@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sanjogkaskar
- * Date: 3/28/19
- * Time: 4:16 PM
- */
 
-namespace Fluidthoery\Filemanager;
+namespace Fluidtheory\Filemanager;
 
 use Illuminate\Support\ServiceProvider;
 
-class FileManagerServiceProvider extends ServiceProvider {
+class FileManagerServiceProvider extends ServiceProvider{
 
     public function boot(){
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
@@ -36,10 +30,6 @@ class FileManagerServiceProvider extends ServiceProvider {
 
     public function register()
     {
-
-    }
-
-    public function Storage(){
 
     }
 
