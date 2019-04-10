@@ -17,12 +17,5 @@
         "psr-4": {
             "Fluidtheory\\Filemanager\\": "src/"
         }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Fluidtheory\\Filemanager\\FileManagerServiceProvider"
-            ]
-        }
     }
 }
