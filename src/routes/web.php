@@ -7,7 +7,7 @@
  */
 
 
-Route::group(['namespace' => 'Hnrtech\Filemanager\Http\Controllers'], function (){
+Route::group(['namespace' => 'Fluidtheory\Filemanager\Http\Controllers'], function (){
 
     Route::post('/delete_file', 'FileManagerController@delete');
     Route::post('/filemanager/upload', 'FileManagerController@upload');
