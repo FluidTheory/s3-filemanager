@@ -61,7 +61,6 @@
                     return false;
                 }
             @endif
-
             $('#fileManagerModal').modal('toggle');
         });
     });
