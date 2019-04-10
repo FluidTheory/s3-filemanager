@@ -8,7 +8,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@bitbucket.org:vendor/my-private-repo.git"
+            "url":  "git@github.com:FluidTheory/s3-filemanager.git"
         }
     ],
     "license": "MIT",
