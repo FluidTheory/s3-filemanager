@@ -5,6 +5,12 @@
     "require": {
         "league/flysystem-aws-s3-v3": "^1.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@bitbucket.org:vendor/my-private-repo.git"
+        }
+    ],
     "license": "MIT",
     "authors": [
         {
