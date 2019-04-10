@@ -11,7 +11,7 @@ composer require fluidtheory/s3-filemanager
 
 - Add Publisher class in app.php of config folder
 ```php        
-FluidTheory\Filemanager\FileManagerServiceProvider::class
+Fluidtheory\Filemanager\FileManagerServiceProvider::class
 ```
 
 - After successful installation, to publish files to project you need to run, 
