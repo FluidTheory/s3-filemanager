@@ -6,7 +6,7 @@ File Manager with S3 Intrgration and integrate with Trumbowyg Editor
 
 - Run following command to install package: 
 ```php
-composer require fluidthery/filemanager
+composer require fluidtheory/s3-filemanager
 ```
 
 - Add Publisher class in app.php of config folder
