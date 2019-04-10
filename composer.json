@@ -5,12 +5,6 @@
     "require": {
         "league/flysystem-aws-s3-v3": "^1.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:FluidTheory/s3-filemanager.git"
-        }
-    ],
     "license": "MIT",
     "authors": [
         {
