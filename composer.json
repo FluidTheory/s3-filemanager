@@ -1,5 +1,5 @@
 {
-    "name": "hnrtech/filemanager",
+    "name": "fluidtheory/s3-filemanager",
     "description": "File Manager with S3 Intrgration and integrate with Trumbowyg Editor",
     "type": "library",
     "require": {
@@ -15,13 +15,13 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Hnrtech\\Filemanager\\": "src/"
+            "FluidTheory\\Filemanager\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Hnrtech\\Filemanager\\FileManagerServiceProvider"
+                "FluidTheory\\Filemanager\\FileManagerServiceProvider"
             ]
         }
     }

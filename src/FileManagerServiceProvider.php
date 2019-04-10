@@ -6,7 +6,7 @@
  * Time: 4:16 PM
  */
 
-namespace Hnrtech\Filemanager;
+namespace Fluidthoery\Filemanager;
 
 use Illuminate\Support\ServiceProvider;
 
