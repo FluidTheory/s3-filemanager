@@ -1,6 +1,6 @@
 <?php
 
-namespace Hnrtech\Filemanager\Http\Controllers;
+namespace Fluidtheory\Filemanager\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
