@@ -26,9 +26,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 <script>
-    function getS3Images() {
+    $('.s3-upload').click(function () {
+        $('.s3-upload').attr('data-click','');
+        $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
-        console.log(client_id);
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
@@ -45,7 +46,8 @@
         $(iframe).on('load', function() {
             $('#loadingMessage').hide();
         });
-    }
+    });
+
     $(document).ready(function () {
         $('.close').click(function () {
             $('#fileManagerModal').fadeOut();
@@ -74,7 +76,11 @@
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);
-                $('#images').val(images);
+                $('.s3-upload').each(function() {
+                    if($(this).attr('data-click') == 'set'){
+                        $(this).parent().find('.fm-image').val(images);
+                    }
+                });
             }
 
             @if(!empty($validateSize))
