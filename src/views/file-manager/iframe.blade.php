@@ -26,9 +26,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 <script>
-    $('.s3-upload').click(function () {
-        $('.s3-upload').attr('data-click','');
-        $(this).attr('data-click','set');
+    function getS3Images() {
         var client_id = $('#folder-id').val();
         if(client_id === undefined || client_id === ''){
             client_id = null;
@@ -46,7 +44,7 @@
         $(iframe).on('load', function() {
             $('#loadingMessage').hide();
         });
-    });
+    }
 
     $(document).ready(function () {
         $('.close').click(function () {
