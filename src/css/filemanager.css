@@ -16,7 +16,6 @@
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     outline: none;
-    /*position: fixed;*/
     left: 50px;
     right: 50px;
     width: auto;
