@@ -17,7 +17,6 @@ class FileManagerServiceProvider extends ServiceProvider{
         $this->publishes([
             __DIR__.'/js/' => public_path('/js/'),
         ], 'public');
-
     }
 
 
