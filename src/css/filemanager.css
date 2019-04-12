@@ -78,3 +78,8 @@
 .filemanager-iframe .modal-footer {
     padding: 0px 35px;
 }
+#loadingMessage{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}

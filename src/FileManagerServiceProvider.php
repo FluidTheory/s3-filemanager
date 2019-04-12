@@ -10,10 +10,6 @@ class FileManagerServiceProvider extends ServiceProvider{
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         $this->loadViewsFrom(__DIR__.'/views', 'filemanager');
 
-        $this->mergeConfigFrom(
-            __DIR__.'/config/path.php', 'path'
-        );
-
         $this->publishes([
             __DIR__.'/css/' => public_path('/css/'),
         ], 'public');
@@ -22,9 +18,6 @@ class FileManagerServiceProvider extends ServiceProvider{
             __DIR__.'/js/' => public_path('/js/'),
         ], 'public');
 
-        $this->publishes([
-            __DIR__.'/config/path.php' => config_path('path.php'),
-        ]);
     }
 
 

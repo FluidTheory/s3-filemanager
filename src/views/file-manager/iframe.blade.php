@@ -8,8 +8,13 @@
         <h3 id="fileManagerModalLabel">File Manager</h3>
     </div>
     <div class="modal-body">
-        <iframe src="{{ url('/filemanager?path='.config('path.folder_name'))}}" id="file_manager"
-                style="width: 100%;height: 100%"></iframe>
+        <div id="loadingMessage" class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <iframe src="" id="file_manager" style="width: 100%;height: 100%"></iframe>
+        <div id="err_message" class="text-center"></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-theme-color waves-effect" data-dismiss="modal" aria-hidden="true" style="float: right;">Cancel</button>
@@ -21,6 +26,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 <script>
+    function getS3Images() {
+        var client_id = $('#folder-id').val();
+        console.log(client_id);
+        if(client_id === undefined || client_id === ''){
+            client_id = null;
+            $('#file_manager').hide();
+            $('#loadingMessage').hide();
+            $('#err_message').html('Please add data-client attribute to upload button and set folder value !!');
+        }
+
+        if(client_id != null || client_id == 'cms'){
+            var url = '/filemanager?path='+client_id;
+            $('#file_manager').attr('src',url);
+        }
+        $('#fileManagerModal').modal('toggle');
+        var iframe = $('iframe');
+        $(iframe).on('load', function() {
+            $('#loadingMessage').hide();
+        });
+    }
     $(document).ready(function () {
         $('.close').click(function () {
             $('#fileManagerModal').fadeOut();
@@ -53,14 +78,15 @@
             }
 
             @if(!empty($validateSize))
-                if(width >= 640 && height <= 1920){
-                    $('#image-upload').val(images);
-                    $('form#img-upload').submit();
-                } else{
-                    alert("Please upload a bigger image.");
-                    return false;
-                }
+            if(width >= 640 && height <= 1920){
+                $('#image-upload').val(images);
+                $('form#img-upload').submit();
+            } else{
+                alert("Please upload a bigger image.");
+                return false;
+            }
             @endif
+
             $('#fileManagerModal').modal('toggle');
         });
     });
