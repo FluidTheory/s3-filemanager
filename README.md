@@ -19,14 +19,6 @@ Fluidtheory\Filemanager\FileManagerServiceProvider::class
 php artisan vendor:publish
 ```
 
-- After publish, path.php file will be added in config folder set 'folder_name' as per require directory to fetch images 
-
-- To setup file upload use following,
-```php 
-For Upload Button : {!! config('path.button') !!} 
-For Input file name : {!! config('path.input') !!}
-```
-
 - Include File Manager css
 ```php
 <link rel="stylesheet" href="/css/filemanager-custom.css">
@@ -39,12 +31,16 @@ For Input file name : {!! config('path.input') !!}
 @include('filemanager::file-manager.iframe')
 ```
 
-- Include script to open File manager modal,=
+- Set following attribute for upload button,
 ```php
-    $('#image-upload').on('click', function () {
-        $('#fileManagerModal').modal('toggle');
-    });
-```    
+    data-multiple="true" for multi-select image or data-multiple="false" for single image select
+    Set another attribute data-click=""
+```  
+
+- Pass folder name with hidden input
+```php
+    <input type="hidden" id="folder-id" value="<your-folder-name>">
+```  
 
 - Change default value of "FILESYSTEM_DRIVER" in filesystems.php file to s3 and add update s3 array as follwoing
 ```php

@@ -15,7 +15,7 @@
 <?php $image_name = []; ?>
 @if(Session::has('message'))
     <?php
-        $image_name = Session::get('image_name');
+    $image_name = Session::get('image_name');
     ?>
     <div class="response-message">{{Session::get('message')}}</div>
 @elseif(Session::has('error'))
@@ -24,13 +24,11 @@
 <div class="filemanager">
     <div style="padding-right: 2.3em;">
         <span id="mySelected">
-            {{--<i class="fas fa-check add-icon" id="file-selected"></i>--}}
             <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" style="display: none;">
                 Insert
             </button>
         </span>
         <span id="myBtn">
-            {{--<i class="fas fa-plus add-icon"></i>--}}
             <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
                 Add Folder
             </button>
@@ -40,7 +38,6 @@
             <input type="hidden" class="path" name="path" value="{{@$path}}">
             <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif" id="file" multiple>
             <span onclick="openDialog()">
-                {{--<i class="fas fa-upload add-icon"></i>--}}
                 <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
                     Upload
                 </button>
@@ -49,31 +46,31 @@
     </div>
     <div class="breadcrumbs">
         <?php
-            $tokens = explode('/', $path);
-            $lastToken = array_pop($tokens);
-            $path = [];
-         ?>
+        $tokens = explode('/', $path);
+        $lastToken = array_pop($tokens);
+        $path = [];
+        ?>
         @foreach($tokens as $k)
             <?php $path[] = $k; $current = implode('/', $path); ?>
-                <a href="/filemanager?path={{$current}}">
-                    @if($path[0] == $current)
-                        <span class="folderName">
+            <a href="/filemanager?path={{$current}}">
+                @if($path[0] == $current)
+                    <span class="folderName">
                             <i class="fas fa-home"></i>
                         </span>
-                    @else
-                        <span class="folderName">
+                @else
+                    <span class="folderName">
                         </span>
-                    @endif
-                </a>
-                <span class="arrow">→</span>
-                <span class="folderName">{!! $lastToken !!}</span>
+                @endif
+            </a>
+            <span class="arrow">→</span>
+            <span class="folderName">{!! $lastToken !!}</span>
         @endforeach
         <span class="folderName"></span>
     </div>
     <ul class="data">
         <ul class="data animated img-gallery">
             @foreach($final['folders'] as $k)
-               <?php $r = explode('/', $k); ?>
+                <?php $r = explode('/', $k); ?>
                 <li class="folders" id="folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}">
                     <span class="folders">
                         <span onclick="location.href = '/filemanager?path={{ $k }}';" class="icon folder full"></span>
@@ -90,16 +87,16 @@
             @endforeach
             @foreach($final['files'] as $k)
                 <?php
-                    $checked = '';
-                    $li_class = '';
-                    $db_image = str_replace(array(" ",".","(",")"),"-",$k['name']);
-                    if(!empty($image_name) && in_array($db_image, $image_name)){
-                        $checked = 'checked';
-                        $li_class = 'add-background selected';
+                $checked = '';
+                $li_class = '';
+                $db_image = str_replace(array(" ",".","(",")"),"-",$k['name']);
+                if(!empty($image_name) && in_array($db_image, $image_name)){
+                $checked = 'checked';
+                $li_class = 'add-background selected';
                 ?>
                 <script>$("#insert-btn").show();</script>
                 <?php
-                    }
+                }
                 ?>
                 <li class="image-li {{ $li_class }}" id="li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" onclick="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}')">
                     <span class="image">
@@ -144,9 +141,11 @@
         </form>
     </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function () {
+
         $('.delbtn').mousedown(function (event) {
             event.preventDefault();
             var type = $(this).data('name');
@@ -221,88 +220,88 @@
             modal.style.display = "none";
         }
     }
-        <?php foreach($final['files'] as $k){ ?>
-        $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseover(function(){
-            $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").show();
-        });
+    <?php foreach($final['files'] as $k){ ?>
+    $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseover(function(){
+        $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").show();
+    });
 
-        $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseleave(function(){
-            $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").hide();
-        });
-        <?php } ?>
+    $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseleave(function(){
+        $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").hide();
+    });
+    <?php } ?>
 
 
-        <?php foreach($final['folders'] as $k){
-                $r = explode('/', $k);
-            ?>
-        $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseover(function(){
-            $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").show();
-        });
+    <?php foreach($final['folders'] as $k){
+    $r = explode('/', $k);
+    ?>
+    $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseover(function(){
+        $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").show();
+    });
 
-        $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseleave(function(){
-            $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").hide();
-        });
-        <?php } ?>
+    $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseleave(function(){
+        $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").hide();
+    });
+    <?php } ?>
 
-        function show_border(checkName, actionFrom = null){
-            if ($("#option-"+checkName).prop("checked") == true) {
-
-                if(actionFrom == null) { // click on selected image box
-                    @if(isset($events))
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                    @else
-                        $("#option-" + checkName).prop("checked", false);
-                        $('#li-' + checkName).removeClass('add-background');
-                        $('#li-'+checkName).removeClass('selected');
-                    @endif
-                }else{ // click on unselected image checkbox
-                    @if(isset($events))
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-'+checkName).addClass('add-background');
-                        $('#li-'+checkName).addClass('selected');
-                    @else
-                        $('#li-'+checkName).addClass('add-background');
-                        $('#li-'+checkName).addClass('selected');
-                    @endif
-                }
-            }else{
-                if(actionFrom == 'del') {
+    function show_border(checkName, actionFrom = null){
+        var multiple = parent.document.getElementById('multiple-img').value;
+        if ($("#option-"+checkName).prop("checked") == true) {
+            if(actionFrom == null) { // click on selected image box
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                } else{
                     $("#option-" + checkName).prop("checked", false);
                     $('#li-' + checkName).removeClass('add-background');
-                }else if(actionFrom == null){ // image box click when checkbox unchecked
-                    @if(isset($events))
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-'+checkName).addClass('selected');
-                    @else
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-'+checkName).addClass('selected');
-                    @endif
+                    $('#li-' + checkName).removeClass('selected');
                 }
-                else{ // checkbox unchecked click
-                    @if(isset($events))
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                    @else
-                        $('#li-' + checkName).removeClass('add-background');
-                        $('#li-' + checkName).removeClass('selected');
-                    @endif
+            }else{ // click on unselected image checkbox
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }else {
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
                 }
             }
-
-            var $insert_btn = $("#insert-btn").hide();
-            $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+        }else{
+            if(actionFrom == 'del') {
+                $("#option-" + checkName).prop("checked", false);
+                $('#li-' + checkName).removeClass('add-background');
+            }else if(actionFrom == null){ // image box click when checkbox unchecked
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }else {
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }
+            }
+            else { // checkbox unchecked click
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                } else {
+                    $('#li-' + checkName).removeClass('add-background');
+                    $('#li-' + checkName).removeClass('selected');
+                }
+            }
         }
+
+        var $insert_btn = $("#insert-btn").hide();
+        $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+    }
 
 </script>
 <style>
@@ -342,49 +341,49 @@
 
     }
     .inputGroup label:before {
-         width: 10px;
-         height: 10px;
-         border-radius: 50%;
-         content: '';
-         position: absolute;
-         left: 50%;
-         top: 50%;
-         transform: translate(-50%, -50%) scale3d(1, 1, 1);
-         transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
-         opacity: 0;
-         z-index: -1;
-     }
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale3d(1, 1, 1);
+        transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        opacity: 0;
+        z-index: -1;
+    }
 
     .inputGroup label:after {
-         width: 15px;
-         height: 15px;
-         content: '';
-         border: 2px solid #ccc;
-         background-color: #ccc;
-         background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
-         background-repeat: no-repeat;
-         background-position: -2px -3px;
-         border-radius: 50%;
-         z-index: 2;
-         position: absolute;
-         right: 0px;
-         top: 50%;
-         transform: translateY(-50%);
-         cursor: pointer;
-         transition: all 200ms ease-in;
-     }
+        width: 15px;
+        height: 15px;
+        content: '';
+        border: 2px solid #ccc;
+        background-color: #ccc;
+        background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+        background-repeat: no-repeat;
+        background-position: -2px -3px;
+        border-radius: 50%;
+        z-index: 2;
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        transition: all 200ms ease-in;
+    }
 
     .inputGroup input:checked ~ label {
         color: #fff;
     }
     .inputGroup input:checked ~ label:before {
-         transform: translate(-50%, -50%) scale3d(56, 56, 1);
-         opacity: 1;
-     }
+        transform: translate(-50%, -50%) scale3d(56, 56, 1);
+        opacity: 1;
+    }
     .inputGroup input:checked ~ label:after {
-         background-color: #2684FF;
-         border-color: #2684FF;
-     }
+        background-color: #2684FF;
+        border-color: #2684FF;
+    }
 
     .check-input {
         width: 32px;
@@ -405,7 +404,7 @@
     }
 
     .add-background{
-         border: 2px solid #2684FF !important;
+        border: 2px solid #2684FF !important;
     }
 </style>
 </body>

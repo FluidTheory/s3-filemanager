@@ -9,21 +9,28 @@
     </div>
     <div class="modal-body">
         <div id="loader"></div>
-        <iframe src="" id="file_manager" style="width: 100%;height: 100%"></iframe>
+        <iframe src="" id="file_manager" data-select="" style="width: 100%;height: 100%"></iframe>
         <div id="err_message" class="text-center"></div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-theme-color waves-effect" data-dismiss="modal" aria-hidden="true" style="float: right;">Cancel</button>
     </div>
 </div>
+<input type="hidden" id="multiple-img" value="">
 {{--end model for S3 file manager --}}
 
 {{--scripts--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 <script>
-    function getS3Images() {
+    $('.s3-upload').click(function () {
+        $('.s3-upload').attr('data-click','');
+        $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
+        var multiple = $(this).data('multiple');
+        getS3Images(client_id,multiple);
+    });
+    function getS3Images(client_id,multiple) {
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
@@ -32,9 +39,32 @@
         }
 
         if(client_id != null || client_id == 'cms'){
-            var url = '/filemanager?path='+client_id;
-            $('#file_manager').attr('src',url);
+            var iframeSrc = $('#file_manager').attr('src');
+            if(iframeSrc == '') {
+                if (multiple == true) {
+                    $('#multiple-img').val('true');
+                    var url = '/filemanager?path=' + client_id;
+                }
+                else {
+                    $('#multiple-img').val('false');
+                    var url = '/filemanager?path=' + client_id;
+                }
+                $('#file_manager').attr('src', url);
+            }else{
+                console.log(multiple);
+                if(multiple == false) {
+                    $('#multiple-img').val('false');
+                    var iframe = $('#file_manager').contents();
+
+                    iframe.find(".check-input").prop("checked", false);
+                    iframe.find('li.image-li').removeClass('add-background');
+                    iframe.find('li.image-li').removeClass('selected');
+                }else{
+                    $('#multiple-img').val('true');
+                }
+            }
         }
+
         $('#fileManagerModal').modal('toggle');
         var iframe = $('iframe');
         $(iframe).on('load', function() {
@@ -64,9 +94,9 @@
                     width.push($(this).find('img')[0].naturalWidth);
                 }
             });
-
             if(current == '.trumbowyg-editor') {
-                var img = '{{ env('AWS_URL').config('path.folder_name').'/' }}' + images ;
+                var client_id = $('#folder-id').val();
+                var img = '{{ env('AWS_URL')}}'+ client_id +'/' + images ;
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);

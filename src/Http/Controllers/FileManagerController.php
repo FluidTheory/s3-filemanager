@@ -44,7 +44,7 @@ class FileManagerController extends Controller
             'files' => $files
         ];
 
-        return view('filemanager::file-manager.index')->with(array('events'=> 'true','final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
+        return view('filemanager::file-manager.index')->with(array('final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }
 

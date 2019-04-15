@@ -12,7 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/filemanager-custom.css?v=1.1">
+    <link rel="stylesheet" href="/css/filemanager-custom.css?v=1.2">
 
 </head>
 
@@ -43,12 +43,12 @@
         <div class="col-lg-12 mt-5">
             <div class="col-xs-6 ol-sm-3">
                 <a href="javascript:;" id="image-upload" class="btn btn-primary"
-               name="upload">Upload</a>
+                   name="upload">Upload</a>
             </div>
             <div class="col-xs-6 ol-sm-9">
                 <input type="text" class="form-control" name="new_images" id="images"
-                   value="{{old('new_images')}}"
-                   readonly>
+                       value="{{old('new_images')}}"
+                       readonly>
             </div>
         </div>
     </div>
