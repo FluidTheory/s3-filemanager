@@ -8,11 +8,7 @@
         <h3 id="fileManagerModalLabel">File Manager</h3>
     </div>
     <div class="modal-body">
-        <div id="loadingMessage" class="text-center">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
+        <div id="loader"></div>
         <iframe src="" id="file_manager" style="width: 100%;height: 100%"></iframe>
         <div id="err_message" class="text-center"></div>
     </div>
@@ -31,7 +27,7 @@
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
-            $('#loadingMessage').hide();
+            $('#loader').hide();
             $('#err_message').html('Please add data-client attribute to upload button and set folder value !!');
         }
 
@@ -42,7 +38,7 @@
         $('#fileManagerModal').modal('toggle');
         var iframe = $('iframe');
         $(iframe).on('load', function() {
-            $('#loadingMessage').hide();
+            $('#loader').hide();
         });
     }
 
