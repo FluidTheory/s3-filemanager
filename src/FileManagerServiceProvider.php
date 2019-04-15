@@ -19,7 +19,6 @@ class FileManagerServiceProvider extends ServiceProvider{
         ], 'public');
     }
 
-
     public function register()
     {
 
