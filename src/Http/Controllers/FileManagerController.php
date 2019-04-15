@@ -43,7 +43,6 @@ class FileManagerController extends Controller
             'folders' => $folders,
             'files' => $files
         ];
-
         return view('filemanager::file-manager.index')->with(array('final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }
