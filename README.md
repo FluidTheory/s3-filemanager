@@ -37,6 +37,11 @@ php artisan vendor:publish
     Set another attribute data-click=""
 ```  
 
+- Add input field to set image value
+```php
+<input type="text" class="form-control fm-image" name="new_images" value="" readonly>
+```
+
 - Pass folder name with hidden input
 ```php
     <input type="hidden" id="folder-id" value="<your-folder-name>">
