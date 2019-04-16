@@ -33,8 +33,8 @@ php artisan vendor:publish
 
 - Set following attribute for upload button,
 ```php
-    data-multiple="true" for multi-select image or data-multiple="false" for single image select
-    Set another attribute data-click=""
+   - data-multiple="true" for multi-select image or data-multiple="false" for single image select
+   - Set another attribute data-click=""
 ```  
 
 - Add input field to set image value
