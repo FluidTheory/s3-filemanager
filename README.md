@@ -1,4 +1,4 @@
-# s3-filemanager
+# Laravel s3-filemanager
 
 File Manager with S3 Intrgration and integrate with Trumbowyg Editor
 
@@ -68,7 +68,8 @@ AWS_URL=
 ```php
 {!! config('path.editor') !!} and include js with following code,
 <script src="/js/file-manager/trumbowyg.js"></script>
-{!! config('path.js') !!}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/emoji/trumbowyg.emoji.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/table/trumbowyg.table.min.js"></script>
 ```
 
 - Also, include css of trumbowyg editor
