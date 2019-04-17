@@ -20,10 +20,8 @@
 {{--end model for S3 file manager --}}
 
 {{--scripts--}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
 <script>
-    $('.s3-upload').click(function () {
+    $(document).on('click','.s3-upload',function () {
         $('.s3-upload').attr('data-click','');
         $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
@@ -51,7 +49,6 @@
                 }
                 $('#file_manager').attr('src', url);
             }else{
-                console.log(multiple);
                 if(multiple == false) {
                     $('#multiple-img').val('false');
                     var iframe = $('#file_manager').contents();

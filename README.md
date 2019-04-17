@@ -1,8 +1,8 @@
-# Laravel s3-filemanager
+# Laravel S3-filemanager
 
 File Manager with S3 Intrgration and integrate with Trumbowyg Editor
 
-## Installing s3-File Manager
+## Steps to Integarte S3-File Manager
 
 - Run following command to install package: 
 ```php
@@ -19,12 +19,12 @@ Fluidtheory\Filemanager\FileManagerServiceProvider::class
 php artisan vendor:publish
 ```
 
-- Include File Manager css
+- Include File Manager css in header
 ```php
 <link rel="stylesheet" href="/css/filemanager-custom.css">
 ```
 
-##### Note: Include Bootstrap css and js for modal style if not available in your project
+##### Note: Include Bootstrap css and js for modal style if not available in your project. Please include jquery file in header
 
 - Include Modal in your view file where input and button are added
 ```php
@@ -42,7 +42,7 @@ php artisan vendor:publish
 <input type="text" class="form-control fm-image" name="new_images" value="" readonly>
 ```
 
-- Pass folder name with hidden input
+- Pass folder name with hidden input in view file
 ```php
     <input type="hidden" id="folder-id" value="<your-folder-name>">
 ```  
@@ -71,7 +71,7 @@ AWS_URL=
 
 ##### If you want to include file manager in trumbowyg editor please include following:
 ```php
-{!! config('path.editor') !!} and include js with following code,
+Include following js file first,
 <script src="/js/file-manager/trumbowyg.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/emoji/trumbowyg.emoji.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/table/trumbowyg.table.min.js"></script>
@@ -84,9 +84,9 @@ AWS_URL=
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/table/ui/trumbowyg.table.min.css">
 ```
 
-- Final steps for Editor with s3-filemanager
+- Final steps for Editor with s3-filemanager, give class to textarea to integrate Trumbowyg editor
 ```php
-$('#desc').trumbowyg();
+$('.<your-class>').trumbowyg();
 ```
 
 
