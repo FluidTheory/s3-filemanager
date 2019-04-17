@@ -10,7 +10,6 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/filemanager-custom.css?v=1.2">
-
 </head>
 <body>
 
