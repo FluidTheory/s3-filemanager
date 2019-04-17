@@ -42,9 +42,7 @@
                    name="upload">Upload</a>
             </div>
             <div class="col-xs-6 ol-sm-9">
-                <input type="text" class="form-control" name="new_images" id="images"
-                       value="{{old('new_images')}}"
-                       readonly>
+                <input type="text" class="form-control" name="new_images" id="images" value="{{old('new_images')}}" readonly>
             </div>
         </div>
     </div>

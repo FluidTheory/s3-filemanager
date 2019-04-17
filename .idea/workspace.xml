@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,16 +43,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
-              <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
+            <state relative-caret-position="705">
+              <caret line="47" column="18" lean-forward="true" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="750">
@@ -138,8 +135,8 @@
         <option value="$PROJECT_DIR$/src/js/file-manager/trumbowyg.js" />
         <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
         <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
-        <option value="$PROJECT_DIR$/src/views/index.blade.php" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/views/index.blade.php" />
       </list>
     </option>
   </component>
@@ -260,7 +257,7 @@
       <workItem from="1554899745675" duration="10100000" />
       <workItem from="1554987982862" duration="9245000" />
       <workItem from="1555069578734" duration="15053000" />
-      <workItem from="1555392723301" duration="5841000" />
+      <workItem from="1555392723301" duration="6090000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit.">
       <created>1554788173853</created>
@@ -399,7 +396,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55957000" />
+    <option name="totallyTimeSpent" value="56206000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
@@ -721,13 +718,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="57" column="34" selection-start-line="57" selection-start-column="34" selection-end-line="57" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6150">
@@ -739,6 +729,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="47" column="18" lean-forward="true" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
         </state>
       </provider>
     </entry>
