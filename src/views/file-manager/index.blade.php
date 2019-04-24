@@ -69,7 +69,6 @@
         @if(!empty($tokens))
             <span class="folderName">{!! $lastToken !!}</span>
         @endif
-        <span class="folderName"></span>
     </div>
     <ul class="data">
         <ul class="data animated img-gallery">
