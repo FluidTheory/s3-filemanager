@@ -59,12 +59,16 @@
                         </span>
                 @else
                     <span class="folderName">
+                            {!! $k !!}
                         </span>
                 @endif
             </a>
             <span class="arrow">→</span>
-            <span class="folderName">{!! $lastToken !!}</span>
+
         @endforeach
+        @if(!empty($tokens))
+            <span class="folderName">{!! $lastToken !!}</span>
+        @endif
         <span class="folderName"></span>
     </div>
     <ul class="data">
