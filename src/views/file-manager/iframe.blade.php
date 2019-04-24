@@ -20,6 +20,8 @@
 {{--end model for S3 file manager --}}
 
 {{--scripts--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>--}}
+{{--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>--}}
 <script>
     $(document).on('click','.s3-upload',function () {
         $('.s3-upload').attr('data-click','');
@@ -77,6 +79,7 @@
     $('#file_manager').on('load', function () {
         var iframe = $('#file_manager').contents();
         iframe.find("#mySelected").click(function () {
+
             let current = $('#fileManagerModal').attr('current');
             var images = [];
             var size = [];
@@ -85,7 +88,10 @@
 
             iframe.find('ul.img-gallery li').each(function () {
                 if ($(this).hasClass('selected')) {
-                    images.push($(this).find('img').data('value'));
+                    var src = $(this).find('img').attr('src');
+                    var client_id = $('#folder-id').val();
+                    var path = src.replace("{{ env('AWS_URL')}}"+client_id+"/","");
+                    images.push(path);
                     size.push($(this).find('img').data('size'));
                     height.push($(this).find('img')[0].naturalHeight);
                     width.push($(this).find('img')[0].naturalWidth);
