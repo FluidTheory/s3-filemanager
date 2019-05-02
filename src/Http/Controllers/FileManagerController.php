@@ -96,11 +96,9 @@ class FileManagerController extends Controller
                 ));
 
                 $dir = $image;
-
                 $result = Storage::disk('s3')->makeDirectory($dir);
 
                 $filePath = $image . '/' . $name;
-
                 $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
 
                 $image_array[] = $name;
