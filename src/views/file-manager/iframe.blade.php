@@ -125,14 +125,15 @@
                     var client_id = $('#folder-id').val();
                     if(type == 'image'){
                         images.push($(this).find('img').data('value'));
+                        height.push($(this).find('img')[0].naturalHeight);
+                        width.push($(this).find('img')[0].naturalWidth);
                     }
                     if(type == 'video'){
                         images.push($(this).find('video').data('value'));
                     }
                     ids.push($(this).find('img').data('id'));
                     size.push($(this).find('img').data('size'));
-                    // height.push($(this).find('img')[0].naturalHeight);
-                    // width.push($(this).find('img')[0].naturalWidth);
+
                 }
             });
             if(current == '.trumbowyg-editor') {
@@ -141,22 +142,23 @@
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);
+
+                @if(!empty($validateSize))
+                if(width >= 640 && height <= 1920){
+                    $('#image-upload').val(images);
+                    $('form#img-upload').submit();
+                } else{
+                    alert("Please upload a bigger image.");
+                    return false;
+                }
+
+                @endif
                 $('.s3-upload').each(function() {
                     if($(this).attr('data-click') == 'set'){
                         $(this).parent().find('.fm-image').val(images).attr('data-ids',ids);
                     }
                 });
             }
-
-            @if(!empty($validateSize))
-            if(width >= 640 && height <= 1920){
-                $('#image-upload').val(images);
-                $('form#img-upload').submit();
-            } else{
-                alert("Please upload a bigger image.");
-                return false;
-            }
-            @endif
 
             $('#fileManagerModal').modal('toggle');
         });
