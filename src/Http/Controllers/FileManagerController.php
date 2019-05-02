@@ -19,7 +19,6 @@ class FileManagerController extends Controller
 
         $path = $_GET;
         $files = [];
-
         $client_id = $path['path'];
         $images = Asset::where('client_id', $client_id)->get();
 
