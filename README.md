@@ -1,4 +1,4 @@
-# Laravel S3-filemanager
+# Laravel Filemanager
 
 File Manager with S3 Intrgration and integrate with Trumbowyg Editor
 
