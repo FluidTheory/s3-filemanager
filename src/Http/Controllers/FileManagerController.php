@@ -127,7 +127,6 @@ class FileManagerController extends Controller
     public function delete(Request $request)
     {
         $data = $request->all();
-
         $del_file = Assets::where('id','=',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
 
         if ($del_file) {
