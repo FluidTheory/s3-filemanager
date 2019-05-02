@@ -4,11 +4,13 @@ namespace Fluidtheory\Filemanager\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use Fluidtheory\Filemanager\Models\Asset;
 use Illuminate\Http\Request;
 use Auth;
 use File;
 use Illuminate\Support\Facades\Storage;
 use Session;
+use DB;
 
 class FileManagerController extends Controller
 {
@@ -19,20 +21,23 @@ class FileManagerController extends Controller
         $files = [];
 
         $client_id = $path['path'];
-        $folders = Storage::directories($path['path']);
-        $tempFiles = Storage::files($path['path']);
+        $images = Asset::where('client_id', $client_id)->get();
 
-        foreach ($tempFiles as $key => $value) {
-            $dt = Storage::LastModified($value);
-            $name = explode('/', $value);
-            $size = Storage::Size($value);
-            $imgSize = round(($size / 1024) * 100) / 100;
+        foreach ($images as $key => $value) {
+            $dt = $value['updated_at'];
+            $name = $value['name'];
+
+            $imgSize = $value['size'];
             $files[] = [
-                'name' => end($name),
+                'id' => $value['id'],
+                'type' => $value['type'],
+                'name' => $name,
                 'modified' => $dt,
                 'size' => $imgSize,
+                'src' => env('AWS_URL').$value['id'].'/'.$name
             ];
         }
+
         $modified = array();
         foreach ($files as $key => $value)
         {
@@ -40,9 +45,9 @@ class FileManagerController extends Controller
         }
         array_multisort($modified, SORT_DESC, $files);
         $final = [
-            'folders' => $folders,
             'files' => $files
         ];
+
         return view('filemanager::file-manager.index')->with(array('final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }
@@ -50,22 +55,54 @@ class FileManagerController extends Controller
     public function upload(Request $request)
     {
         $data = $request->all();
+
+        $width = 0;
+        $height = 0;
         $image_array = array();
         if ($request->hasFile('file')) {
             $files = $request->file('file');
-            if (count($files) > 1) {
-                foreach ($files as $file) {
-                    $name = $file->getClientOriginalName();
-                    $name = str_replace(" ","-",$name);
-                    $filePath = $data['path'] . '/' . $name;
-                    $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
-                    $image_array[] = $name;
-                }
-            } else {
-                $name = $files[0]->getClientOriginalName();
+
+            foreach ($files as $file) {
+                $name = $file->getClientOriginalName();
                 $name = str_replace(" ","-",$name);
-                $filePath = $data['path'] . '/' . $name;
-                $results = Storage::disk('s3')->put($filePath, file_get_contents($files[0]));
+
+                $arr = explode('.',$name);
+                $ext = end($arr);
+
+                if($ext == 'mp4'){
+                    $type = 'video';
+                } elseif($ext == 'pdf') {
+                    $type = 'pdf';
+                }else {
+                    $param = getimagesize($file);
+                    $width = $param[0];
+                    $height = $param[1];
+                    $type = 'image';
+                }
+                $size = floor(filesize($file)/1024);
+
+                if($size > 10240){
+                    return redirect()->back()->with('flash', 'danger')->with('error', 'Please upload file less than 10MB .');
+                }
+
+                $image = Asset::insertGetId(array(
+                    'name' => $name,
+                    'client_id' => $data['path'],
+                    'width' => $width,
+                    'height' => $height,
+                    'size' => $size,
+                    'type' => $type,
+                    'created_at' => gmdate("Y-m-d H:i:s")
+                ));
+
+                $dir = $image;
+
+                $result = Storage::disk('s3')->makeDirectory($dir);
+
+                $filePath = $image . '/' . $name;
+
+                $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
+
                 $image_array[] = $name;
             }
 
@@ -92,13 +129,10 @@ class FileManagerController extends Controller
     public function delete(Request $request)
     {
         $data = $request->all();
-        $file = $data['path'] . '/' . $data['name'];
-        if ($data['type'] == 'folder') {
-            $result = Storage::disk('s3')->deleteDirectory($file);
-        } else {
-            $result = Storage::disk('s3')->delete($file);
-        }
-        if ($result) {
+
+        $del_file = Assets::where('id','=',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+
+        if ($del_file) {
             return 'true';
         } else {
             return 'false';

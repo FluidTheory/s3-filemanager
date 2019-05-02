@@ -15,7 +15,7 @@
 <?php $image_name = []; ?>
 @if(Session::has('message'))
     <?php
-    $image_name = Session::get('image_name');
+        $image_name = Session::get('image_name');
     ?>
     <div class="response-message">{{Session::get('message')}}</div>
 @elseif(Session::has('error'))
@@ -28,15 +28,11 @@
                 Insert
             </button>
         </span>
-        <span id="myBtn">
-            <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
-                Add Folder
-            </button>
-        </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
-            {{csrf_field()}}
+
             <input type="hidden" class="path" name="path" value="{{@$path}}">
-            <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif" id="file" multiple>
+            <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
+            <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif,video/mp4,application/pdf" id="file" multiple>
             <span onclick="openDialog()">
                 <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
                     Upload
@@ -46,74 +42,69 @@
     </div>
     <div class="breadcrumbs">
         <?php
-        $tokens = explode('/', $path);
-        $lastToken = array_pop($tokens);
-        $path = [];
-        ?>
+            $tokens = explode('/', $path);
+            $lastToken = array_pop($tokens);
+            $path = [];
+         ?>
         @foreach($tokens as $k)
             <?php $path[] = $k; $current = implode('/', $path); ?>
-            <a href="/filemanager?path={{$current}}">
-                @if($path[0] == $current)
-                    <span class="folderName">
+                <a href="/filemanager?path={{$current}}">
+                    @if($path[0] == $current)
+                        <span class="folderName">
                             <i class="fas fa-home"></i>
                         </span>
-                @else
-                    <span class="folderName">
+                    @else
+                        <span class="folderName">
                             {!! $k !!}
                         </span>
-                @endif
-            </a>
-            <span class="arrow">→</span>
+                    @endif
+                </a>
+                <span class="arrow">→</span>
 
         @endforeach
-        @if(!empty($tokens))
-            <span class="folderName">{!! $lastToken !!}</span>
-        @endif
+            @if(!empty($tokens))
+                <span class="folderName">{!! $lastToken !!}</span>
+            @endif
+        <span class="folderName"></span>
     </div>
     <ul class="data">
         <ul class="data animated img-gallery">
-            @foreach($final['folders'] as $k)
-                <?php $r = explode('/', $k); ?>
-                <li class="folders" id="folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}">
-                    <span class="folders">
-                        <span onclick="location.href = '/filemanager?path={{ $k }}';" class="icon folder full"></span>
 
-                        <span class="name" :aria-valuemax="{{end($r)}}">{{end($r)}}</span>
-                    </span>
-
-                    <div id="hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}" style="display: none">
-                    <span class="delbtn" data-value="{{end($r)}}" data-name="folder">
-                        <i class="fas fa-trash del-icon"></i>
-                    </span>
-                    </div>
-                </li>
-            @endforeach
             @foreach($final['files'] as $k)
                 <?php
-                $checked = '';
-                $li_class = '';
-                $db_image = str_replace(array(" ",".","(",")"),"-",$k['name']);
-                if(!empty($image_name) && in_array($db_image, $image_name)){
-                $checked = 'checked';
-                $li_class = 'add-background selected';
+                    $checked = '';
+                    $li_class = '';
+                    $db_image = str_replace(array(" ",".","(",")"),"-",$k['name']);
+                    if(!empty($image_name) && in_array($db_image, $image_name)){
+                        $checked = 'checked';
+                        $li_class = 'add-background selected';
                 ?>
                 <script>$("#insert-btn").show();</script>
                 <?php
-                }
+                    }
                 ?>
-                <li class="image-li {{ $li_class }}" id="li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" onclick="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}')">
+                <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" type="{{$k['type']}}" id="li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" onclick="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}',this.type)">
                     <span class="image">
-                        <img class="img-select" id="img-select" src="{{env('AWS_URL').$client_id.'/'. $k['name']  }}"
-                             data-value="{{ $k['name']  }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" style="width: 300px; height: 130px; object-fit: cover;">
+                        @if($k['type'] == 'image' || $k['type'] == 'pdf')
+                            <img class="img-select" id="img-select" src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
+                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" style="width: 300px; height: 130px; object-fit: cover;">
+                        @endif
+
+                        @if($k['type'] == 'video')
+                            <video class="img-select" id="img-select"
+                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" style="width: 300px; height: 130px; object-fit: cover;">
+                                <source src="{{$k['src']}}" type="video/mp4">
+                            </video>
+                        @endif
                     </span>
                     <div id="outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" class="outer-div" style="display: none;">
                         <span class="inputGroup">
-                            <input {{ $checked }} class="check-input" id="option-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" name="option{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" onchange="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}', 'box')" type="checkbox"/>
+                            <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}" id="option-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" name="option{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}" onchange="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}',this, 'box')" type="checkbox" disabled/>
                             <label for="option-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}"></label>
                         </span>
                         <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
                         <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
-                        <span class="delbtn" data-value="{{$k['name']}}" data-name="file" onclick="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}','del')">
+                        <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-name="file" onclick="show_border('{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}',this,'del')">
                             <i class="fas fa-trash del-icon"></i>
                         </span>
                     </div>
@@ -158,8 +149,7 @@
                 var r = confirm("Are you sure want to delete Folder?");
             }
             if(r == true) {
-                var id = $(this).data('value');
-                var path = $('.path').val();
+                var id = $(this).data('id');
                 var token = $('input[name=_token]').val();
                 $.blockUI({
                     css: {
@@ -170,13 +160,12 @@
                 $.ajax({
                     type: 'POST',
                     url: '/delete_file',
-                    data: 'name=' + id + '&_token=' + token + '&path=' + path + '&type=' + type,
+                    data: 'id=' + id + '&_token=' + token +'&type=' + type,
                     success: function (response) {
-                        console.log(response);
                         if (response = true) {
                             location.reload();
                         } else {
-                            $('.messages').html('Folder not Deleted.');
+                            $('.messages').html('Unable to delete ...');
                         }
                     },
                     complete: function () {
@@ -187,17 +176,27 @@
             }
         });
     });
-</script>
-<script>
+
     function openDialog() {
         document.getElementById("file").click();
     }
 
-    document.getElementById("file").onchange = function () {
-        document.getElementById("upload-form").submit();
+    document.getElementById("file").onchange = function (e) {
+        var error = 0;
+        $('#file').each(function (index) {
+            var get_size = this.files[index].size;
+            var size = (Math.round((get_size / 1024) * 100) / 100);
+            if(size >= '10000') {
+                error+= 1;
+                alert("Please upload an file less than 10MB");
+                e.preventDefault(e);
+            }
+        });
+        if(error == 0){
+            document.getElementById("upload-form").submit();
+        }
     };
-</script>
-<script>
+
     // Get the modal
     var modal = document.getElementById('fileManageAddFolderModal');
 
@@ -208,9 +207,9 @@
     var span = document.getElementsByClassName("close")[0];
 
     // When the user clicks the button, open the modal
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
+    // btn.onclick = function () {
+    //     modal.style.display = "block";
+    // }
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
@@ -223,88 +222,90 @@
             modal.style.display = "none";
         }
     }
-    <?php foreach($final['files'] as $k){ ?>
-    $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseover(function(){
-        $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").show();
-    });
+        <?php foreach($final['files'] as $k){ ?>
+        $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseover(function(){
+            $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").show();
+        });
 
-    $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseleave(function(){
-        $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").hide();
-    });
-    <?php } ?>
+        $("#li-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").mouseleave(function(){
+            $("#outer-{!! str_replace(array(" ",".","(",")"),"-",$k['name']) !!}").hide();
+        });
+        <?php } ?>
 
 
-    <?php foreach($final['folders'] as $k){
-    $r = explode('/', $k);
-    ?>
-    $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseover(function(){
-        $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").show();
-    });
+        function show_border(checkName,current, actionFrom = null){
+            var type = window.frameElement.getAttribute("data-type");
+            if(type == 'all'){ // For all Files
 
-    $("#folder-li-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").mouseleave(function(){
-        $("#hover-div-{!! str_replace(array(" ",".","(",")"),"-",end($r)) !!}").hide();
-    });
-    <?php } ?>
+            } else if(type == 'image-video') { // For Image and video
+                if(current == 'image' || current == 'video') {
 
-    function show_border(checkName, actionFrom = null){
-        var multiple = parent.document.getElementById('multiple-img').value;
-        if ($("#option-"+checkName).prop("checked") == true) {
-            if(actionFrom == null) { // click on selected image box
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                } else{
+                } else {
+                    alert('You can select Image/Video  file only !!');
+                    return false;
+                }
+            }else if(current != type){
+                    alert('You can select '+type+' file only !!');
+                    return false;
+            }
+            var multiple = parent.document.getElementById('multiple-img').value;
+            if ($("#option-"+checkName).prop("checked") == true) {
+                if(actionFrom == null) { // click on selected image box
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                    } else{
+                        $("#option-" + checkName).prop("checked", false);
+                        $('#li-' + checkName).removeClass('add-background');
+                        $('#li-' + checkName).removeClass('selected');
+                    }
+                }else{ // click on unselected image checkbox
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }else {
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }
+                }
+            }else{
+                if(actionFrom == 'del') {
                     $("#option-" + checkName).prop("checked", false);
                     $('#li-' + checkName).removeClass('add-background');
-                    $('#li-' + checkName).removeClass('selected');
+                }else if(actionFrom == null){ // image box click when checkbox unchecked
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }else {
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }
                 }
-            }else{ // click on unselected image checkbox
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }else {
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }
-            }
-        }else{
-            if(actionFrom == 'del') {
-                $("#option-" + checkName).prop("checked", false);
-                $('#li-' + checkName).removeClass('add-background');
-            }else if(actionFrom == null){ // image box click when checkbox unchecked
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }else {
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
+                else { // checkbox unchecked click
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                    } else {
+                        $('#li-' + checkName).removeClass('add-background');
+                        $('#li-' + checkName).removeClass('selected');
+                    }
                 }
             }
-            else { // checkbox unchecked click
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                } else {
-                    $('#li-' + checkName).removeClass('add-background');
-                    $('#li-' + checkName).removeClass('selected');
-                }
-            }
-        }
 
-        var $insert_btn = $("#insert-btn").hide();
-        $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
-    }
+            var $insert_btn = $("#insert-btn").hide();
+            $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+        }
 
 </script>
 <style>

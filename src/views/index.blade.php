@@ -2,15 +2,20 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>File Manager - S3 Integrated</title>
+
+    <title>File Manager - S3 Integrated </title>
+
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/filemanager-custom.css?v=1.2">
+
 </head>
+
 <body>
 
 <!-- Navigation -->
@@ -38,10 +43,12 @@
         <div class="col-lg-12 mt-5">
             <div class="col-xs-6 ol-sm-3">
                 <a href="javascript:;" id="image-upload" class="btn btn-primary"
-                   name="upload">Upload</a>
+               name="upload">Upload</a>
             </div>
             <div class="col-xs-6 ol-sm-9">
-                <input type="text" class="form-control" name="new_images" id="images" value="{{old('new_images')}}" readonly>
+                <input type="text" class="form-control" name="new_images" id="images"
+                   value="{{old('new_images')}}"
+                   readonly>
             </div>
         </div>
     </div>
@@ -49,6 +56,7 @@
 </div>
 
 <!-- Bootstrap core JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
     $('#image-upload').on('click', function () {
         $('#fileManagerModal').modal('toggle');

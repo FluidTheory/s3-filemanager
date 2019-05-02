@@ -85,7 +85,7 @@
 /** Loader style **/
 #loader {
     position: absolute;
-    left: 46%;
+    left: 50%;
     top: 50%;
     z-index: 1;
     margin: -20px 0 0 10px;
