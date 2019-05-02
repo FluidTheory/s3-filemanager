@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="128" column="32" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
+            <state relative-caret-position="136">
+              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
               <folding>
                 <element signature="e#60#96#0#PHP" expanded="true" />
               </folding>
@@ -38,9 +38,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/composer.json">
-          <provider selected="true" editor-type-id="text-editor" />
+      <file leaf-file-name="composer.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="FileManagerServiceProvider.php" pinned="false" current-in-tab="false">
@@ -77,6 +81,7 @@
         <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
         <option value="$PROJECT_DIR$/src/FileManagerServiceProvider.php" />
         <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
+        <option value="$PROJECT_DIR$/src/composer.json" />
       </list>
     </option>
   </component>
@@ -106,24 +111,6 @@
             <path>
               <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
               <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -178,7 +165,7 @@
       <workItem from="1556169889967" duration="1111000" />
       <workItem from="1556175454546" duration="1770000" />
       <workItem from="1556180629559" duration="1287000" />
-      <workItem from="1556800626040" duration="5213000" />
+      <workItem from="1556800626040" duration="7362000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit.">
       <created>1554788173853</created>
@@ -355,11 +342,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556809305982</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="File Manager Update">
+      <created>1556810322194</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1556810322194</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72146000" />
+    <option name="totallyTimeSpent" value="74295000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
@@ -748,9 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/composer.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FileManagerServiceProvider.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -760,11 +751,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="128" column="32" selection-start-line="128" selection-start-column="32" selection-end-line="128" selection-end-column="32" />
+        <state relative-caret-position="136">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
           <folding>
             <element signature="e#60#96#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
