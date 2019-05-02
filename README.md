@@ -1,8 +1,8 @@
-# Laravel S3-filemanager
+# Laravel Filemanager
 
 File Manager with S3 Intrgration and integrate with Trumbowyg Editor
 
-## Steps to Integarte S3-File Manager
+## Steps to Integarte File Manager with S3 Integration
 
 - Run following command to install package: 
 ```php
