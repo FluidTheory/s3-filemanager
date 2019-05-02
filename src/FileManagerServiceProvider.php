@@ -29,7 +29,6 @@ class FileManagerServiceProvider extends ServiceProvider{
         ]);
     }
 
-
     public function register()
     {
 
