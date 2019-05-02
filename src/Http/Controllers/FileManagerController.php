@@ -52,7 +52,6 @@ class FileManagerController extends Controller
     public function upload(Request $request)
     {
         $data = $request->all();
-
         $width = 0;
         $height = 0;
         $image_array = array();
