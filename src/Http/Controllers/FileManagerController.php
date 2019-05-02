@@ -3,7 +3,6 @@
 namespace Fluidtheory\Filemanager\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use Fluidtheory\Filemanager\Models\Asset;
 use Illuminate\Http\Request;
 use Auth;
@@ -16,7 +15,6 @@ class FileManagerController extends Controller
 {
     public function index()
     {
-
         $path = $_GET;
         $files = [];
         $client_id = $path['path'];
