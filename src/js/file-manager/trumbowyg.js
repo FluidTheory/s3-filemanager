@@ -1312,8 +1312,11 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
         },
         insertImage: function () {
             var client_id = $('#folder-id').val();
-            getS3Images(client_id);
-            $('#fileManagerModal').attr('current', '.trumbowyg-editor').modal('toggle');
+            var multiple = false;
+            $('#file_manager').attr('data-type','image');
+            $('#fileManagerModal').attr('current', '.trumbowyg-editor');
+
+            getS3Images(client_id,multiple);
             var t = this;
             t.saveRange();
 
