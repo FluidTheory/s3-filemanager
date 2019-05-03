@@ -18,7 +18,7 @@ class FileManagerController extends Controller
         $path = $_GET;
         $files = [];
         $client_id = $path['path'];
-        $images = Asset::where('client_id', $client_id)->get();
+        $images = Asset::where('client_id', $client_id)->where('deleted_at',null)->get();
 
         foreach ($images as $key => $value) {
             $dt = $value['updated_at'];
