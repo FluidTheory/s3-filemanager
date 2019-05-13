@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Auth;
 use File;
 use Illuminate\Support\Facades\Storage;
-use Session;
+use Illuminate\Support\Facades\Session;
 use DB;
 
 class FileManagerController extends Controller
@@ -17,10 +17,16 @@ class FileManagerController extends Controller
     {
         $path = $_GET;
         $files = [];
+        $last_id = 0;
+        $multiple = 'false';
+        $image_ids = array();
         $client_id = $path['path'];
-        $images = Asset::where('client_id', $client_id)->where('deleted_at',null)->get();
+        $images = Asset::where('client_id', $client_id)->where('deleted_at',null)->orderBy('id', 'DESC')->get();
 
         foreach ($images as $key => $value) {
+            if($key == 0){
+                $last_id = $value['id'];
+            }
             $dt = $value['updated_at'];
             $name = $value['name'];
 
@@ -40,12 +46,18 @@ class FileManagerController extends Controller
         {
             $modified[$key] = $value['modified'];
         }
-        array_multisort($modified, SORT_DESC, $files);
         $final = [
             'files' => $files
         ];
 
-        return view('filemanager::file-manager.index')->with(array('final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
+        if(isset($path['ids'])){
+            $image_ids = explode(',',$path['ids']);
+        }
+        if(isset($path['multiple'])){
+            $multiple = $path['multiple'];
+        }
+
+        return view('filemanager::file-manager.index')->with(array('multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }
 
@@ -54,13 +66,15 @@ class FileManagerController extends Controller
         $data = $request->all();
         $width = 0;
         $height = 0;
+        $multiSelect = $data['multi-select'];
+
         $image_array = array();
         if ($request->hasFile('file')) {
             $files = $request->file('file');
 
             foreach ($files as $file) {
                 $name = $file->getClientOriginalName();
-                $name = str_replace(" ","-",$name);
+                $name = str_replace(array(" ",".","(",")"),"-",$name);
 
                 $arr = explode('.',$name);
                 $ext = end($arr);
@@ -97,11 +111,11 @@ class FileManagerController extends Controller
                 $filePath = $image . '/' . $name;
                 $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-                $image_array[] = $name;
+                $image_array[] = $image;
             }
-
+            $ids = implode(',',$image_array);
             if ($results) {
-                return redirect()->back()->with('flash', 'success')->with('message', 'Image uploaded successfully')->with('image_name', $image_array);
+                return redirect('/filemanager?path='.$data['path'].'&ids='.$ids.'&multiple='.$multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
             } else {
                 return redirect()->back()->with('flash', 'danger')->with('error', 'Image not uploaded.');
             }

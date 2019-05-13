@@ -12,11 +12,8 @@
 </head>
 <body>
 <div class="messages"></div>
-<?php $image_name = []; ?>
 @if(Session::has('message'))
-    <?php
-        $image_name = Session::get('image_name');
-    ?>
+
     <div class="response-message">{{Session::get('message')}}</div>
 @elseif(Session::has('error'))
     <div class="response-message"> {{Session::get('error')}}</div>
@@ -32,7 +29,8 @@
 
             <input type="hidden" class="path" name="path" value="{{@$path}}">
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
-            <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif,video/mp4,application/pdf" id="file" multiple>
+            <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
+            <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif,video/mp4,application/pdf" id="file-input" multiple>
             <span onclick="openDialog()">
                 <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
                     Upload
@@ -69,15 +67,22 @@
     </div>
     <ul class="data">
         <ul class="data animated img-gallery">
-
             @foreach($final['files'] as $k)
                 <?php
                     $checked = '';
                     $li_class = '';
-                    $db_image = str_replace(array(" ",".","(",")"),"-",$k['name']);
-                    if(!empty($image_name) && in_array($db_image, $image_name)){
-                        $checked = 'checked';
-                        $li_class = 'add-background selected';
+                    $ids = $k['id'];
+                    if(!empty($image_ids) && in_array($ids, $image_ids)){
+                        if($multiple == 'true'){
+                            $checked = 'checked';
+                            $li_class = 'add-background selected';
+                        } else {
+                            if($count == 0){
+                                $checked = 'checked';
+                                $li_class = 'add-background selected';
+                            }
+                            $count++;
+                        }
                 ?>
                 <script>$("#insert-btn").show();</script>
                 <?php
@@ -139,7 +144,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function () {
-
         $('.delbtn').mousedown(function (event) {
             event.preventDefault();
             var type = $(this).data('name');
@@ -178,10 +182,29 @@
     });
 
     function openDialog() {
-        document.getElementById("file").click();
+        var type = parent.document.getElementById('file_manager').getAttribute('data-type');
+        if(type == 'image'){
+            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif');
+        }
+        else if(type == 'video'){
+            $('#file-input').attr('accept','video/mp4');
+        } else if(type == 'image-video'){
+            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif,video/mp4');
+        } else if(type == 'file'){
+            $('#file-input').attr('accept','application/pdf');
+        } else{
+            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif,video/mp4,application/pdf');
+        }
+        var multiSelect = parent.document.getElementById('file_manager').getAttribute('data-select');
+        if(multiSelect == 'true'){
+            $('#multi-select').val('true');
+        }else{
+            $('#multi-select').val('false');
+        }
+        document.getElementById("file-input").click();
     }
 
-    document.getElementById("file").onchange = function (e) {
+    document.getElementById("file-input").onchange = function (e) {
         var error = 0;
         $('#file').each(function (index) {
             var get_size = this.files[index].size;

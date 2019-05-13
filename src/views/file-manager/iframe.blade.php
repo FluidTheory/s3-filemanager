@@ -9,8 +9,9 @@
     </div>
     <div class="modal-body">
         <div id="loader"></div>
-        <iframe src="" id="file_manager" data-type="" data-select="" style="width: 100%;height: 100%" ></iframe>
+        <iframe src="" id="file_manager" name="iframe" data-type="" data-select="" style="width: 100%;height: 100%" ></iframe>
         <div id="err_message" class="text-center"></div>
+        <input type="hidden" id="selected-ids"  value="">
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-lg btn-theme-color waves-effect" data-dismiss="modal" aria-hidden="true" style="float: right;">Cancel</button>
@@ -27,7 +28,8 @@
         var multiple = $(this).data('multiple');
         var type = $(this).attr('data-type');
         $('#file_manager').attr('data-type',type);
-        var current = $(this).parent().find('.fm-image').attr('data-ids');
+        $('#file_manager').attr('data-select',multiple);
+        var current = $(this).parent().find('.image-ids').val();
         getS3Images(client_id,multiple,current,type);
     });
     function getS3Images(client_id,multiple,current,type) {
@@ -90,6 +92,7 @@
                 }
             }
         }
+
         var iframe = $('#file_manager').contents();
         if(type == 'image'){
             iframe.find(".checkb-video").attr("disabled", true);
@@ -111,28 +114,30 @@
     $('#file_manager').on('load', function () {
         var iframe = $('#file_manager').contents();
         iframe.find("#mySelected").click(function () {
-            var type = $('#file_manager').attr("data-type");
             let current = $('#fileManagerModal').attr('current');
             var images = [];
             var ids = [];
             var size = [];
             var height = [];
             var width = [];
-
             iframe.find('ul.img-gallery li').each(function () {
                 if ($(this).hasClass('selected')) {
+                    var type = $(this).attr("type");
                     var src = $(this).find('img').attr('src');
                     var client_id = $('#folder-id').val();
-                    if(type == 'image'){
+                    if(type == 'image' ){
                         images.push($(this).find('img').data('value'));
                         height.push($(this).find('img')[0].naturalHeight);
                         width.push($(this).find('img')[0].naturalWidth);
+                        ids.push($(this).find('img').data('id'));
+                        size.push($(this).find('img').data('size'));
                     }
                     if(type == 'video'){
                         images.push($(this).find('video').data('value'));
+                        ids.push($(this).find('video').data('id'));
+                        size.push($(this).find('video').data('size'));
                     }
-                    ids.push($(this).find('img').data('id'));
-                    size.push($(this).find('img').data('size'));
+
 
                 }
             });
@@ -155,7 +160,8 @@
                 @endif
                 $('.s3-upload').each(function() {
                     if($(this).attr('data-click') == 'set'){
-                        $(this).parent().find('.fm-image').val(images).attr('data-ids',ids);
+                        $(this).parent().find('.fm-image').val(images);
+                        $(this).parent().find('.image-ids').val(ids);
                     }
                 });
             }
