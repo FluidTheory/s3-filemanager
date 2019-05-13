@@ -67,6 +67,7 @@
     </div>
     <ul class="data">
         <ul class="data animated img-gallery">
+            <?php $count = 0; ?>
             @foreach($final['files'] as $k)
                 <?php
                     $checked = '';
