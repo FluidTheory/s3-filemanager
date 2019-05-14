@@ -32,6 +32,10 @@
         var current = $(this).parent().find('.image-ids').val();
         getS3Images(client_id,multiple,current,type);
     });
+    $(document).on('click','.clear-file', function () {
+        $(this).parent().find('.fm-image').val('');
+        $(this).parent().find('.image-ids').val('');
+    });
     function getS3Images(client_id,multiple,current,type) {
         if(client_id === undefined || client_id === ''){
             client_id = null;

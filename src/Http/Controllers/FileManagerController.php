@@ -73,8 +73,10 @@ class FileManagerController extends Controller
             $files = $request->file('file');
 
             foreach ($files as $file) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $file);
                 $name = $file->getClientOriginalName();
-                $name = str_replace(array(" ",".","(",")"),"-",$name);
+                $name = str_replace(" ","-",$name);
 
                 $arr = explode('.',$name);
                 $ext = end($arr);
@@ -89,6 +91,7 @@ class FileManagerController extends Controller
                     $height = $param[1];
                     $type = 'image';
                 }
+
                 $size = floor(filesize($file)/1024);
 
                 if($size > 10240){
@@ -102,6 +105,7 @@ class FileManagerController extends Controller
                     'height' => $height,
                     'size' => $size,
                     'type' => $type,
+                    'mime_type' => $mimeType,
                     'created_at' => gmdate("Y-m-d H:i:s")
                 ));
 

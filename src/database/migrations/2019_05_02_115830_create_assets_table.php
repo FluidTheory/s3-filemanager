@@ -19,6 +19,7 @@ class CreateAssetsTable extends Migration
             $table->string('name');
             $table->string('size');
             $table->string('type');
+            $table->string('mime_type');
             $table->string('height');
             $table->string('width');
             $table->string('alt');
