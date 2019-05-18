@@ -21,7 +21,7 @@ class FileManagerController extends Controller
         $multiple = 'false';
         $image_ids = array();
         $client_id = $path['path'];
-        $images = Asset::where('client_id', $client_id)->where('deleted_at',null)->orderBy('id', 'DESC')->get();
+        $images = Asset::where('client_id', $client_id)->where('deleted_at',null)->orderBy('id', 'DESC')->limit(20)->get();
 
         foreach ($images as $key => $value) {
             if($key == 0){
@@ -59,6 +59,31 @@ class FileManagerController extends Controller
 
         return view('filemanager::file-manager.index')->with(array('multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
+    }
+
+    public function fetchImages(Request $request){
+        $data = $request->all();
+        $files = [];
+        $image_ids = array();
+        $images = Asset::where('client_id', $data['id'])->where('deleted_at',null)->orderBy('id', 'DESC')->offset($data['start'])->limit($data['limit'])->get();
+
+        foreach ($images as $key => $value) {
+            $dt = $value['updated_at'];
+            $name = $value['name'];
+
+            $imgSize = $value['size'];
+            $files[] = [
+                'id' => $value['id'],
+                'type' => $value['type'],
+                'name' => $name,
+                'modified' => $dt,
+                'size' => $imgSize,
+                'src' => env('AWS_URL').$value['id'].'/'.$name
+            ];
+        }
+        return $files;
+//        echo "<pre>";
+//        print_r(json_encode($files)); die;
     }
 
     public function upload(Request $request)

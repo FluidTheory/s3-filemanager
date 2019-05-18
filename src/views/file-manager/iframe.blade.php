@@ -4,9 +4,6 @@
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
      aria-hidden="true">
-    <div class="modal-header">
-        <h3 id="fileManagerModalLabel">File Manager</h3>
-    </div>
     <div class="modal-body">
         <div id="loader"></div>
         <iframe src="" id="file_manager" name="iframe" data-type="" data-select="" style="width: 100%;height: 100%" ></iframe>
@@ -14,7 +11,7 @@
         <input type="hidden" id="selected-ids"  value="">
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-lg btn-theme-color waves-effect" data-dismiss="modal" aria-hidden="true" style="float: right;">Cancel</button>
+        <button type="button" class="btn btn-lg btn-theme-color waves-effect" id="fm_cancel" data-dismiss="modal" aria-hidden="true" style="float: right;">Cancel</button>
     </div>
 </div>
 <input type="hidden" id="multiple-img" value="">
@@ -58,6 +55,7 @@
                 $('#file_manager').attr('src', url);
             }else{
                 var iframe = $('#file_manager').contents();
+
                 if(multiple == false) {
                     $('#multiple-img').val('false');
                     if(current == '') {
@@ -136,6 +134,11 @@
                         ids.push($(this).find('img').data('id'));
                         size.push($(this).find('img').data('size'));
                     }
+                    if(type == 'pdf' ){
+                        images.push($(this).find('img').data('value'));
+                        ids.push($(this).find('img').data('id'));
+                        size.push($(this).find('img').data('size'));
+                    }
                     if(type == 'video'){
                         images.push($(this).find('video').data('value'));
                         ids.push($(this).find('video').data('id'));
@@ -155,7 +158,6 @@
                 @if(!empty($validateSize))
                 if(width >= 640 && height <= 1920){
                     $('#image-upload').val(images);
-                    $('#image-ids').val(ids);
                     $('form#img-upload').submit();
                 } else{
                     alert("Please upload a bigger image.");

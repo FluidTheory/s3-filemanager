@@ -29,9 +29,9 @@ body {
 
 .filemanager {
     width: 95%;
-    max-width:1340px;
     position: relative;
     margin: 10px auto 50px; /*** Vrushabh 25/12/18 ***/
+    margin-top: 7%;
 }
 
 @media all and (max-width: 965px) {
@@ -170,7 +170,7 @@ body {
     width: 307px;
     height: 118px;
     list-style-type: none;
-    margin: 10px;
+    margin: 5px;
     display: inline-block;
     position: relative;
     overflow: hidden;

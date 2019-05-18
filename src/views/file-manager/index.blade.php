@@ -11,15 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<div class="messages"></div>
-@if(Session::has('message'))
-
-    <div class="response-message">{{Session::get('message')}}</div>
-@elseif(Session::has('error'))
-    <div class="response-message"> {{Session::get('error')}}</div>
-@endif
-<div class="filemanager">
-    <div style="padding-right: 2.3em;">
+<div id="fm_header">
+    <div class="inside-data">
         <span id="mySelected">
             <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" style="display: none;">
                 Insert
@@ -32,92 +25,105 @@
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
             <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif,video/mp4,application/pdf" id="file-input" multiple>
             <span onclick="openDialog()">
-                <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
-                    Upload
-                </button>
-            </span>
+                    <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
+                        Upload
+                    </button>
+                </span>
         </form>
     </div>
+</div>
+<div class="messages"></div>
+@if(Session::has('message'))
+
+    <div class="response-message">{{Session::get('message')}}</div>
+@elseif(Session::has('error'))
+    <div class="response-message"> {{Session::get('error')}}</div>
+@endif
+<div class="filemanager">
     <div class="breadcrumbs">
         <?php
-        $tokens = explode('/', $path);
-        $lastToken = array_pop($tokens);
-        $path = [];
-        ?>
+            $tokens = explode('/', $path);
+            $lastToken = array_pop($tokens);
+            $path = [];
+         ?>
         @foreach($tokens as $k)
             <?php $path[] = $k; $current = implode('/', $path); ?>
-            <a href="/filemanager?path={{$current}}">
-                @if($path[0] == $current)
-                    <span class="folderName">
+                <a href="/filemanager?path={{$current}}">
+                    @if($path[0] == $current)
+                        <span class="folderName">
                             <i class="fas fa-home"></i>
                         </span>
-                @else
-                    <span class="folderName">
+                    @else
+                        <span class="folderName">
                             {!! $k !!}
                         </span>
-                @endif
-            </a>
-            <span class="arrow">→</span>
+                    @endif
+                </a>
+                <span class="arrow">→</span>
 
         @endforeach
-        @if(!empty($tokens))
-            <span class="folderName">{!! $lastToken !!}</span>
-        @endif
+            @if(!empty($tokens))
+                <span class="folderName">{!! $lastToken !!}</span>
+            @endif
         <span class="folderName"></span>
     </div>
     <ul class="data">
-        <ul class="data animated img-gallery">
+        <ul id="load_data" class="data animated img-gallery">
             <?php $count = 0; ?>
             @foreach($final['files'] as $k)
                 <?php
-                $checked = '';
-                $li_class = '';
-                $ids = $k['id'];
-                if(!empty($image_ids) && in_array($ids, $image_ids)){
-                if($multiple == 'true'){
-                    $checked = 'checked';
-                    $li_class = 'add-background selected';
-                } else {
-                    if($count == 0){
-                        $checked = 'checked';
-                        $li_class = 'add-background selected';
-                    }
-                    $count++;
-                }
+                    $checked = '';
+                    $li_class = '';
+                    $ids = $k['id'];
+                    if(!empty($image_ids) && in_array($ids, $image_ids)){
+                        if($multiple == 'true'){
+                            $checked = 'checked';
+                            $li_class = 'add-background selected';
+                        } else {
+                            if($count == 0){
+                                $checked = 'checked';
+                                $li_class = 'add-background selected';
+                            }
+                            $count++;
+                        }
                 ?>
                 <script>$("#insert-btn").show();</script>
                 <?php
-                }
+                    }
                 ?>
                 <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" type="{{$k['type']}}" id="li-{!! $k['id'] !!}" onclick="show_border('{!! $k['id'] !!}',this.type)">
                     <span class="image">
                         @if($k['type'] == 'image' || $k['type'] == 'pdf')
                             <img class="img-select" id="img-select" src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
-                                 data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" style="width: 300px; height: 130px; object-fit: cover;">
+                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight">
                         @endif
 
                         @if($k['type'] == 'video')
                             <video class="img-select" id="img-select"
-                                   data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" style="width: 300px; height: 130px; object-fit: cover;">
+                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" >
                                 <source src="{{$k['src']}}" type="video/mp4">
                             </video>
                         @endif
                     </span>
-                    <div id="outer-{!! $k['id'] !!}" class="outer-div" style="display: none;">
+                    <div id="outer-{!! $k['id'] !!}" class="outer-div">
                         <span class="inputGroup">
                             <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}" id="option-{!! $k['id'] !!}" name="option{!! $k['id'] !!}" onchange="show_border('{!! $k['id'] !!}',this, 'box')" type="checkbox" disabled/>
                             <label for="option-{!! $k['name'] !!}"></label>
                         </span>
                         <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
-                        <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
-                        <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-name="file" onclick="show_border('{!! $k['id'] !!}',this,'del')">
+                        <div class="box-bottom">
+                            <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
+                            <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-name="file" onclick="show_border('{!! $k['id'] !!}',this,'del')">
                             <i class="fas fa-trash del-icon"></i>
                         </span>
+                        </div>
                     </div>
                 </li>
             @endforeach
         </ul>
     </ul>
+    <div id="load_data_message"></div>
+    <div class="loader" style="display: none"></div>
     <div class="nothingfound">
         <div class="nofiles"></div>
         <span>No files here.</span>
@@ -145,6 +151,71 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        // load images
+        var limit = 20;
+        var start = 1;
+        var action = 'inactive';
+
+        function load_images(limit, start,id)
+        {
+            $.ajax({
+                url:"fetch",
+                method:"POST",
+                data:{limit:limit, start:start, id:id},
+                cache:false,
+                success:function(response)
+                {
+                    var data = '';
+                    $.each(response, function () {
+                        data += '<li class="image-li check-'+this.id+'" type="'+this.type+'" id="li-'+this.id+'" onclick="show_border('+this.id+','+this.type+')">';
+                        data += '<span class="image">';
+                        if(this.type == 'image' || this.type == 'pdf'){
+                            data += '<img class="img-select" id="img-select" src="'+(this.type == "pdf" ? "images/pdf-icon.png" : this.src)+'"data-value="'+this.name+'" data-id="'+this.id+'" data-size="'+this.size+'" value="'+this.naturalHeight+'">';
+                        }
+                        if(this.type == 'video'){
+                            data += '<video class="img-select" id="img-select" data-value="'+this.name+'" data-id="'+this.id+'" data-size="'+this.size+'" value="'+this.naturalHeight+'" ><source src="'+this.src+'" type="video/mp4"></video>';
+                        }
+                        data += '</span>';
+                        data += '<div id="outer-'+this.id+'" class="outer-div">';
+                        data += '<span class="inputGroup">';
+                        data += '<input class="check-input check-'+this.id+' '+(this.type == "image" ? "checkb-image" : "checkb-video")+'" id="option-'+this.id+'" name="option'+this.id+'" onchange="show_border('+this.id+','+this+', "box")" type="checkbox" disabled/>';
+                        data += '</span>';
+                        data += '<span class="name" value="'+this.name+'">'+this.name+'</span>';
+                        data += '<div class="box-bottom">';
+                        data += '<span class="image-size" value="'+this.size+'">'+this.size+' KB</span><span class="delbtn" data-value="'+this.name+'" data-id="'+this.id+'" data-name="file" onclick="show_border('+ this.id+',this, "del")"> <i class="fas fa-trash del-icon"></i>';
+                        data += '</span>';
+                        data += '</div>';
+                        data += '</li>';
+                    });
+                    $('#load_data').append(data);
+                    if(data == '')
+                    {
+                        $('.loader').fadeOut();
+                        action = 'active';
+                    }
+                    else
+                    {
+                        $('.loader').fadeOut();
+                        action = "inactive";
+                    }
+                }
+            });
+        }
+
+        $(window).scroll(function(){
+            if($(window).scrollTop() + $(window).height() > $("#load_data").height() && action == 'inactive')
+            {
+                $('.loader').show();
+                action = 'active';
+                start = start + limit;
+                var id = parent.document.getElementById('folder-id').value;
+                setTimeout(function(){
+                    load_images(limit, start,id);
+                }, 1000);
+            }
+        });
+
         $('.delbtn').mousedown(function (event) {
             event.preventDefault();
             var type = $(this).data('name');
@@ -241,93 +312,122 @@
             modal.style.display = "none";
         }
     }
-    <?php foreach($final['files'] as $k){ ?>
-    $("#li-{!! $k['id'] !!}").mouseover(function(){
-        $("#outer-{!! $k['id'] !!}").show();
-    });
-
-    $("#li-{!! $k['id'] !!}").mouseleave(function(){
-        $("#outer-{!! $k['id'] !!}").hide();
-    });
-    <?php } ?>
 
 
-    function show_border(checkName,current, actionFrom = null){
-        var type = window.frameElement.getAttribute("data-type");
-        if(type == 'all'){ // For all Files
+        function show_border(checkName,current, actionFrom = null){
+            var type = window.frameElement.getAttribute("data-type");
+            if(type == 'all'){ // For all Files
 
-        } else if(type == 'image-video') { // For Image and video
-            if(current == 'image' || current == 'video') {
+            } else if(type == 'image-video') { // For Image and video
+                if(current == 'image' || current == 'video') {
 
-            } else {
-                alert('You can select Image/Video  file only !!');
-                return false;
+                } else {
+                    alert('You can select Image/Video  file only !!');
+                    return false;
+                }
+            }else if(current != type){
+                    alert('You can select '+type+' file only !!');
+                    return false;
             }
-        }else if(current != type){
-            alert('You can select '+type+' file only !!');
-            return false;
-        }
-        var multiple = parent.document.getElementById('multiple-img').value;
-        if ($("#option-"+checkName).prop("checked") == true) {
-            if(actionFrom == null) { // click on selected image box
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                } else{
+            var multiple = parent.document.getElementById('multiple-img').value;
+            if ($("#option-"+checkName).prop("checked") == true) {
+                if(actionFrom == null) { // click on selected image box
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                    } else{
+                        $("#option-" + checkName).prop("checked", false);
+                        $('#li-' + checkName).removeClass('add-background');
+                        $('#li-' + checkName).removeClass('selected');
+                    }
+                }else{ // click on unselected image checkbox
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }else {
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }
+                }
+            }else{
+                if(actionFrom == 'del') {
                     $("#option-" + checkName).prop("checked", false);
                     $('#li-' + checkName).removeClass('add-background');
-                    $('#li-' + checkName).removeClass('selected');
+                }else if(actionFrom == null){ // image box click when checkbox unchecked
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }else {
+                        $("#option-" + checkName).prop("checked", true);
+                        $('#li-' + checkName).addClass('add-background');
+                        $('#li-' + checkName).addClass('selected');
+                    }
                 }
-            }else{ // click on unselected image checkbox
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }else {
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }
-            }
-        }else{
-            if(actionFrom == 'del') {
-                $("#option-" + checkName).prop("checked", false);
-                $('#li-' + checkName).removeClass('add-background');
-            }else if(actionFrom == null){ // image box click when checkbox unchecked
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
-                }else {
-                    $("#option-" + checkName).prop("checked", true);
-                    $('#li-' + checkName).addClass('add-background');
-                    $('#li-' + checkName).addClass('selected');
+                else { // checkbox unchecked click
+                    if (multiple === 'false') {
+                        $(".check-input").prop("checked", false);
+                        $('li.image-li').removeClass('add-background');
+                        $('li.image-li').removeClass('selected');
+                    } else {
+                        $('#li-' + checkName).removeClass('add-background');
+                        $('#li-' + checkName).removeClass('selected');
+                    }
                 }
             }
-            else { // checkbox unchecked click
-                if (multiple === 'false') {
-                    $(".check-input").prop("checked", false);
-                    $('li.image-li').removeClass('add-background');
-                    $('li.image-li').removeClass('selected');
-                } else {
-                    $('#li-' + checkName).removeClass('add-background');
-                    $('#li-' + checkName).removeClass('selected');
-                }
+            var count = $('li.image-li.selected').length;
+            if(count > 0){
+                $('#insert-btn').text('Insert ('+ count +')');
+                // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
             }
+            var $insert_btn = $("#insert-btn").hide();
+            $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
         }
-
-        var $insert_btn = $("#insert-btn").hide();
-        $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
-    }
 
 </script>
 <style>
+    body {
+        background-color: transparent;
+    }
+    #fm_header{
+        padding-right: 2.3em;
+        position: fixed;
+        width: 100%;
+        height: 60px;
+        margin: 0px !important;
+        background-color: #38a7de;
+        top: 0px;
+        padding-top: 20px;
+        z-index: 1000;
+    }
+    .inside-data{
+        width: 95%;
+    }
+    .filemanager .data li {
+        border-radius: 10px;
+        background-color: #373743;
+        border: 1px solid #373743;
+        width: 19%;
+        height: 200px !important;
+    }
+    .img-gallery{
+        text-align: center;
+    }
+    .img-gallery img.img-select{
+        transform: translate(-50%, -50%);
+        max-width: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
     .image-li:hover .image{
         opacity: 0.35;
     }
@@ -350,6 +450,7 @@
         position: absolute;
         right: 4px;
         top: 5px;
+        opacity: 0;
     }
     .inputGroup label {
         padding: 12px 30px;
@@ -378,14 +479,14 @@
     }
 
     .inputGroup label:after {
-        width: 15px;
-        height: 15px;
+        width: 16px;
+        height: 16px;
         content: '';
         border: 2px solid #ccc;
         background-color: #ccc;
-        background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+        background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
         background-repeat: no-repeat;
-        background-position: -2px -3px;
+        background-position: -1px 0px;
         border-radius: 50%;
         z-index: 2;
         position: absolute;
@@ -420,14 +521,66 @@
     }
 
     .outer-div{
-        width: 300px;
-        height: 134px;
+        width: 95%;
+        height: 200px;
         position: absolute;
         top: 0px;
     }
 
+    .box-bottom{
+        opacity: 0;
+        -webkit-box-align: center;
+        align-items: center;
+        z-index: 1;
+        bottom: 10px;
+        left: 5px;
+        position: absolute;
+        width: 100%;
+        transform: translateY(35px);
+        transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+    }
+    .outer-div .name{
+        opacity: 0;
+    }
+    .filemanager .data li:hover > .outer-div .box-bottom{
+        opacity: 1;
+        transform: translateY(0px);
+        transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+    }
+    .filemanager .data li:hover > .outer-div .name, .filemanager .data li:hover > .outer-div .inputGroup{
+        opacity: 1;
+    }
+    li.selected .inputGroup{
+        opacity: 1;
+    }
+    .filemanager-btn:hover {
+        background-color: #212529 !important;
+        color: #ffffff !important;
+    }
     .add-background{
         border: 2px solid #2684FF !important;
+    }
+    .loader {
+        position: absolute;
+        left: 49%;
+        border: 12px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 12px solid #3498db;
+        width: 30px;
+        height: 30px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 </style>
 </body>

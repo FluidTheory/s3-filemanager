@@ -49,3 +49,13 @@ button.btn-theme-color {
     color: #FFF;
     margin-top: 20px;
 }
+#fm_cancel{
+    color: rgb(80, 95, 121);
+    margin-top: 20px;
+    background: transparent;
+}
+#fm_cancel:hover{
+    color: #212529;
+    text-decoration: none;
+    background: #80808040;
+}
