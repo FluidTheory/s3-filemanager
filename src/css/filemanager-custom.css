@@ -59,3 +59,6 @@ button.btn-theme-color {
     text-decoration: none;
     background: #80808040;
 }
+iframe#file_manager {
+    border: none;
+}
