@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>File Manager</title>
     <!-- Include our stylesheet -->
-    <link href="/css/filemanager/styles.css?v=3.1" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=3" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -34,6 +34,7 @@
 </div>
 <div class="messages"></div>
 @if(Session::has('message'))
+
     <div class="response-message">{{Session::get('message')}}</div>
 @elseif(Session::has('error'))
     <div class="response-message"> {{Session::get('error')}}</div>
@@ -410,7 +411,6 @@
         background-color: transparent;
     }
     #fm_header{
-        padding-right: 2.3em;
         position: fixed;
         width: 100%;
         height: 60px;
@@ -419,9 +419,6 @@
         top: 0px;
         padding-top: 20px;
         z-index: 1000;
-    }
-    .inside-data{
-        width: 95%;
     }
     .filemanager .data li {
         border-radius: 10px;
