@@ -82,8 +82,6 @@ class FileManagerController extends Controller
             ];
         }
         return $files;
-//        echo "<pre>";
-//        print_r(json_encode($files)); die;
     }
 
     public function upload(Request $request)

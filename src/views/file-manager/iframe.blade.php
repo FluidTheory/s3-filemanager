@@ -19,7 +19,7 @@
 
 <script>
     $(document).on('click','.s3-upload',function () {
-        $('.s3-upload').attr('data-click','');
+        $(this).attr('data-click','');
         $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
         var multiple = $(this).data('multiple');
@@ -96,6 +96,12 @@
         }
 
         var iframe = $('#file_manager').contents();
+        if(current == ''){
+            iframe.find('#insert-btn').text('Insert');
+        }else{
+            var elements = current.split(',');
+            iframe.find('#insert-btn').text('Insert ('+elements.length+')');
+        }
         if(type == 'image'){
             iframe.find(".checkb-video").attr("disabled", true);
         }
@@ -124,7 +130,7 @@
             var width = [];
             iframe.find('ul.img-gallery li').each(function () {
                 if ($(this).hasClass('selected')) {
-                    var type = $(this).attr("type");
+                    var type = $(this).attr("data-type");
                     var src = $(this).find('img').attr('src');
                     var client_id = $('#folder-id').val();
                     if(type == 'image' ){

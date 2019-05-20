@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>File Manager</title>
     <!-- Include our stylesheet -->
-    <link href="/css/filemanager/styles.css?v=1.3" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=3" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -91,7 +91,7 @@
                 <?php
                     }
                 ?>
-                <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" type="{{$k['type']}}" id="li-{!! $k['id'] !!}" onclick="show_border('{!! $k['id'] !!}',this.type)">
+                <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" data-type="{{$k['type']}}" data-action="no" data-id="{!! $k['id'] !!}" id="li-{!! $k['id'] !!}">
                     <span class="image">
                         @if($k['type'] == 'image' || $k['type'] == 'pdf')
                             <img class="img-select" id="img-select" src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
@@ -107,13 +107,13 @@
                     </span>
                     <div id="outer-{!! $k['id'] !!}" class="outer-div">
                         <span class="inputGroup">
-                            <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}" id="option-{!! $k['id'] !!}" name="option{!! $k['id'] !!}" onchange="show_border('{!! $k['id'] !!}',this, 'box')" type="checkbox" disabled/>
+                            <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}" data-id="{!! $k['id'] !!}" data-type="{{$k['type']}}" data-action="box" id="option-{!! $k['id'] !!}" name="option{!! $k['id'] !!}" type="checkbox" disabled/>
                             <label for="option-{!! $k['name'] !!}"></label>
                         </span>
                         <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
                         <div class="box-bottom">
                             <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
-                            <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-name="file" onclick="show_border('{!! $k['id'] !!}',this,'del')">
+                            <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-type="{{$k['type']}}" data-action="del" data-name="file" >
                             <i class="fas fa-trash del-icon"></i>
                         </span>
                         </div>
@@ -168,7 +168,7 @@
                 {
                     var data = '';
                     $.each(response, function () {
-                        data += '<li class="image-li check-'+this.id+'" type="'+this.type+'" id="li-'+this.id+'" onclick="show_border('+this.id+','+this.type+')">';
+                        data += '<li class="image-li check-'+this.id+'" data-type="'+this.type+'" data-action="no" data-id="'+this.id+'" id="li-'+this.id+'">';
                         data += '<span class="image">';
                         if(this.type == 'image' || this.type == 'pdf'){
                             data += '<img class="img-select" id="img-select" src="'+(this.type == "pdf" ? "images/pdf-icon.png" : this.src)+'"data-value="'+this.name+'" data-id="'+this.id+'" data-size="'+this.size+'" value="'+this.naturalHeight+'">';
@@ -179,11 +179,12 @@
                         data += '</span>';
                         data += '<div id="outer-'+this.id+'" class="outer-div">';
                         data += '<span class="inputGroup">';
-                        data += '<input class="check-input check-'+this.id+' '+(this.type == "image" ? "checkb-image" : "checkb-video")+'" id="option-'+this.id+'" name="option'+this.id+'" onchange="show_border('+this.id+','+this+', "box")" type="checkbox" disabled/>';
+                        data += '<input class="check-input check-'+this.id+' '+(this.type == "image" ? "checkb-image" : "checkb-video")+'" id="option-'+this.id+'" data-id="'+this.id+'" data-type="'+this.type+'" data-action="box" name="option'+this.id+'" type="checkbox" disabled/>';
+                        data += '<label for="option-'+ this.name +'"></label>';
                         data += '</span>';
                         data += '<span class="name" value="'+this.name+'">'+this.name+'</span>';
                         data += '<div class="box-bottom">';
-                        data += '<span class="image-size" value="'+this.size+'">'+this.size+' KB</span><span class="delbtn" data-value="'+this.name+'" data-id="'+this.id+'" data-name="file" onclick="show_border('+ this.id+',this, "del")"> <i class="fas fa-trash del-icon"></i>';
+                        data += '<span class="image-size" value="'+this.size+'">'+this.size+' KB</span><span class="delbtn" data-value="'+this.name+'" data-id="'+this.id+'" data-type="'+this.type+'" data-action="del" data-name="file"> <i class="fas fa-trash del-icon"></i>';
                         data += '</span>';
                         data += '</div>';
                         data += '</li>';
@@ -252,6 +253,18 @@
             }
         });
     });
+
+    $(document).on('click','.image-li, .check-input, .delbtn', function () {
+        var type = $(this).data('type');
+        var id = $(this).data('id');
+        var action = $(this).data('action');
+        if(action == 'no'){
+            show_border(id,type);
+        } else{
+            show_border(id,type,action);
+        }
+    });
+
 
     function openDialog() {
         var type = parent.document.getElementById('file_manager').getAttribute('data-type');
@@ -418,9 +431,6 @@
         width: 19%;
         height: 200px !important;
     }
-    .img-gallery{
-        text-align: center;
-    }
     .img-gallery img.img-select{
         transform: translate(-50%, -50%);
         max-width: 100%;
@@ -514,8 +524,7 @@
         height: 32px;
         order: 1;
         z-index: 2;
-        position: absolute;
-        transform: translateY(-50%);
+        position: relative;
         cursor: pointer;
         visibility: hidden;
     }
