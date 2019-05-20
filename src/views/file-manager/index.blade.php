@@ -34,7 +34,6 @@
 </div>
 <div class="messages"></div>
 @if(Session::has('message'))
-
     <div class="response-message">{{Session::get('message')}}</div>
 @elseif(Session::has('error'))
     <div class="response-message"> {{Session::get('error')}}</div>
