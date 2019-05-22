@@ -164,7 +164,7 @@
 
                 @if(!empty($validateSize))
                 if(width >= 640 && height <= 1920){
-                    $('#image-ids').val(images);
+                    $('#image-ids').val(ids);
                     $('form#img-upload').submit();
                 } else{
                     alert("Please upload a bigger image.");
