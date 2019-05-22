@@ -1,5 +1,5 @@
 {{--css--}}
-<link rel="stylesheet" href="/css/filemanager.css?v=1.5">
+<link rel="stylesheet" href="/css/filemanager.css?v=1.6">
 
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
@@ -19,7 +19,7 @@
 
 <script>
     $(document).on('click','.s3-upload',function () {
-        $(this).attr('data-click','');
+        $('.s3-upload').attr('data-click','');
         $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
         var multiple = $(this).data('multiple');
@@ -33,7 +33,7 @@
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
     });
-    function getS3Images(client_id,multiple,current,type) {
+    function getS3Images(client_id,multiple,current = '',type = '') {
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
@@ -97,8 +97,9 @@
 
         var iframe = $('#file_manager').contents();
         if(current == ''){
-            iframe.find('#insert-btn').text('Insert');
+            iframe.find('#insert-btn').hide();
         }else{
+            iframe.find('#insert-btn').show();
             var elements = current.split(',');
             iframe.find('#insert-btn').text('Insert ('+elements.length+')');
         }
@@ -163,7 +164,7 @@
 
                 @if(!empty($validateSize))
                 if(width >= 640 && height <= 1920){
-                    $('#image-upload').val(images);
+                    $('#image-ids').val(images);
                     $('form#img-upload').submit();
                 } else{
                     alert("Please upload a bigger image.");
