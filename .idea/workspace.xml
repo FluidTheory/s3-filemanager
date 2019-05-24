@@ -15,17 +15,7 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="181" selection-start-line="181" selection-end-line="181" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -91,24 +81,6 @@
               <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
               <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="file-manager" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -169,7 +141,7 @@
       <workItem from="1557840386203" duration="5671000" />
       <workItem from="1558220893169" duration="12633000" />
       <workItem from="1558433468049" duration="5492000" />
-      <workItem from="1558682819547" duration="1802000" />
+      <workItem from="1558682819547" duration="2047000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit.">
       <created>1554788173853</created>
@@ -486,15 +458,21 @@
       <option name="project" value="LOCAL" />
       <updated>1558532823209</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="[NR-952] - File manager Package bug fixed">
+      <created>1558697359211</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1558697359211</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125740000" />
+    <option name="totallyTimeSpent" value="125985000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3009768" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -885,15 +863,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/file-manager/ui/icons.svg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
           <caret line="181" selection-start-line="181" selection-end-line="181" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/file-manager/ui/icons.svg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
   <component name="masterDetails">
