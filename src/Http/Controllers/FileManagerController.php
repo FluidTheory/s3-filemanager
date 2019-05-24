@@ -56,7 +56,6 @@ class FileManagerController extends Controller
         if(isset($path['multiple'])){
             $multiple = $path['multiple'];
         }
-
         return view('filemanager::file-manager.index')->with(array('multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }

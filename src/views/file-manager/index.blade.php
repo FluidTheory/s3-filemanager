@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>File Manager</title>
     <!-- Include our stylesheet -->
-    <link href="/css/filemanager/styles.css?v=3.3" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=3.4" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -13,11 +13,13 @@
 <body>
 <div id="fm_header">
     <div class="inside-data">
-        <span id="mySelected">
-            <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" style="display: none;">
-                Insert
-            </button>
-        </span>
+        @if(!empty($image_ids))
+            <span id="mySelected">
+                <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" style="display: none;">
+                    Insert ({{count($image_ids)}})
+                </button>
+            </span>
+        @endif
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
 
             <input type="hidden" class="path" name="path" value="{{@$path}}">
