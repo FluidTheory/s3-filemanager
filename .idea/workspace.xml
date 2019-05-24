@@ -94,13 +94,13 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/Http/Controllers" />
       <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -141,7 +141,7 @@
       <workItem from="1557840386203" duration="5671000" />
       <workItem from="1558220893169" duration="12633000" />
       <workItem from="1558433468049" duration="5492000" />
-      <workItem from="1558682819547" duration="2047000" />
+      <workItem from="1558682819547" duration="3679000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit.">
       <created>1554788173853</created>
@@ -469,10 +469,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125985000" />
+    <option name="totallyTimeSpent" value="127617000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3009768" />
       <window_info anchor="bottom" id="TODO" order="6" />

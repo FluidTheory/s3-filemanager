@@ -13,13 +13,11 @@
 <body>
 <div id="fm_header">
     <div class="inside-data">
-        @if(!empty($image_ids))
-            <span id="mySelected">
-                <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" style="display: none;">
-                    Insert ({{count($image_ids)}})
-                </button>
-            </span>
-        @endif
+        <span id="mySelected">
+            <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" {!! (!empty($image_ids) ? 'style="display : block;"' : 'style="display: none;"') !!}>
+                Insert ({!! (!empty($image_ids) ? count($image_ids) : '') !!})
+            </button>
+        </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
 
             <input type="hidden" class="path" name="path" value="{{@$path}}">
