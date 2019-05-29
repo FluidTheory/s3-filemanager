@@ -26,6 +26,7 @@
         var type = $(this).attr('data-type');
         $('#file_manager').attr('data-type',type);
         $('#file_manager').attr('data-select',multiple);
+        $('#fileManagerModal').attr('current','');
         var current = $(this).parent().find('.image-ids').val();
         getS3Images(client_id,multiple,current,type);
     });
@@ -155,7 +156,7 @@
 
                 }
             });
-            if(current == '.trumbowyg-editor') {
+            if(current == 'trumbowyg-editor') {
                 var client_id = $('#folder-id').val();
                 var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
                 $('input[name="url"]').val(img);
