@@ -1,12 +1,12 @@
 {{--css--}}
-<link rel="stylesheet" href="/css/filemanager.css?v=1.6">
+<link rel="stylesheet" href="/css/filemanager.css?v=1.7">
 
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
      aria-hidden="true">
     <div class="modal-body">
-        <div id="loader"></div>
-        <iframe src="" id="file_manager" name="iframe" data-type="" data-select="" style="width: 100%;height: 100%" ></iframe>
+        <div id="loader" class="db-spinner"></div>
+        <iframe src="" id="file_manager" class="overlay" name="iframe" data-type="" data-select="" style="width: 100%;height: 100%" ></iframe>
         <div id="err_message" class="text-center"></div>
         <input type="hidden" id="selected-ids"  value="">
     </div>
@@ -38,6 +38,7 @@
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
+            $('body').removeClass('overlay');
             $('#loader').hide();
             $('#err_message').html('Please add data-client attribute to upload button and set folder value !!');
         }
@@ -110,6 +111,7 @@
         $('#fileManagerModal').modal('toggle');
         var iframe = $('iframe');
         $(iframe).on('load', function() {
+            iframe.contents().find('.overlay').removeClass('overlay');
             $('#loader').hide();
         });
 

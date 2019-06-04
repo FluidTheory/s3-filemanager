@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="[NR-952] - File manager Package bug fixed">
+    <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/file-manager/trumbowyg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/file-manager/trumbowyg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,7 +15,7 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -29,6 +27,7 @@
       <find>filemanager-cust</find>
       <find>styles.css</find>
       <find>.css</find>
+      <find>.js</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -75,7 +74,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -87,6 +85,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -143,7 +142,8 @@
       <workItem from="1557840386203" duration="5671000" />
       <workItem from="1558220893169" duration="12633000" />
       <workItem from="1558433468049" duration="5492000" />
-      <workItem from="1558682819547" duration="12958000" />
+      <workItem from="1558682819547" duration="22919000" />
+      <workItem from="1559626141631" duration="1355000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit.">
       <created>1554788173853</created>
@@ -474,26 +474,33 @@
       <option name="project" value="LOCAL" />
       <updated>1558701220254</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="[NR-952] - Image selection bug fixed">
+      <created>1559131349291</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1559131349291</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136896000" />
+    <option name="totallyTimeSpent" value="148212000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
+    <editor active="true" />
     <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30463982" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32938388" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32938388" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3009768" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32938388" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -502,6 +509,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +531,8 @@
     <MESSAGE value="Bug Fixes" />
     <MESSAGE value="[NR-963] - Fil manager new updates" />
     <MESSAGE value="[NR-952] - File manager Package bug fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="[NR-952] - File manager Package bug fixed" />
+    <MESSAGE value="[NR-952] - Image selection bug fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="[NR-952] - Image selection bug fixed" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">

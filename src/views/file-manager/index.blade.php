@@ -10,7 +10,7 @@
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
+<body class="overlay">
 <div id="fm_header">
     <div class="inside-data">
         <span id="mySelected">
@@ -226,6 +226,8 @@
                 var r = confirm("Are you sure want to delete Folder?");
             }
             if(r == true) {
+                parent.$('#loader').show();
+                $('body').addClass('overlay');
                 var id = $(this).data('id');
                 var token = $('input[name=_token]').val();
                 $.blockUI({
@@ -301,6 +303,8 @@
             }
         });
         if(error == 0){
+            parent.$('#loader').show();
+            $('body').addClass('overlay');
             document.getElementById("upload-form").submit();
         }
     };
@@ -586,6 +590,19 @@
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+    }
+    .overlay {
+        /* Height & width depends on how you want to reveal the overlay (see JS below) */
+        height: 100%;
+        width: 100%;
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        background-color: rgb(0,0,0); /* Black fallback color */
+        background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+        overflow-x: hidden; /* Disable horizontal scroll */
+        transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+        opacity: 0.5;
+        pointer-events: none;
     }
 </style>
 </body>
