@@ -120,8 +120,8 @@ class FileManagerController extends Controller
 
                 $size = floor(filesize($file)/1024);
 
-                if($size > 20480){
-                    $error =  'Please upload file less than 20MB .';
+                if($size > 10240){
+                    $error =  'Please upload file less than 10MB .';
                     return redirect('filemanager?path='.$data["path"].'&message='.$error)->with('message','test message');
                 }
 
