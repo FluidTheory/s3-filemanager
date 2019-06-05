@@ -723,5 +723,14 @@ li.folders {
     height: 145px !important;
     text-align: center;
 }
-
 /***/
+@media all and (max-width: 560px) {
+    .filemanager .data li {
+        width: 45%;
+        margin: 6px 6px;
+        height: 150px !important;
+    }
+    .img-gallery img.img-select{
+        max-width: 80% !important;
+    }
+}

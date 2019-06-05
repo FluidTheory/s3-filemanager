@@ -1,5 +1,8 @@
 {{--css--}}
-<link rel="stylesheet" href="/css/filemanager.css?v=1.7">
+<link rel="stylesheet" href="/css/filemanager.css?v=1.8">
+@if(Session::has('message'))
+    <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
      aria-hidden="true">

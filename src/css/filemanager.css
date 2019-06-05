@@ -116,4 +116,23 @@
         transform: rotate(360deg);
     }
 }
+@media all and (max-width: 560px) {
+    .filemanager .data li {
+        width: 45%;
+        margin: 6px 6px;
+    }
+    .filemanager-iframe{
+        left: 0px;
+        right: 0px;
+        height: 600px;
+    }
+    .filemanager-iframe .modal-body {
+        height: 88%;
+    }
+    .db-spinner {
+        width: 50px;
+        height: 50px;
+        left: 43%;
+    }
+}
 
