@@ -15,6 +15,7 @@ class FileManagerController extends Controller
 {
     public function index()
     {
+        $message = '';
         $path = $_GET;
         $files = [];
         $last_id = 0;
@@ -56,7 +57,10 @@ class FileManagerController extends Controller
         if(isset($path['multiple'])){
             $multiple = $path['multiple'];
         }
-        return view('filemanager::file-manager.index')->with(array('multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
+        if(!empty($path['message'])){
+            $message = $path['message'];
+        }
+        return view('filemanager::file-manager.index')->with(array('message' => $message,'multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id));
 
     }
 
@@ -116,8 +120,9 @@ class FileManagerController extends Controller
 
                 $size = floor(filesize($file)/1024);
 
-                if($size > 10240){
-                    return redirect()->back()->with('flash', 'danger')->with('error', 'Please upload file less than 10MB .');
+                if($size > 20480){
+                    $error =  'Please upload file less than 20MB .';
+                    return redirect('filemanager?path='.$data["path"].'&message='.$error)->with('message','test message');
                 }
 
                 $image = Asset::insertGetId(array(

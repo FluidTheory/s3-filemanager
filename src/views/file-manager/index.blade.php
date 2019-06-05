@@ -12,6 +12,9 @@
 </head>
 <body class="overlay">
 <div id="fm_header">
+    @if(!empty($message))
+        <div class="alert alert-info error-message">{!! $message !!} </div>
+    @endif
     <div class="inside-data">
         <span id="mySelected">
             <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" {!! (!empty($image_ids) ? 'style="display : block;"' : 'style="display: none;"') !!}>
@@ -33,12 +36,6 @@
     </div>
 </div>
 <div class="messages"></div>
-@if(Session::has('message'))
-
-    <div class="response-message">{{Session::get('message')}}</div>
-@elseif(Session::has('error'))
-    <div class="response-message"> {{Session::get('error')}}</div>
-@endif
 <div class="filemanager">
     <div class="breadcrumbs">
         <?php
@@ -603,6 +600,14 @@
         transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
         opacity: 0.5;
         pointer-events: none;
+    }
+    .error-message{
+        float: left;
+        margin-left: 5%;
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
     }
 </style>
 </body>
