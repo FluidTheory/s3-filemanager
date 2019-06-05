@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/file-manager/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,7 +15,35 @@
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8124">
+              <caret line="43" column="23" lean-forward="true" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1908">
+              <caret line="181" selection-start-line="181" selection-end-line="181" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="395">
+              <caret line="128" column="36" lean-forward="true" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -51,11 +75,11 @@
         <option value="$PROJECT_DIR$/src/composer.json" />
         <option value="$PROJECT_DIR$/src/js/file-manager/trumbowyg.js" />
         <option value="$PROJECT_DIR$/src/database/migrations/2019_05_02_115830_create_assets_table.php" />
-        <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
         <option value="$PROJECT_DIR$/src/css/filemanager-custom.css" />
         <option value="$PROJECT_DIR$/src/views/index.blade.php" />
         <option value="$PROJECT_DIR$/src/views/file-manager/index.blade.php" />
         <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
+        <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
       </list>
     </option>
   </component>
@@ -84,6 +108,37 @@
             <path>
               <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
               <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Http" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="s3-filemanager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="s3-filemanager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="file-manager" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -147,14 +202,7 @@
       <workItem from="1558220893169" duration="12633000" />
       <workItem from="1558433468049" duration="5492000" />
       <workItem from="1558682819547" duration="22919000" />
-      <workItem from="1559626141631" duration="4175000" />
-    </task>
-    <task id="LOCAL-00001" summary="initial commit.">
-      <created>1554788173853</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1554788173853</updated>
+      <workItem from="1559626141631" duration="6276000" />
     </task>
     <task id="LOCAL-00002" summary="initial commit.">
       <created>1554789842079</created>
@@ -492,16 +540,24 @@
       <option name="project" value="LOCAL" />
       <updated>1559648880264</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="[NWP-1119] - Gif upload added">
+      <created>1559722536564</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1559722536565</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="151032000" />
+    <option name="totallyTimeSpent" value="153133000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="941" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30463982" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30463982" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -510,7 +566,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32938388" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32938388" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32938388" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -543,7 +599,8 @@
     <MESSAGE value="[NR-952] - File manager Package bug fixed" />
     <MESSAGE value="[NR-952] - Image selection bug fixed" />
     <MESSAGE value="[NR-1001] - Image upload issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="[NR-1001] - Image upload issue" />
+    <MESSAGE value="[NWP-1119] - Gif upload added" />
+    <option name="LAST_COMMIT_MESSAGE" value="[NWP-1119] - Gif upload added" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
@@ -840,13 +897,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="151" column="1" selection-start-line="151" selection-start-column="1" selection-end-line="151" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/database/migrations/2019_05_02_115830_create_assets_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="600">
@@ -871,24 +921,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="43" column="42" lean-forward="true" selection-start-line="43" selection-start-column="42" selection-end-line="43" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
           <caret line="196" lean-forward="true" selection-start-line="196" selection-end-line="196" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
         </state>
       </provider>
     </entry>
@@ -901,6 +937,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/file-manager/ui/icons.svg">
       <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8124">
+          <caret line="43" column="23" lean-forward="true" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="181" selection-start-line="181" selection-end-line="181" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="395">
+          <caret line="128" column="36" lean-forward="true" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
