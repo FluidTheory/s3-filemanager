@@ -10,7 +10,6 @@
     padding:0;
 }
 
-
 /*-------------------------
 	Demo page
 -------------------------*/
@@ -20,8 +19,6 @@ body {
     font: 14px normal Arial, Helvetica, sans-serif;
     z-index: -4;
 }
-
-
 /*-------------------------
 	File manager
 -------------------------*/
@@ -522,27 +519,6 @@ footer a.tz{
     z-index:1;
 }
 
-footer a.tz:before{
-    content: '';
-    background: url('http://cdn.tutorialzine.com/misc/enhance/v2_footer_bg.png') no-repeat 0 -53px;
-    width: 138px;
-    height: 20px;
-    display: inline-block;
-    position: relative;
-    bottom: -3px;
-}
-
-footer .close{
-    position: absolute;
-    cursor: pointer;
-    width: 8px;
-    height: 8px;
-    background: url('http://cdn.tutorialzine.com/misc/enhance/v2_footer_bg.png') no-repeat 0 0px;
-    top:10px;
-    right:10px;
-    z-index: 3;
-}
-
 footer #tzine-actions{
     position: absolute;
     top: 8px;
@@ -722,7 +698,7 @@ li.folders {
 /***/
 @media all and (max-width: 560px) {
     .filemanager .data li {
-        width: 45% !important;
+        width: 45%;
         margin: 6px 6px;
         height: 150px !important;
     }
