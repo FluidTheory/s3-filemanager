@@ -124,10 +124,10 @@
     .filemanager-iframe{
         left: 0px;
         right: 0px;
-        height: 600px;
+        height: 94vh;
     }
     .filemanager-iframe .modal-body {
-        height: 88%;
+        height: 80vh;
     }
     .db-spinner {
         width: 50px;
