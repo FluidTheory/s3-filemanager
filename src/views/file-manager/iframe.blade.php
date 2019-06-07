@@ -189,3 +189,10 @@
         });
     });
 </script>
+<script src="//rawcdn.githack.com/RickStrahl/jquery-resizable/master/dist/jquery-resizable.min.js"></script>
+<script src="/js/file-manager/trumbowyg.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/emoji/trumbowyg.emoji.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/resizimg/trumbowyg.resizimg.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/table/trumbowyg.table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/colors/trumbowyg.colors.min.js"></script>
