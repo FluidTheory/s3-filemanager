@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>File Manager</title>
     <!-- Include our stylesheet -->
-    <link href="/css/filemanager/styles.css?v=3.8" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=3.6" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -26,7 +26,7 @@
             <input type="hidden" class="path" name="path" value="{{@$path}}">
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
-            <input type="file" style="display: none" name="file[]" accept="image/x-png,image/jpeg,image/gif,video/mp4,application/pdf" id="file-input" multiple>
+            <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf" id="file-input" multiple>
             <span onclick="openDialog()">
                     <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
                         Upload
@@ -36,33 +36,35 @@
     </div>
 </div>
 <div class="messages"></div>
-
+{{--@if(isset($errors))--}}
+{{--<div class="response-message"> {!! $errors->first() !!} </div>--}}
+{{--@endif--}}
 <div class="filemanager">
     <div class="breadcrumbs">
         <?php
-            $tokens = explode('/', $path);
-            $lastToken = array_pop($tokens);
-            $path = [];
-         ?>
+        $tokens = explode('/', $path);
+        $lastToken = array_pop($tokens);
+        $path = [];
+        ?>
         @foreach($tokens as $k)
             <?php $path[] = $k; $current = implode('/', $path); ?>
-                <a href="/filemanager?path={{$current}}">
-                    @if($path[0] == $current)
-                        <span class="folderName">
+            <a href="/filemanager?path={{$current}}">
+                @if($path[0] == $current)
+                    <span class="folderName">
                             <i class="fas fa-home"></i>
                         </span>
-                    @else
-                        <span class="folderName">
+                @else
+                    <span class="folderName">
                             {!! $k !!}
                         </span>
-                    @endif
-                </a>
-                <span class="arrow">→</span>
+                @endif
+            </a>
+            <span class="arrow">→</span>
 
         @endforeach
-            @if(!empty($tokens))
-                <span class="folderName">{!! $lastToken !!}</span>
-            @endif
+        @if(!empty($tokens))
+            <span class="folderName">{!! $lastToken !!}</span>
+        @endif
         <span class="folderName"></span>
     </div>
     <ul class="data">
@@ -70,35 +72,35 @@
             <?php $count = 0; ?>
             @foreach($final['files'] as $k)
                 <?php
-                    $checked = '';
-                    $li_class = '';
-                    $ids = $k['id'];
-                    if(!empty($image_ids) && in_array($ids, $image_ids)){
-                        if($multiple == 'true'){
-                            $checked = 'checked';
-                            $li_class = 'add-background selected';
-                        } else {
-                            if($count == 0){
-                                $checked = 'checked';
-                                $li_class = 'add-background selected';
-                            }
-                            $count++;
-                        }
+                $checked = '';
+                $li_class = '';
+                $ids = $k['id'];
+                if(!empty($image_ids) && in_array($ids, $image_ids)){
+                if($multiple == 'true'){
+                    $checked = 'checked';
+                    $li_class = 'add-background selected';
+                } else {
+                    if($count == 0){
+                        $checked = 'checked';
+                        $li_class = 'add-background selected';
+                    }
+                    $count++;
+                }
                 ?>
                 <script>$("#insert-btn").show();</script>
                 <?php
-                    }
+                }
                 ?>
                 <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" data-type="{{$k['type']}}" data-action="no" data-id="{!! $k['id'] !!}" id="li-{!! $k['id'] !!}">
                     <span class="image">
                         @if($k['type'] == 'image' || $k['type'] == 'pdf')
                             <img class="img-select" id="img-select" src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
-                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight">
+                                 data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight">
                         @endif
 
                         @if($k['type'] == 'video')
                             <video class="img-select" id="img-select"
-                             data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" >
+                                   data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" >
                                 <source src="{{$k['src']}}" type="video/mp4">
                             </video>
                         @endif
@@ -269,16 +271,16 @@
     function openDialog() {
         var type = parent.document.getElementById('file_manager').getAttribute('data-type');
         if(type == 'image'){
-            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif');
+            $('#file-input').attr('accept','image/*');
         }
         else if(type == 'video'){
             $('#file-input').attr('accept','video/mp4');
         } else if(type == 'image-video'){
-            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif,video/mp4');
+            $('#file-input').attr('accept','image/*,video/mp4');
         } else if(type == 'file'){
             $('#file-input').attr('accept','application/pdf');
         } else{
-            $('#file-input').attr('accept','image/x-png,image/jpeg,image/gif,video/mp4,application/pdf');
+            $('#file-input').attr('accept','image/*,video/mp4,application/pdf');
         }
         var multiSelect = parent.document.getElementById('file_manager').getAttribute('data-select');
         if(multiSelect == 'true'){
@@ -329,83 +331,83 @@
     }
 
 
-        function show_border(checkName,current, actionFrom = null){
-            var type = window.frameElement.getAttribute("data-type");
-            if(type == 'all'){ // For all Files
+    function show_border(checkName,current, actionFrom = null){
+        var type = window.frameElement.getAttribute("data-type");
+        if(type == 'all'){ // For all Files
 
-            } else if(type == 'image-video') { // For Image and video
-                if(current == 'image' || current == 'video') {
+        } else if(type == 'image-video') { // For Image and video
+            if(current == 'image' || current == 'video') {
 
-                } else {
-                    alert('You can select Image/Video  file only !!');
-                    return false;
-                }
-            }else if(current != type){
-                    alert('You can select '+type+' file only !!');
-                    return false;
+            } else {
+                alert('You can select Image/Video  file only !!');
+                return false;
             }
-            var multiple = parent.document.getElementById('multiple-img').value;
-            if ($("#option-"+checkName).prop("checked") == true) {
-                if(actionFrom == null) { // click on selected image box
-                    if (multiple === 'false') {
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                    } else{
-                        $("#option-" + checkName).prop("checked", false);
-                        $('#li-' + checkName).removeClass('add-background');
-                        $('#li-' + checkName).removeClass('selected');
-                    }
-                }else{ // click on unselected image checkbox
-                    if (multiple === 'false') {
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-' + checkName).addClass('selected');
-                    }else {
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-' + checkName).addClass('selected');
-                    }
-                }
-            }else{
-                if(actionFrom == 'del') {
+        }else if(current != type){
+            alert('You can select '+type+' file only !!');
+            return false;
+        }
+        var multiple = parent.document.getElementById('multiple-img').value;
+        if ($("#option-"+checkName).prop("checked") == true) {
+            if(actionFrom == null) { // click on selected image box
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                } else{
                     $("#option-" + checkName).prop("checked", false);
                     $('#li-' + checkName).removeClass('add-background');
-                }else if(actionFrom == null){ // image box click when checkbox unchecked
-                    if (multiple === 'false') {
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-' + checkName).addClass('selected');
-                    }else {
-                        $("#option-" + checkName).prop("checked", true);
-                        $('#li-' + checkName).addClass('add-background');
-                        $('#li-' + checkName).addClass('selected');
-                    }
+                    $('#li-' + checkName).removeClass('selected');
                 }
-                else { // checkbox unchecked click
-                    if (multiple === 'false') {
-                        $(".check-input").prop("checked", false);
-                        $('li.image-li').removeClass('add-background');
-                        $('li.image-li').removeClass('selected');
-                    } else {
-                        $('#li-' + checkName).removeClass('add-background');
-                        $('#li-' + checkName).removeClass('selected');
-                    }
+            }else{ // click on unselected image checkbox
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }else {
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
                 }
             }
-            var count = $('li.image-li.selected').length;
-            if(count > 0){
-                $('#insert-btn').text('Insert ('+ count +')');
-                // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
+        }else{
+            if(actionFrom == 'del') {
+                $("#option-" + checkName).prop("checked", false);
+                $('#li-' + checkName).removeClass('add-background');
+            }else if(actionFrom == null){ // image box click when checkbox unchecked
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }else {
+                    $("#option-" + checkName).prop("checked", true);
+                    $('#li-' + checkName).addClass('add-background');
+                    $('#li-' + checkName).addClass('selected');
+                }
             }
-            var $insert_btn = $("#insert-btn").hide();
-            $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+            else { // checkbox unchecked click
+                if (multiple === 'false') {
+                    $(".check-input").prop("checked", false);
+                    $('li.image-li').removeClass('add-background');
+                    $('li.image-li').removeClass('selected');
+                } else {
+                    $('#li-' + checkName).removeClass('add-background');
+                    $('#li-' + checkName).removeClass('selected');
+                }
+            }
         }
+        var count = $('li.image-li.selected').length;
+        if(count > 0){
+            $('#insert-btn').text('Insert ('+ count +')');
+            // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
+        }
+        var $insert_btn = $("#insert-btn").hide();
+        $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+    }
 
 </script>
 <style>
@@ -602,14 +604,14 @@
         opacity: 0.5;
         pointer-events: none;
     }
-    .error-message{
+    .error-message {
         float: left;
         margin-left: 5%;
         margin-top: 15px;
         font-size: 18px;
         font-weight: bold;
         color: #fff;
-
+    }
 </style>
 </body>
 </html>
