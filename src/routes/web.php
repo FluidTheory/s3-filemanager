@@ -7,7 +7,7 @@
  */
 
 
-Route::group(['namespace' => 'Fluidtheory\Filemanager\Http\Controllers'], function (){
+Route::group(['namespace' => 'Fluidtheory\Filemanager\Http\Controllers','scheme' => 'https'], function (){
 
     Route::post('/delete_file', 'FileManagerController@delete');
     Route::post('/filemanager/upload', 'FileManagerController@upload');
@@ -15,4 +15,3 @@ Route::group(['namespace' => 'Fluidtheory\Filemanager\Http\Controllers'], functi
     Route::get('/filemanager/{path?}/{ids?}/{multiple?}/{message?}', 'FileManagerController@index');
     Route::post('/fetch', 'FileManagerController@fetchImages');
 });
-
