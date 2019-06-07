@@ -130,23 +130,23 @@
     </div>
 </div>
 <!-- The Modal -->
-<div id="fileManageAddFolderModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <form action="/filemanager/addfolder" method="post" enctype="multipart/form-data" role="form">
-            {{ csrf_field() }}
-            <span class="close">x</span>
-            <div class="modal-data">
-                <p class="icon folder"></p>
-                <br/>
-                <input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input" required autofocus>
-                <br/>
-                <input type="hidden" name="path" value="{{@$folder_path}}">
-                <button type="submit" class="btn">ADD</button>
-            </div>
-        </form>
-    </div>
-</div>
+{{--<div id="fileManageAddFolderModal" class="modal">--}}
+    {{--<!-- Modal content -->--}}
+    {{--<div class="modal-content">--}}
+        {{--<form action="/filemanager/addfolder" method="post" enctype="multipart/form-data" role="form">--}}
+            {{--{{ csrf_field() }}--}}
+            {{--<span class="close">x</span>--}}
+            {{--<div class="modal-data">--}}
+                {{--<p class="icon folder"></p>--}}
+                {{--<br/>--}}
+                {{--<input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input" required autofocus>--}}
+                {{--<br/>--}}
+                {{--<input type="hidden" name="path" value="{{@$folder_path}}">--}}
+                {{--<button type="submit" class="btn">ADD</button>--}}
+            {{--</div>--}}
+        {{--</form>--}}
+    {{--</div>--}}
+{{--</div>--}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
