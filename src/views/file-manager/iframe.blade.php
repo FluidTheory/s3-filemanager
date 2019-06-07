@@ -15,7 +15,6 @@
 </div>
 <input type="hidden" id="multiple-img" value="">
 {{--end model for S3 file manager --}}
-
 <script>
     $(document).on('click','.s3-upload',function () {
         $('.s3-upload').attr('data-click','');
