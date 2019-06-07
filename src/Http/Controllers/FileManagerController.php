@@ -7,7 +7,6 @@ use Fluidtheory\Filemanager\Models\Asset;
 use Illuminate\Http\Request;
 use Auth;
 use File;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use DB;
