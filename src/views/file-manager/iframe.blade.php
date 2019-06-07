@@ -196,3 +196,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.15.1/plugins/table/trumbowyg.table.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/fontfamily/trumbowyg.fontfamily.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.18.0/plugins/colors/trumbowyg.colors.min.js"></script>
+<script>
+    $('.s3-editor').trumbowyg({
+        btns: [
+            ['viewHTML'],
+            ['table'],
+            ['fontfamily'],
+            ['foreColor', 'backColor'],
+            ['undo', 'redo'], // Only supported in Blink browsers
+            ['formatting'],
+            ['strong', 'em', 'del'],
+            ['superscript', 'subscript'],
+            ['link'],
+            ['insertImage'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+            ['unorderedList', 'orderedList'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['fullscreen'],
+        ]
+    });
+    function applyMCE() {
+        $('.s3-editor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['table'],
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen'],
+            ]
+        });
+    }
+</script>
