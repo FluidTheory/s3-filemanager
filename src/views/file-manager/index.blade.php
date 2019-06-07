@@ -36,9 +36,7 @@
     </div>
 </div>
 <div class="messages"></div>
-{{--@if(isset($errors))--}}
-    {{--<div class="response-message"> {!! $errors->first() !!} </div>--}}
-{{--@endif--}}
+
 <div class="filemanager">
     <div class="breadcrumbs">
         <?php
