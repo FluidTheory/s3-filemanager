@@ -1315,7 +1315,6 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
             var multiple = false;
             $('#file_manager').attr('data-type','image');
             $('#fileManagerModal').attr('current', 'trumbowyg-editor');
-
             getS3Images(client_id,multiple);
 
             var t = this;
