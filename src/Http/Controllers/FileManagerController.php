@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Auth;
 use File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
 use DB;
 
 class FileManagerController extends Controller
@@ -122,7 +121,7 @@ class FileManagerController extends Controller
 
                 if($size > 10240){
                     $error =  'Please upload file less than 10MB .';
-                    return redirect('filemanager?path='.$data["path"].'&message='.$error)->with('message','test message');
+                    return redirect()->secure('filemanager?path='.$data["path"].'&message='.$error)->with('message','test message');
                 }
 
                 $image = Asset::insertGetId(array(
@@ -146,7 +145,7 @@ class FileManagerController extends Controller
             }
             $ids = implode(',',$image_array);
             if ($results) {
-                return redirect('/filemanager?path='.$data['path'].'&ids='.$ids.'&multiple='.$multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
+                return redirect()->secure('/filemanager?path='.$data['path'].'&ids='.$ids.'&multiple='.$multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
             } else {
                 return redirect()->back()->with('flash', 'danger')->with('error', 'Image not uploaded.');
             }
