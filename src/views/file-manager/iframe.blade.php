@@ -1,5 +1,5 @@
 {{--css--}}
-<link rel="stylesheet" href="/css/filemanager.css?v=2.0">
+<link rel="stylesheet" href="/css/filemanager.css?v=2.1">
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
      aria-hidden="true">
@@ -31,6 +31,16 @@
     $(document).on('click','.clear-file', function () {
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
+    });
+    $(document).on('click', '.trumbowyg-insertImage-button', function () {
+        var client_id = $('#folder-id').val();
+        var multiple = false;
+        $('#file_manager').attr('data-type','image');
+        $('#fileManagerModal').attr('current', 'trumbowyg-editor');
+        getS3Images(client_id,multiple);
+    });
+    $(document).on('click', '.trumbowyg-modal-submit', function () {
+        $('#fileManagerModal').attr('current', '').modal('hide');
     });
     function getS3Images(client_id,multiple,current = '',type = '') {
         if(client_id === undefined || client_id === ''){
