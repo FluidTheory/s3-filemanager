@@ -1124,10 +1124,10 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
             t.syncCode(force);
 
             if (t.o.semantic) {
-                // t.semanticTag('b');
-                // t.semanticTag('i');
+                t.semanticTag('b');
+                t.semanticTag('i');
                 t.semanticTag('s');
-                // t.semanticTag('strike');
+                t.semanticTag('strike');
 
                 if (full) {
                     var inlineElementsSelector = t.o.inlineElementsSelector,
@@ -1149,7 +1149,7 @@ Object.defineProperty(jQuery.trumbowyg, 'defaultOptions', {
                     };
                     wrapInlinesInParagraphsFrom(t.$ed.children(inlineElementsSelector).first());
 
-                    // t.semanticTag('div', true);
+                    t.semanticTag('div', true);
 
                     // Unwrap paragraphs content, containing nothing usefull
                     t.$ed.find('p').filter(function () {
