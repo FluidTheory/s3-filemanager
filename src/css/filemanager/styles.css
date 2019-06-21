@@ -699,7 +699,7 @@ li.folders {
 /***/
 @media all and (max-width: 560px) {
     .filemanager .data li {
-        width: 45%;
+        width: 45% !important;
         margin: 6px 6px;
         height: 150px !important;
     }

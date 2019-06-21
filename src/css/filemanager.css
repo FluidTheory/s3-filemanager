@@ -117,10 +117,6 @@
     }
 }
 @media all and (max-width: 560px) {
-    .filemanager .data li {
-        width: 45%;
-        margin: 6px 6px;
-    }
     .filemanager-iframe{
         left: 0px;
         right: 0px;
