@@ -70,7 +70,7 @@
             @foreach($final['directories'] as $k)
                 <li class="folders" style="height: 200px !important;">
                     <span class="folders">
-                        <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'" data-clientid="{{$k['client_id']}}" class="icon folder full folder-details"></span>
+                        <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'" data-clientid="{{$k['client_id']}}" class="icon folder full folder-details icon-font"></span>
                         <span class="name folder-name" :aria-valuemax="">{{$k['name']}}</span>
                         <div class="folder-outer-div">
                             <span class="folder-box-bottom">
@@ -148,7 +148,7 @@
             {{ csrf_field() }}
             <span class="close custom-close">x</span>
             <div class="modal-data" style="text-align: -webkit-center">
-                <p class="icon folder custom-folder"></p>
+                <p class="icon folder custom-folder icon-font"></p>
                 <br/>
                 <input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input form-control custom-input" required autofocus>
                 <br/>
@@ -697,6 +697,9 @@
     }
     .folders {
         height: 200px !important;
+    }
+    .icon-font {
+        font-size: 35px !important;
     }
     @media all and (max-width: 568px) {
         .folders {
