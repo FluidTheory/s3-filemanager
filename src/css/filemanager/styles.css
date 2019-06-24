@@ -712,3 +712,11 @@ li.folders {
         max-width: 80% !important;
     }
 }
+.model-content-folder {
+    background-color: #fefefe !important;
+    margin: auto !important;
+    border: 1px solid #888 !important;
+    width: 22% !important;
+    height: 50% !important;
+    border-radius: 5px !important;
+}
