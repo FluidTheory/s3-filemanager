@@ -37,8 +37,8 @@
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
             <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf" id="file-input" multiple>
-            <span id="myBtn" class="mobile-icons">
-                <button type="button" class="btn btn-icon btn-theme-color btn-lg waves-effect filemanager-btn">
+            <span class="mobile-icons">
+                <button type="button" class="myBtn btn btn-icon btn-theme-color btn-lg waves-effect filemanager-btn">
                      <i class="fas fa-plus"></i>
                 </button>
             </span>
@@ -47,8 +47,8 @@
                     <i class="fas fa-upload"></i>
                 </button>
             </span>
-            <span id="myBtn" class="desktop-btn">
-                <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
+            <span class="desktop-btn">
+                <button type="button" class="myBtn btn btn-theme-color btn-lg waves-effect filemanager-btn">
                     Add Folder
                 </button>
             </span>
@@ -284,6 +284,10 @@
                 }
             }
         });
+
+        $(document).on('click','.myBtn', function (e) {
+            $('#fileManageAddFolderModal').css('display','block');
+        });
     });
 
     $(document).on('click','.image-li, .check-input, .delbtn', function () {
@@ -342,15 +346,7 @@
     // Get the modal
     var modal = document.getElementById('fileManageAddFolderModal');
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
     var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
@@ -722,11 +718,14 @@
             border-radius: 15px !important;
             font-size: 14px !important;
         }
-        .icon.folder{
-            margin: 0.7em 1em 1em 0.6em !important;
-        }
         .folder-outer-div {
             top: 82%;
+        }
+        .custom-folder {
+            margin: 0.8em 0em 0.5em 1em !important;
+        }
+        .icon.folder{
+            margin: 0.7em 1em 1em 0.6em;
         }
         .insert-btn-icon {
             margin: 5px !important;
