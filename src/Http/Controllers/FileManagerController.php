@@ -30,7 +30,7 @@ class FileManagerController extends Controller
         $pathExp = explode("/",$path['path']);
         if(empty($pathExp[1])){
             $client_id = $pathExp[0];
-            $directories = Directory::where(['client_id' => $client_id,'parent_id' => 0])->get();
+            $directories = Directory::where(['client_id' => $client_id,'parent_id' => 0,'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
             $images = Asset::where(['client_id' => $client_id,'directory_id' => null,'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
         } else {
@@ -267,7 +267,7 @@ class FileManagerController extends Controller
         $parentDirectory = Directory::where('id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
         $childDirectory = Directory::where('parent_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
         $asset = Asset::where('directory_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
-        if($parentDirectory && $childDirectory && $asset){
+        if($parentDirectory || $childDirectory || $asset){
             $response['status'] = 'true';
             return $response;
         } else {
