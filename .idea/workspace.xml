@@ -17,7 +17,7 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
+            <state relative-caret-position="10815">
               <caret line="721" column="1" selection-start-line="721" selection-start-column="1" selection-end-line="721" selection-end-column="1" />
             </state>
           </provider>
@@ -26,7 +26,7 @@
       <file leaf-file-name="filemanager.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/filemanager.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1085">
+            <state relative-caret-position="1770">
               <caret line="118" column="35" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
             </state>
           </provider>
@@ -35,26 +35,26 @@
       <file leaf-file-name="filemanager-custom.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/filemanager-custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
+            <state relative-caret-position="945">
               <caret line="63" column="1" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
+            <state relative-caret-position="186">
+              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="808">
-              <caret line="270" column="41" lean-forward="true" selection-start-line="270" selection-start-column="41" selection-end-line="270" selection-end-column="41" />
+            <state relative-caret-position="1117">
+              <caret line="270" column="41" selection-start-line="270" selection-start-column="41" selection-end-line="270" selection-end-column="41" />
               <folding>
                 <element signature="e#60#96#0#PHP" expanded="true" />
               </folding>
@@ -103,8 +103,8 @@
         <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
         <option value="$PROJECT_DIR$/src/routes/web.php" />
         <option value="$PROJECT_DIR$/src/css/filemanager/styles.css" />
-        <option value="$PROJECT_DIR$/src/views/file-manager/index.blade.php" />
         <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
+        <option value="$PROJECT_DIR$/src/views/file-manager/index.blade.php" />
       </list>
     </option>
   </component>
@@ -127,6 +127,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -182,7 +183,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -247,13 +247,7 @@
       <workItem from="1560157117699" duration="27218000" />
       <workItem from="1561041961737" duration="1865000" />
       <workItem from="1561350785216" duration="8839000" />
-    </task>
-    <task id="LOCAL-00036" summary="Bug Fixes">
-      <created>1557844026287</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1557844026287</updated>
+      <workItem from="1561380456454" duration="239000" />
     </task>
     <task id="LOCAL-00037" summary="Bug Fixes">
       <created>1557850345453</created>
@@ -591,17 +585,23 @@
       <option name="project" value="LOCAL" />
       <updated>1561376568729</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="NR-1028:Integrate the folder structure(css fixed).">
+      <created>1561380520070</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1561380520071</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217030000" />
+    <option name="totallyTimeSpent" value="217297000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="797" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19670959" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19957082" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
@@ -610,7 +610,7 @@
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32938388" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32791728" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32791728" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -965,39 +965,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/css/filemanager.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1085">
+        <state relative-caret-position="1770">
           <caret line="118" column="35" selection-start-line="118" selection-start-column="35" selection-end-line="118" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/css/filemanager-custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
+        <state relative-caret-position="945">
           <caret line="63" column="1" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
+        <state relative-caret-position="10815">
           <caret line="721" column="1" selection-start-line="721" selection-start-column="1" selection-end-line="721" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="808">
-          <caret line="270" column="41" lean-forward="true" selection-start-line="270" selection-start-column="41" selection-end-line="270" selection-end-column="41" />
+        <state relative-caret-position="1117">
+          <caret line="270" column="41" selection-start-line="270" selection-start-column="41" selection-end-line="270" selection-end-column="41" />
           <folding>
             <element signature="e#60#96#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
         </state>
       </provider>
     </entry>
