@@ -68,7 +68,7 @@
     <ul class="data">
         <ul id="load_data" class="data animated img-gallery">
             @foreach($final['directories'] as $k)
-                <li class="folders" style="height: 200px !important;">
+                <li class="folders">
                     <span class="folders">
                         <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'" data-clientid="{{$k['client_id']}}" class="icon folder full folder-details icon-font"></span>
                         <span class="name folder-name" :aria-valuemax="">{{$k['name']}}</span>
