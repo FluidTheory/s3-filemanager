@@ -18,7 +18,7 @@
     <div class="inside-data">
         <span id="mySelected">
             <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" {!! (!empty($image_ids) ? 'style="display : block;"' : 'style="display: none;"') !!}>
-                Insert {!! (empty($image_ids) ? "(".count($image_ids).")" : "") !!}
+                Insert {!! (!empty($image_ids) ? "(".count($image_ids).")" : "") !!}
             </button>
         </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
