@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>File Manager</title>
     <!-- Include our stylesheet -->
-    <link href="/css/filemanager/styles.css?v=4.1" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=4.2" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -17,21 +17,46 @@
     @endif
     <div class="inside-data">
         <span id="mySelected">
-            <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" {!! (!empty($image_ids) ? 'style="display : block;"' : 'style="display: none;"') !!}>
-                Insert ({!! (!empty($image_ids) ? count($image_ids) : '') !!})
-            </button>
+            <button type="button" id="insert-btn" class="btn btn-theme-color btn-lg waves-effect filemanager-btn" {!! (!empty($image_ids) ? 'style="display : block;"' : 'style="display: none;"') !!}></button>
         </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
-
+            <span class="breadcrumbs">
+                                <a href="/filemanager?path={{$client_id}}"><i class="fas fa-home" style="font-size: 20px;margin: 10px 0px 0px 15px;"></i></a>
+                                <input type="hidden" class="path" name="folder_path" value="{{ $client_id }}">
+                @foreach($breadcrumbs as $key => $value)
+                    <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold">→</span>
+                    @if($path != $value['slug'])
+                        <a href="/filemanager?path={{$value['slug']}}" style="font-size: 18px;font-weight: 600">{!! $value['name'] !!}</a>
+                    @else
+                        <input type="hidden" class="path" name="folder_path" value="{{ $value['slug'] }}">
+                        <span class="folderName" style="font-size: 18px;font-weight: 600">{!! $value['name'] !!}</span>
+                    @endif
+                @endforeach
+            </span>
             <input type="hidden" class="path" name="path" value="{{@$path}}">
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
             <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf" id="file-input" multiple>
-            <span onclick="openDialog()">
-                    <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
-                        Upload
-                    </button>
-                </span>
+            <span id="myBtn" class="mobile-icons">
+                <button type="button" class="btn btn-icon btn-theme-color btn-lg waves-effect filemanager-btn">
+                     <i class="fas fa-plus"></i>
+                </button>
+            </span>
+            <span onclick="openDialog()" class="mobile-icons">
+                <button type="button" class="btn btn-icon btn-theme-color btn-lg waves-effect filemanager-btn">
+                    <i class="fas fa-upload"></i>
+                </button>
+            </span>
+            <span id="myBtn" class="desktop-btn">
+                <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
+                    Add Folder
+                </button>
+            </span>
+            <span onclick="openDialog()" class="desktop-btn">
+                <button type="button" class="btn btn-theme-color btn-lg waves-effect filemanager-btn">
+                    Upload
+                </button>
+            </span>
         </form>
     </div>
 </div>
@@ -40,35 +65,21 @@
 {{--<div class="response-message"> {!! $errors->first() !!} </div>--}}
 {{--@endif--}}
 <div class="filemanager">
-    <div class="breadcrumbs">
-        <?php
-        $tokens = explode('/', $path);
-        $lastToken = array_pop($tokens);
-        $path = [];
-        ?>
-        @foreach($tokens as $k)
-            <?php $path[] = $k; $current = implode('/', $path); ?>
-            <a href="/filemanager?path={{$current}}">
-                @if($path[0] == $current)
-                    <span class="folderName">
-                            <i class="fas fa-home"></i>
-                        </span>
-                @else
-                    <span class="folderName">
-                            {!! $k !!}
-                        </span>
-                @endif
-            </a>
-            <span class="arrow">→</span>
-
-        @endforeach
-        @if(!empty($tokens))
-            <span class="folderName">{!! $lastToken !!}</span>
-        @endif
-        <span class="folderName"></span>
-    </div>
     <ul class="data">
         <ul id="load_data" class="data animated img-gallery">
+            @foreach($final['directories'] as $k)
+                <li class="folders" style="height: 200px !important;">
+                    <span class="folders">
+                        <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'" data-clientid="{{$k['client_id']}}" class="icon folder full folder-details"></span>
+                        <span class="name folder-name" :aria-valuemax="">{{$k['name']}}</span>
+                        <div class="folder-outer-div">
+                            <span class="folder-box-bottom">
+                                <i class="fas fa-trash del-icon delete-folder" data-id="{{$k['id']}}"></i>
+                            </span>
+                        </div>
+                    </span>
+                </li>
+            @endforeach
             <?php $count = 0; ?>
             @foreach($final['files'] as $k)
                 <?php
@@ -130,24 +141,23 @@
     </div>
 </div>
 <!-- The Modal -->
-{{--<div id="fileManageAddFolderModal" class="modal">--}}
-    {{--<!-- Modal content -->--}}
-    {{--<div class="modal-content">--}}
-        {{--<form action="/filemanager/addfolder" method="post" enctype="multipart/form-data" role="form">--}}
-            {{--{{ csrf_field() }}--}}
-            {{--<span class="close">x</span>--}}
-            {{--<div class="modal-data">--}}
-                {{--<p class="icon folder"></p>--}}
-                {{--<br/>--}}
-                {{--<input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input" required autofocus>--}}
-                {{--<br/>--}}
-                {{--<input type="hidden" name="path" value="{{@$folder_path}}">--}}
-                {{--<button type="submit" class="btn">ADD</button>--}}
-            {{--</div>--}}
-        {{--</form>--}}
-    {{--</div>--}}
-{{--</div>--}}
-
+<div id="fileManageAddFolderModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content model-content-folder">
+        <form action="{{ url('/filemanager/addfolder') }}" method="post" enctype="multipart/form-data" role="form">
+            {{ csrf_field() }}
+            <span class="close custom-close">x</span>
+            <div class="modal-data" style="text-align: -webkit-center">
+                <p class="icon folder custom-folder"></p>
+                <br/>
+                <input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input form-control custom-input" required autofocus>
+                <br/>
+                <input type="hidden" name="path" value="{{@$folder_path}}">
+                <button type="submit" class="btn">ADD</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -254,6 +264,26 @@
                 });
             }
         });
+
+        $('.delete-folder').click(function () {
+            var r = confirm("Are you sure want to delete Folder?");
+            if(r == true){
+                var id = $(this).data('id');
+                var token = $('input[name=_token]').val();
+                if(id != ''){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/delete-folders',
+                        data: 'id='+id+'&_token='+token,
+                        success: function (response) {
+                            if(response.status === 'true'){
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     });
 
     $(document).on('click','.image-li, .check-input, .delbtn', function () {
@@ -314,6 +344,18 @@
 
     // Get the button that opens the modal
     var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
@@ -394,7 +436,12 @@
         }
         var count = $('li.image-li.selected').length;
         if(count > 0){
-            $('#insert-btn').text('Insert ('+ count +')');
+            if(screen.width >= '568'){
+                $('#insert-btn').text('Insert ('+ count +')');
+            } else{
+                $('#insert-btn').addClass('insert-btn-icon');
+                $('#insert-btn').html('<i class="fas fa-check"></i> ('+ count +')');
+            }
             // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
         }
         var $insert_btn = $("#insert-btn").hide();
@@ -604,6 +651,92 @@
         font-weight: bold;
         color: #fff;
     }
+
+    /* Satish Style add css*/
+    .model-content-folder{
+        background-color: #fefefe !important;
+        margin: auto !important;
+        border: 1px solid #888 !important;
+        width: 22% !important;
+        height: 50% !important;
+        border-radius: 5px !important;
+    }
+    .custom-close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 24px;
+        margin: 8px;
+    }
+    .custom-folder {
+        display: inline-block !important;
+        margin: 0.8em 0em 0.5em 1em !important;
+        background-color: transparent !important;
+        overflow: hidden !important;
+    }
+    .custom-input {
+        width: 50%;
+        height: 20px;
+        border-radius: 5px
+    }
+    .folder-outer-div {
+        width: 95%;
+        height: 200px;
+        position: absolute;
+        top: 85%;
+    }
+    .folder-box-bottom {
+        opacity: 0;
+        -webkit-box-align: center;
+        align-items: center;
+        z-index: 1;
+        bottom: 10px;
+        left: 5px;
+        position: relative;
+        width: 100%;
+        transform: translateY(35px);
+        transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+    }
+    .mobile-icons {
+        display: none;
+    }
+    .folders {
+        height: 200px !important;
+    }
+    @media all and (max-width: 568px) {
+        .folders {
+            height: 150px !important;
+        }
+        .desktop-btn {
+            display: none;
+        }
+        .model-content-folder {
+            width: 70% !important;
+        }
+        .mobile-icons {
+            display: initial;
+        }
+        .btn-icon {
+            margin: 5px !important;
+            padding: 8px !important;
+            width: 36px !important;
+            border-radius: 15px !important;
+            font-size: 14px !important;
+        }
+        .icon.folder{
+            margin: 0.7em 1em 1em 0.6em !important;
+        }
+        .folder-outer-div {
+            top: 82%;
+        }
+        .insert-btn-icon {
+            margin: 5px !important;
+            padding: 8px !important;
+            width: 65px !important;
+            border-radius: 15px !important;
+            font-size: 14px !important;
+        }
+    }
+    /*end css*/
 </style>
 </body>
 </html>

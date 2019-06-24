@@ -203,13 +203,16 @@ body {
     height: 100%;
 }
 
+.filemanager .data li .folder-name {
+    left: 10px !important;
+}
+
 .filemanager .data li .name {
     color: #ffffff;
     font-size: 15px;
     font-weight: 700;
     line-height: 20px;
     width: 70%;
-    /*white-space: nowrap;*/
     display: inline-block;
     position: absolute;
     overflow: hidden;
@@ -695,7 +698,7 @@ footer #tzine-actions iframe{
 /***** Vrushabh 25/12/18 ****/
 
 li.folders {
-    height: 145px !important;
+    height: 145px;
     text-align: center;
 }
 /***/
