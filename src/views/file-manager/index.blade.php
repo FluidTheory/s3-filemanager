@@ -23,7 +23,7 @@
         </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
             <span class="breadcrumbs">
-                                <a href="/filemanager?path={{$client_id}}"><i class="fas fa-home" style="font-size: 20px;margin: 10px 0px 0px 15px;"></i></a>
+                                <a href="/filemanager?path={{$client_id}}"><i class="fas fa-home custom-breadcrumbs"></i></a>
                                 <input type="hidden" class="path" name="folder_path" value="{{ $client_id }}">
                 @foreach($breadcrumbs as $key => $value)
                     <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold">→</span>
@@ -702,6 +702,11 @@
     }
     .icon-font {
         font-size: 35px !important;
+    }
+    .custom-breadcrumbs {
+        font-size: 20px !important;
+        margin: 10px 0px 0px 15px !important;
+        color:#ffffff !important;
     }
     @media all and (max-width: 568px) {
         .folders {

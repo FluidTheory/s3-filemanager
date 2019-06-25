@@ -62,6 +62,7 @@
                     $('#multiple-img').val('false');
                     var url = '/filemanager?path=' + client_id;
                 }
+                cancel(client_id);
                 $('#file_manager').attr('src', url);
             }else{
                 var iframe = $('#file_manager').contents();
@@ -123,6 +124,13 @@
             $('#loader').hide();
         });
 
+    }
+
+    function cancel(client_id){
+        $(document).on('click','#fm_cancel', function () {
+            var url = '/filemanager?path='+client_id;
+            $('#file_manager').attr('src', url);
+        });
     }
 
     $(document).ready(function () {
