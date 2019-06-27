@@ -28,10 +28,10 @@
                 @foreach($breadcrumbs as $key => $value)
                     <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold">→</span>
                     @if($path != $value['slug'])
-                        <a href="/filemanager?path={{$value['slug']}}" style="font-size: 18px;font-weight: 600">{!! $value['name'] !!}</a>
+                        <a class="child-breadcrumbs" href="/filemanager?path={{$value['slug']}}">{!! $value['name'] !!}</a>
                     @else
                         <input type="hidden" class="path" name="folder_path" value="{{ $value['slug'] }}">
-                        <span class="folderName" style="font-size: 18px;font-weight: 600">{!! $value['name'] !!}</span>
+                        <span class="folderName child-breadcrumbs">{!! $value['name'] !!}</span>
                     @endif
                 @endforeach
             </span>
@@ -63,9 +63,6 @@
     </div>
 </div>
 <div class="messages"></div>
-{{--@if(isset($errors))--}}
-{{--<div class="response-message"> {!! $errors->first() !!} </div>--}}
-{{--@endif--}}
 <div class="filemanager">
     <ul class="data">
         <ul id="load_data" class="data animated img-gallery">
@@ -155,7 +152,7 @@
                 <input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input form-control custom-input" required autofocus>
                 <br/>
                 <input type="hidden" name="path" value="{{@$folder_path}}">
-                <button type="submit" class="btn">ADD</button>
+                <button type="submit" class="btn filemanager-btn float-none">ADD</button>
             </div>
         </form>
     </div>
@@ -707,6 +704,15 @@
         font-size: 20px !important;
         margin: 10px 0px 0px 15px !important;
         color:#ffffff !important;
+    }
+    .child-breadcrumbs {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        text-decoration: none !important;
+    }
+    .float-none {
+        float: none !important;
     }
     @media all and (max-width: 568px) {
         .folders {
