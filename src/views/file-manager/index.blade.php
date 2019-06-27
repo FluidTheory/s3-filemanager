@@ -152,7 +152,7 @@
                 <input type="text" name="folder_name" placeholder="Enter Folder Name" value="" class="input form-control custom-input" required autofocus>
                 <br/>
                 <input type="hidden" name="path" value="{{@$folder_path}}">
-                <button type="submit" class="btn filemanager-btn float-none">ADD</button>
+                <button type="submit" class="btn add-btn">ADD</button>
             </div>
         </form>
     </div>
@@ -711,8 +711,16 @@
         color: #ffffff;
         text-decoration: none !important;
     }
-    .float-none {
+    .add-btn {
+        color: #ffffff;
+        margin-top: 0px;
+        cursor: pointer;
+        background: #40a7de !important;
         float: none !important;
+    }
+    .add-btn:hover {
+        background-color: #212529 !important;
+        color: #ffffff !important;
     }
     @media all and (max-width: 568px) {
         .folders {
