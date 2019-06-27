@@ -26,7 +26,7 @@
                                 <a href="/filemanager?path={{$client_id}}"><i class="fas fa-home custom-breadcrumbs"></i></a>
                                 <input type="hidden" class="path" name="folder_path" value="{{ $client_id }}">
                 @foreach($breadcrumbs as $key => $value)
-                    <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold">→</span>
+                    <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold"> / </span>
                     @if($path != $value['slug'])
                         <a class="child-breadcrumbs" href="/filemanager?path={{$value['slug']}}">{!! $value['name'] !!}</a>
                     @else
