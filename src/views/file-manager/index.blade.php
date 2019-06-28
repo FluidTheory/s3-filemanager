@@ -270,6 +270,7 @@
                 var id = $(this).data('id');
                 var token = $('input[name=_token]').val();
                 if(id != ''){
+                    parent.$('#loader').show();
                     $.ajax({
                         type: 'POST',
                         url: '/delete-folders',
@@ -281,6 +282,14 @@
                         }
                     });
                 }
+            }
+        });
+
+        $('.add-btn').click(function () {
+            var folderName = $('.custom-input').val();
+            if(folderName != ''){
+                parent.$('#loader').show();
+                $('#fileManageAddFolderModal').css('display','none');
             }
         });
 
@@ -677,10 +686,9 @@
         width: 95%;
         height: 200px;
         position: absolute;
-        top: 85%;
+        top: 90%;
     }
     .folder-box-bottom {
-        opacity: 0;
         -webkit-box-align: center;
         align-items: center;
         z-index: 1;
