@@ -173,8 +173,10 @@ class FileManagerController extends Controller
                     } else {
                         $directoryId = null;
                     }
+                } else{
+                    $directoryIds = array(0);
+                    $directoryId = null;
                 }
-
                 $image = Asset::insertGetId(array(
                     'name' => $name,
                     'client_id' => array_shift($directoryIds),
