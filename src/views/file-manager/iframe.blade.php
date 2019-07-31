@@ -65,7 +65,6 @@
                     var url = '/filemanager?path=' + client_id;
                 }
                 cancel(client_id);
-                $('#file_manager').attr('src', url);
             }else{
                 var iframe = $('#file_manager').contents();
 
@@ -129,11 +128,14 @@
     }
 
     function cancel(client_id){
-        $(document).on('click','#fm_cancel', function () {
-            var url = '/filemanager?path='+client_id;
-            $('#file_manager').attr('src', url);
-        });
+        var url = '/filemanager?path='+client_id;
+        $('#file_manager').attr('src', url);
     }
+
+    $(document).on('click','#fm_cancel', function () {
+        var client_id = $('#folder-id').val();
+        cancel(client_id);
+    });
 
     $(document).ready(function () {
         $('.close').click(function () {
