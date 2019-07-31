@@ -370,7 +370,8 @@
     }
 
 
-    function show_border(checkName,current, actionFrom = null){
+    function show_border(checkName,current){
+        var actionFrom = arguments.length > 2 && arguments[2] !== null ? arguments[2] : null;
         var type = window.frameElement.getAttribute("data-type");
         if(type == 'all'){ // For all Files
 
