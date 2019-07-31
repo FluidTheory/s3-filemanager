@@ -42,7 +42,9 @@
     $(document).on('click', '.trumbowyg-modal-submit', function () {
         $('#fileManagerModal').attr('current', '').modal('hide');
     });
-    function getS3Images(client_id,multiple,current = '',type = '') {
+    function getS3Images(client_id,multiple) {
+        var current = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+        var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
         if(client_id === undefined || client_id === ''){
             client_id = null;
             $('#file_manager').hide();
