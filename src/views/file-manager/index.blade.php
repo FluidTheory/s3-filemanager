@@ -161,16 +161,15 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
+    // Copy to clipboard
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).attr('copyval')).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
     $(document).ready(function () {
-        // Copy to clipboard
-        function copyToClipboard(element) {
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($(element).attr('copyval')).select();
-            document.execCommand("copy");
-            $temp.remove();
-        }
-
         // load images
         var limit = 20;
         var start = 1;
