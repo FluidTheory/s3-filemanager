@@ -123,6 +123,7 @@
                         </span>
                         <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
                         <div class="box-bottom">
+                            <span class="copy_clipboard" onclick="copyToClipboard(this)" copyval="{{$k['src']}}">Copy Url</span>
                             <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
                             <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-type="{{$k['type']}}" data-action="del" data-name="file" >
                             <i class="fas fa-trash del-icon"></i>
@@ -161,6 +162,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Copy to clipboard
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).attr('copyval')).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
 
         // load images
         var limit = 20;
@@ -486,7 +495,15 @@
     .image-li:hover .image{
         opacity: 0.35;
     }
-
+    .copy_clipboard{
+        color: #ffffff;
+        position: absolute;
+        left: 4px;
+        bottom: 30px;
+        padding: 5px;
+        border: 2px solid #ffffff;
+        border-radius: 5px;
+    }
     .image-size{
         color: #ffffff;
         font-size: 15px;
