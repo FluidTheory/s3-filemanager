@@ -168,8 +168,9 @@
         $temp.val($(element).attr('copyval')).select();
         document.execCommand("copy");
         $temp.remove();
-        $(element).css('color','blue');
-        setTimeout(function() { $(element).removeAttribute('style'); }, 5000);
+        $(element).css('color','#40a7de');
+        $('.image-li').removeClass('selected');
+        setTimeout(function() { $(element).css('color','#ffffff'); }, 5000);
     }
     $(document).ready(function () {
         // load images
