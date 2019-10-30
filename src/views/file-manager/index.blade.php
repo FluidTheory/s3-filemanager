@@ -169,7 +169,7 @@
         document.execCommand("copy");
         $temp.remove();
         $(element).css('color','#40a7de');
-        $('.image-li').removeClass('selected');
+        $('li.image-li').removeClass('selected');
         setTimeout(function() { $(element).css('color','#ffffff'); }, 5000);
     }
     $(document).ready(function () {
@@ -503,8 +503,6 @@
         left: 4px;
         bottom: 30px;
         padding: 5px;
-        border: 2px solid #ffffff;
-        border-radius: 5px;
     }
     .image-size{
         color: #ffffff;
