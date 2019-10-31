@@ -205,6 +205,7 @@
                         data += '</span>';
                         data += '<span class="name" value="'+this.name+'">'+this.name+'</span>';
                         data += '<div class="box-bottom">';
+                        data += '<span class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="'+this.src+'"></span>';
                         data += '<span class="image-size" value="'+this.size+'">'+this.size+' KB</span><span class="delbtn" data-value="'+this.name+'" data-id="'+this.id+'" data-type="'+this.type+'" data-action="del" data-name="file"> <i class="fas fa-trash del-icon"></i>';
                         data += '</span>';
                         data += '</div>';
