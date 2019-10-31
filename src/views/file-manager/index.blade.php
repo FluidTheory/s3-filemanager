@@ -123,7 +123,7 @@
                         </span>
                         <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
                         <div class="box-bottom">
-                            <span class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="{{$k['src']}}"></span>
+                            <span id="copyClipboard" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="{{$k['src']}}"></span>
                             <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
                             <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-type="{{$k['type']}}" data-action="del" data-name="file" >
                             <i class="fas fa-trash del-icon"></i>
@@ -169,7 +169,7 @@
         document.execCommand("copy");
         $temp.remove();
         $(element).css('color','#40a7de');
-        $('li.image-li').removeClass('selected');
+        parent.$('li.image-li').removeClass('selected');
         setTimeout(function() { $(element).css('color','#ffffff'); }, 5000);
     }
     $(document).ready(function () {
@@ -311,7 +311,9 @@
         });
     });
 
-    $(document).on('click','.image-li, .check-input, .delbtn', function () {
+    $(document).on('click','.image-li, .check-input, .delbtn', function (e) {
+        if(e.target.id == "copyClipboard")
+            return;
         var type = $(this).data('type');
         var id = $(this).data('id');
         var action = $(this).data('action');
