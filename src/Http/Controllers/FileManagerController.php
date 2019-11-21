@@ -142,9 +142,13 @@ class FileManagerController extends Controller
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $mimeType = finfo_file($finfo, $file);
                 $name = $file->getClientOriginalName();
-                $name = str_replace(" ","-",$name);
+                $imgExt = pathinfo($name, PATHINFO_EXTENSION);
+                $imgName = preg_replace('/\\.[^.\\s]{3,4}$/', '', $name);
 
-                $arr = explode('.',$name);
+                $imgName = preg_replace('/[^A-Za-z0-9\-]/', '-', $imgName);
+                $iName = $imgName.'.'.$imgExt;
+
+                $arr = explode('.',$iName);
                 $ext = end($arr);
 
                 if($ext == 'mp4'){
@@ -178,7 +182,7 @@ class FileManagerController extends Controller
                     $directoryId = null;
                 }
                 $image = Asset::insertGetId(array(
-                    'name' => $name,
+                    'name' => $iName,
                     'client_id' => array_shift($directoryIds),
                     'width' => $width,
                     'height' => $height,
@@ -189,10 +193,7 @@ class FileManagerController extends Controller
                     'created_at' => gmdate("Y-m-d H:i:s")
                 ));
 
-                $dir = $image;
-                $result = Storage::disk('s3')->makeDirectory($dir);
-
-                $filePath = $image . '/' . $name;
+                $filePath = $image . '/' . $iName;
                 $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
 
                 $image_array[] = $image;
