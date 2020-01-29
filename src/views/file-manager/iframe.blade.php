@@ -29,6 +29,9 @@
         getS3Images(client_id,multiple,current,type);
     });
     $(document).on('click','.clear-file', function () {
+        dataArray = [];
+        $('#file_manager').contents().find('.assetData').hide();
+        console.log(dataArray);
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
     });

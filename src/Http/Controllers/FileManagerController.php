@@ -65,6 +65,9 @@ class FileManagerController extends Controller
                 'type' => $value['type'],
                 'name' => $name,
                 'modified' => $dt,
+                'alt' => $value['alt'],
+                'title' => $value['title'],
+                'desc' => $value['description'],
                 'size' => $imgSize,
                 'src' => env('AWS_URL').$value['id'].'/'.$name
             ];
@@ -142,13 +145,9 @@ class FileManagerController extends Controller
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $mimeType = finfo_file($finfo, $file);
                 $name = $file->getClientOriginalName();
-                $imgExt = pathinfo($name, PATHINFO_EXTENSION);
-                $imgName = preg_replace('/\\.[^.\\s]{3,4}$/', '', $name);
+                $name = str_replace(" ","-",$name);
 
-                $imgName = preg_replace('/[^A-Za-z0-9\-]/', '-', $imgName);
-                $iName = $imgName.'.'.$imgExt;
-
-                $arr = explode('.',$iName);
+                $arr = explode('.',$name);
                 $ext = end($arr);
 
                 if($ext == 'mp4'){
@@ -182,7 +181,7 @@ class FileManagerController extends Controller
                     $directoryId = null;
                 }
                 $image = Asset::insertGetId(array(
-                    'name' => $iName,
+                    'name' => $name,
                     'client_id' => array_shift($directoryIds),
                     'width' => $width,
                     'height' => $height,
@@ -193,7 +192,10 @@ class FileManagerController extends Controller
                     'created_at' => gmdate("Y-m-d H:i:s")
                 ));
 
-                $filePath = $image . '/' . $iName;
+                $dir = $image;
+                $result = Storage::disk('s3')->makeDirectory($dir);
+
+                $filePath = $image . '/' . $name;
                 $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
 
                 $image_array[] = $image;
@@ -277,5 +279,32 @@ class FileManagerController extends Controller
             $response['status'] = 'false';
             return $response;
         }
+    }
+
+    /**
+     * Get Alt, Title and description of Asset in File manager
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     */
+    public function updateAssetData(Request $request)
+    {
+        $data = $request->all();
+        $response = array();
+        if(!empty($data['assetId'])){
+            $update = array(
+                'alt'=> $data['alt'],
+                'title'=> $data['title'],
+                'description'=> $data['desc'],
+            );
+            $result = Asset::where('id', $data['assetId'])->update($update);
+            if(!empty($result)){
+                $response['error'] = 'false';
+            } else{
+                $response['error'] = 'true';
+            }
+        } else{
+            $response['error'] = 'true';
+        }
+        return $response;
     }
 }

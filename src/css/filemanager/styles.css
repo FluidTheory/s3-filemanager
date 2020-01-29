@@ -15,7 +15,7 @@
 -------------------------*/
 
 body {
-    background-color: #23232e;
+    background-color: transparent;
     font: 14px normal Arial, Helvetica, sans-serif;
     z-index: -4;
 }
@@ -178,7 +178,7 @@ body {
     width: 307px;
     height: 118px;
     list-style-type: none;
-    margin: 5px 0.25% 5px 0.5%;
+    margin: 5px 0.75% 5px 0.75%;
     display: inline-block;
     position: relative;
     overflow: hidden;
@@ -209,9 +209,9 @@ body {
 
 .filemanager .data li .name {
     color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 18px;
     width: 70%;
     display: inline-block;
     position: absolute;
@@ -302,9 +302,6 @@ body {
 		Icons
 -------------------------*/
 
-.icon {
-    font-size: 23px;
-}
 .icon.folder {
     display: inline-block;
     margin: 1.5em 1em 1em 1em; /**** Vrushabh 25/12/18 ****/
@@ -630,10 +627,6 @@ footer #tzine-actions iframe{
 .btn {
     margin: 10px;
     padding: 10px;
-    width: 100px;
-    background: green;
-    border-radius: 5px;
-    font-size: 15px;
 }
 .input {
     display: block;
@@ -691,7 +684,7 @@ footer #tzine-actions iframe{
     background: #ffffff !important;
     float: right;
     margin-top: 0px;
-    cursor: pointer;
+    color: #000;
 }
 /***/
 
@@ -720,3 +713,347 @@ li.folders {
     height: 50% !important;
     border-radius: 5px !important;
 }
+#fm_header{
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    margin: 0px !important;
+    background-color: #38a7de;
+    top: 0px;
+    padding-top: 20px;
+    z-index: 1000;
+}
+.filemanager .data li {
+    border-radius: 10px;
+    background-color: #373743;
+    border: 1px solid #373743;
+    width: 18%;
+    height: 180px;
+}
+.img-gallery img.img-select{
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.image-li:hover .image{
+    opacity: 0.35;
+}
+.copy_clipboard{
+    color: #ffffff;
+    position: absolute;
+    left: 4px;
+    bottom: 40px;
+    padding: 5px;
+}
+.image-size{
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    left: 4px;
+    bottom: 20px;
+}
+.delbtn{
+    position: absolute;
+    right: 4px;
+    bottom: 20px;
+}
+
+.inputGroup {
+    position: absolute;
+    right: 4px;
+    top: 5px;
+    opacity: 0;
+}
+.inputGroup label {
+    padding: 12px 30px;
+    display: inline-block;
+    text-align: left;
+    color: #3C454C;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    transition: color 200ms ease-in;
+    overflow: hidden;
+
+}
+.inputGroup label:before {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale3d(1, 1, 1);
+    transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    opacity: 0;
+    z-index: -1;
+}
+
+.inputGroup label:after {
+    width: 16px;
+    height: 16px;
+    content: '';
+    border: 2px solid #ccc;
+    background-color: #ccc;
+    background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+    background-repeat: no-repeat;
+    background-position: -2px -3px;
+    border-radius: 50%;
+    z-index: 2;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 200ms ease-in;
+}
+
+.inputGroup input:checked ~ label {
+    color: #fff;
+}
+.inputGroup input:checked ~ label:before {
+    transform: translate(-50%, -50%) scale3d(56, 56, 1);
+    opacity: 1;
+}
+.inputGroup input:checked ~ label:after {
+    background-color: #2684FF;
+    border-color: #2684FF;
+}
+
+.check-input {
+    width: 32px;
+    height: 32px;
+    order: 1;
+    z-index: 2;
+    position: relative;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.outer-div{
+    width: 95%;
+    height: 200px;
+    position: absolute;
+    top: 0px;
+}
+
+.box-bottom{
+    opacity: 0;
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 1;
+    bottom: 10px;
+    left: 5px;
+    position: absolute;
+    width: 100%;
+    transform: translateY(35px);
+    transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+}
+.outer-div .name{
+    opacity: 0;
+}
+.filemanager .data li:hover > .outer-div .box-bottom{
+    opacity: 1;
+    transform: translateY(0px);
+    transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+}
+.filemanager .data li:hover > .outer-div .name, .filemanager .data li:hover > .outer-div .inputGroup{
+    opacity: 1;
+}
+li.selected .inputGroup{
+    opacity: 1;
+}
+.filemanager-btn:hover {
+    background-color: #212529 !important;
+    color: #ffffff !important;
+}
+.add-background{
+    border: 2px solid #2684FF !important;
+}
+.loader {
+    position: absolute;
+    left: 49%;
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #3498db;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+    opacity: 0.5;
+    pointer-events: none;
+}
+.error-message {
+    float: left;
+    margin-left: 5%;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Satish Style add css*/
+.model-content-folder{
+    background-color: #fefefe !important;
+    margin: auto !important;
+    border: 1px solid #888 !important;
+    width: 22% !important;
+    height: 50% !important;
+    border-radius: 5px !important;
+}
+.custom-close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 24px;
+    margin: 8px;
+}
+.custom-folder {
+    display: inline-block !important;
+    margin: 0.8em 0em 0.5em 1em !important;
+    background-color: transparent !important;
+    overflow: hidden !important;
+}
+.custom-input {
+    width: 50%;
+    height: 20px;
+    border-radius: 5px
+}
+.folder-outer-div {
+    width: 95%;
+    height: 200px;
+    position: absolute;
+    top: 90%;
+}
+.folder-box-bottom {
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 1;
+    bottom: 10px;
+    left: 5px;
+    position: relative;
+    width: 100%;
+    transform: translateY(35px);
+    transition: transform 0.2s ease 0s, opacity 0.5s ease 0s;
+}
+.mobile-icons {
+    display: none;
+}
+.icon-font {
+    font-size: 30px;
+}
+.custom-breadcrumbs {
+    font-size: 20px !important;
+    margin: 10px 0px 0px 15px !important;
+    color:#ffffff !important;
+}
+.child-breadcrumbs {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none !important;
+}
+.add-btn {
+    color: #ffffff;
+    margin-top: 0px;
+    cursor: pointer;
+    background: #40a7de !important;
+    float: none !important;
+}
+.add-btn:hover {
+    background-color: #212529 !important;
+    color: #ffffff !important;
+}
+@media all and (max-width: 568px) {
+    .folders {
+        height: 150px !important;
+    }
+    .desktop-btn {
+        display: none;
+    }
+    .model-content-folder {
+        width: 70% !important;
+    }
+    .mobile-icons {
+        display: initial;
+    }
+    .btn-icon {
+        margin: 5px !important;
+        padding: 8px !important;
+        width: 36px !important;
+        border-radius: 15px !important;
+        font-size: 14px !important;
+    }
+    .folder-outer-div {
+        top: 82%;
+    }
+    .custom-folder {
+        margin: 0.8em 0em 0.5em 1em !important;
+    }
+    .icon.folder{
+        margin: 0.7em 1em 1em 0.6em;
+    }
+    .insert-btn-icon {
+        margin: 5px !important;
+        padding: 8px !important;
+        width: 65px !important;
+        border-radius: 15px !important;
+        font-size: 14px !important;
+    }
+}
+.assetData{
+    display: none;
+    position: fixed;
+    right: 0;
+}
+#imgThumb{
+    width: 120px;
+    height: 120px;
+}
+.updateBtn {
+    background: #38a7de !important;
+    font-size: 12px;
+    margin: 0;
+}
+#messageBox{
+    font-weight: 600;
+    margin-left: 20px;
+}
+span.success{
+    color: green;
+}
+span.fail{
+    color: red;
+}
+.limitTxt{
+    font-size: 12px;
+}
+.md-form.md-outline{
+    margin-bottom: 1rem;
+}
+/*end css*/
