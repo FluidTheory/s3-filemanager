@@ -16,11 +16,6 @@
       <executable />
     </execution>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>$name</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -107,13 +102,6 @@
       <workItem from="1571235203481" duration="665000" />
       <workItem from="1572262681156" duration="6019000" />
       <workItem from="1572441466348" duration="1486000" />
-    </task>
-    <task id="LOCAL-00046" summary="[NR-952] - File manager Package bug fixed">
-      <created>1558697359211</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1558697359211</updated>
     </task>
     <task id="LOCAL-00047" summary="[NR-952] - File manager Package bug fixed">
       <created>1558701220254</created>
@@ -451,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580285783347</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="[Dashboard - 1155862725780609] - Alt-title,description feature added in media manager">
+      <created>1580292067098</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1580292067099</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -68,7 +68,7 @@
 </div>
 <div class="messages"></div>
 <div class="filemanager row">
-    <div class="col-md-9">
+    <div class="col-sm-6 col-md-9">
     <ul class="data">
         <ul id="load_data" class="data animated img-gallery">
             @foreach($final['directories'] as $k)
@@ -140,7 +140,7 @@
     </ul>
     </div>
 
-    <div class="col-md-3 assetData">
+    <div class="col-sm-6 col-md-3 assetData">
         <div class="col-md-12 text-center">
             <img class="z-depth-2" alt="100x100" id="imgThumb" src="" data-holder-rendered="true">
             <div class="my-2" id="imgName"></div>
@@ -352,9 +352,9 @@
             $.post( "/updateAssetData", { _token: $('input[name=_token]').val(), assetId: id,alt: $.trim($('#alt').val()),title: $('#title').val(), desc: $.trim($('#description').val()) })
             .done(function(data) {
                 if(data.error == 'false'){
-                    $("#option-"+id).data('alt',$('#alt').text());
-                    $("#option-"+id).data('title',$('#title').val());
-                    $("#option-"+id).data('desc',$('#description').text());
+                    $("#option-"+id).data('alt',$.trim($('#alt').val()));
+                    $("#option-"+id).data('title',$.trim($('#title').val()));
+                    $("#option-"+id).data('desc',$.trim($('#description').val()));
                     $('#messageBox').removeClass('fail').addClass('success');
                     $('#messageBox').html('Updated successfully.').show().delay(5000).fadeOut(800);
                 } else{
@@ -473,9 +473,9 @@
                         $('#imgThumb').attr('src',elId.closest('li.image-li').find('img.img-select').attr('src'));
                         $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
                         $('#assetId').val(id);
-                        $('#alt').text(elId.data('alt'));
+                        $('#alt').val(elId.data('alt'));
                         $('#title').val(elId.data('title'));
-                        $('#description').text(elId.data('desc'));
+                        $('#description').val(elId.data('desc'));
                         setDataStyle();
                     } else{
                         $('.assetData').hide();
@@ -504,9 +504,9 @@
             $('#imgThumb').attr('src',elId.closest('li.image-li').find('img.img-select').attr('src'));
             $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
             $('#assetId').val(assetId);
-            $('#alt').text(elId.data('alt'));
+            $('#alt').val(elId.data('alt'));
             $('#title').val(elId.data('title'));
-            $('#description').text(elId.data('desc'));
+            $('#description').val(elId.data('desc'));
             setDataStyle();
 
             if(actionFrom == 'del') {

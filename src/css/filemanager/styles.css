@@ -36,6 +36,7 @@ body {
         margin: 30px auto 0;
         padding: 1px;
         width: 100vw;
+        margin-top: 10%;
     }
 }
 @media all and (max-width: 568px) {
@@ -279,10 +280,29 @@ body {
 @media all and (max-width:965px) {
 
     .filemanager .data li {
-        width: 100%;
-        margin: 5px 0;
+        margin: 5px;
+        width: 45% !important;
+        height: 130px !important;
     }
-
+    .icon.folder{
+        margin: 1.75em 1.5em !important;
+    }
+    .icon-font {
+        font-size: 20px !important;
+    }
+    .delbtn {
+        right: 10px !important;
+        bottom: 70px !important;
+    }
+    .image-size{
+        bottom: 70px !important;
+    }
+    .copy_clipboard{
+        bottom: 85px !important;
+    }
+    .assetData{
+        top: 10%;
+    }
 }
 
 /* Chrome, Safari, Opera */
@@ -1055,5 +1075,8 @@ span.fail{
 }
 .md-form.md-outline{
     margin-bottom: 1rem;
+}
+.assetData{
+    top: 10%;
 }
 /*end css*/
