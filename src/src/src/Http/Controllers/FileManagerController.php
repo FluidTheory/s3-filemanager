@@ -1,0 +1,281 @@
+<?php
+
+namespace Fluidtheory\Filemanager\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Fluidtheory\Filemanager\Models\Asset;
+use Fluidtheory\Filemanager\Models\Directory;
+use Illuminate\Http\Request;
+use Auth;
+use File;
+use Illuminate\Support\Facades\Storage;
+use DB;
+
+class FileManagerController extends Controller
+{
+    /**
+     * Index page of the file manager.
+     *
+     * @return mixed
+     */
+    public function index()
+    {
+        $message = '';
+        $breadcrumbs = array();
+        $path = $_GET;
+        $files = [];
+        $last_id = 0;
+        $multiple = 'false';
+        $image_ids = array();
+        $pathExp = explode("/",$path['path']);
+        if(empty($pathExp[1])){
+            $client_id = $pathExp[0];
+            $directories = Directory::where(['client_id' => $client_id,'parent_id' => 0,'deleted_at' => null])->get();
+            $countImage = 20 - count($directories);
+            $images = Asset::where(['client_id' => $client_id,'directory_id' => null,'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
+        } else {
+            $client_id = $pathExp[0];
+            $directories = Directory::where(['client_id' => $pathExp[0],'parent_id' => end($pathExp),'deleted_at' => null])->get();
+            $countImage = 20 - count($directories);
+            $images = Asset::where(['client_id' => $pathExp[0],'directory_id' => end($pathExp)])->where('deleted_at',null)->orderBy('id', 'DESC')->limit($countImage)->get();
+            $slug_url = $client_id;
+            foreach ($pathExp as $key => $value){
+                if($client_id != array_shift($pathExp)) {
+                    $lastFolder = Directory::where(['client_id' => $client_id,'id' => $value])->first();
+                    if (!empty($lastFolder->parent_id)) {
+                        $slug_url = $slug_url . '/' . $lastFolder->id;
+                        $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
+                    } else {
+                        $slug_url =  $slug_url . '/' .$lastFolder->id;
+                        $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
+                    }
+                }
+            }
+        }
+        foreach ($images as $key => $value) {
+            if($key == 0){
+                $last_id = $value['id'];
+            }
+            $dt = $value['updated_at'];
+            $name = $value['name'];
+
+            $imgSize = $value['size'];
+            $files[] = [
+                'id' => $value['id'],
+                'type' => $value['type'],
+                'name' => $name,
+                'modified' => $dt,
+                'size' => $imgSize,
+                'src' => env('AWS_URL').$value['id'].'/'.$name
+            ];
+        }
+
+        $modified = array();
+        foreach ($files as $key => $value)
+        {
+            $modified[$key] = $value['modified'];
+        }
+        $final = [
+            'files' => $files,
+            'directories' => $directories
+        ];
+
+        if(isset($path['ids'])){
+            $image_ids = explode(',',$path['ids']);
+        }
+        if(isset($path['multiple'])){
+            $multiple = $path['multiple'];
+        }
+        if(!empty($path['message'])){
+            $message = $path['message'];
+        }
+        return view('filemanager::file-manager.index')->with(array('message' => $message,'multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id,'breadcrumbs' => $breadcrumbs));
+    }
+
+    /**
+     * Fetching the files/images from the DB.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function fetchImages(Request $request){
+        $data = $request->all();
+        $files = [];
+        $image_ids = array();
+        $images = Asset::where('client_id', $data['id'])->where('deleted_at',null)->orderBy('id', 'DESC')->offset($data['start'])->limit($data['limit'])->get();
+
+        foreach ($images as $key => $value) {
+            $dt = $value['updated_at'];
+            $name = $value['name'];
+
+            $imgSize = $value['size'];
+            $files[] = [
+                'id' => $value['id'],
+                'type' => $value['type'],
+                'name' => $name,
+                'modified' => $dt,
+                'size' => $imgSize,
+                'src' => env('AWS_URL').$value['id'].'/'.$name
+            ];
+        }
+        return $files;
+    }
+
+    /**
+     * File upload functionality into S3.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function upload(Request $request)
+    {
+        $data = $request->all();
+        $width = 0;
+        $height = 0;
+        $multiSelect = $data['multi-select'];
+
+        $image_array = array();
+        if ($request->hasFile('file')) {
+            $files = $request->file('file');
+
+            foreach ($files as $file) {
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $file);
+                $name = $file->getClientOriginalName();
+                $imgExt = pathinfo($name, PATHINFO_EXTENSION);
+                $imgName = preg_replace('/\\.[^.\\s]{3,4}$/', '', $name);
+
+                $imgName = preg_replace('/[^A-Za-z0-9\-]/', '-', $imgName);
+                $iName = $imgName.'.'.$imgExt;
+
+                $arr = explode('.',$iName);
+                $ext = end($arr);
+
+                if($ext == 'mp4'){
+                    $type = 'video';
+                } elseif($ext == 'pdf') {
+                    $type = 'pdf';
+                }else {
+                    $param = getimagesize($file);
+                    $width = $param[0];
+                    $height = $param[1];
+                    $type = 'image';
+                }
+
+                $size = floor(filesize($file)/1024);
+
+                if($size > 10240){
+                    $error =  'Please upload file less than 10MB .';
+                    return redirect()->secure('filemanager?path='.$data["folder_path"].'&message='.$error)->with('message','test message');
+                }
+
+                //directories
+                if(!empty($data['folder_path'])){
+                    $directoryIds = explode("/",$data['folder_path']);
+                    if(!empty($directoryIds[1])){
+                        $directoryId = end($directoryIds);
+                    } else {
+                        $directoryId = null;
+                    }
+                } else{
+                    $directoryIds = array(0);
+                    $directoryId = null;
+                }
+                $image = Asset::insertGetId(array(
+                    'name' => $iName,
+                    'client_id' => array_shift($directoryIds),
+                    'width' => $width,
+                    'height' => $height,
+                    'size' => $size,
+                    'type' => $type,
+                    'mime_type' => $mimeType,
+                    'directory_id' => $directoryId,
+                    'created_at' => gmdate("Y-m-d H:i:s")
+                ));
+
+                $filePath = $image . '/' . $iName;
+                $results = Storage::disk('s3')->put($filePath, file_get_contents($file));
+
+                $image_array[] = $image;
+            }
+            $ids = implode(',',$image_array);
+            if ($results) {
+                return redirect()->secure('/filemanager?path='.$data['folder_path'].'&ids='.$ids.'&multiple='.$multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
+            } else {
+                return redirect()->back()->with('flash', 'danger')->with('error', 'Image not uploaded.');
+            }
+        }
+    }
+
+    /**
+     * Add folders.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function addfolder(Request $request)
+    {
+        $data = $request->all();
+        $path = explode("/",$data['path']);
+        if(!empty($path[1])){
+            $clientId = $path[0];
+            $parentId = end($path);
+        } else {
+            $clientId = $path[0];
+            $parentId = 0;
+        }
+        //insert data.
+        $insert = array(
+            'client_id' => $clientId,
+            'parent_id' => $parentId,
+            'name' => $data['folder_name'],
+            'created_at' => gmdate("Y-m-d H:i:s")
+        );
+        //create new folder into table.
+        $result = Directory::create($insert);
+        if ($result) {
+            return redirect()->back()->with('flash', 'success')->with('message', 'Folder Created successfully');
+        } else {
+            return redirect()->back()->with('flash', 'danger')->with('error', 'Folder not Created.');
+        }
+    }
+
+    /**
+     * Delete files only.
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function delete(Request $request)
+    {
+        $data = $request->all();
+        $del_file = Asset::where('id','=',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+
+        if ($del_file) {
+            return 'true';
+        } else {
+            return 'false';
+        }
+    }
+
+    /**
+     * Delete folders and files.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function deleteFolder(Request $request){
+        $data = $request->all();
+        $response = array();
+        $parentDirectory = Directory::where('id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        $childDirectory = Directory::where('parent_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        $asset = Asset::where('directory_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        if($parentDirectory || $childDirectory || $asset){
+            $response['status'] = 'true';
+            return $response;
+        } else {
+            $response['status'] = 'false';
+            return $response;
+        }
+    }
+}
