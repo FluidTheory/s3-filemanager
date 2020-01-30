@@ -255,7 +255,7 @@
                         data += '</span>';
                         data += '<div id="outer-' + this.id + '" class="outer-div">';
                         data += '<span class="inputGroup">';
-                        data += '<input class="check-input check-' + this.id + ' ' + (this.type == "image" ? "checkb-image" : "checkb-video") + '" id="option-' + this.id + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="box" ="' + this.alt + '" data-title="' + this.title + '" data-desc="' + this.desc + '" name="option' + this.id + '" type="checkbox" disabled/>';
+                        data += '<input class="check-input check-' + this.id + ' ' + (this.type == "image" ? "checkb-image" : "checkb-video") + '" id="option-' + this.id + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="box" data-alt="' + this.alt + '" data-title="' + this.title + '" data-desc="' + this.desc + '" name="option' + this.id + '" type="checkbox" disabled/>';
                         data += '<label for="option-' + this.name + '"></label>';
                         data += '</span>';
                         data += '<span class="name" value="' + this.name + '">' + this.name + '</span>';
