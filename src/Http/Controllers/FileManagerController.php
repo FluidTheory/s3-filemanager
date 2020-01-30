@@ -27,33 +27,33 @@ class FileManagerController extends Controller
         $last_id = 0;
         $multiple = 'false';
         $image_ids = array();
-        $pathExp = explode("/",$path['path']);
-        if(empty($pathExp[1])){
+        $pathExp = explode("/", $path['path']);
+        if (empty($pathExp[1])) {
             $client_id = $pathExp[0];
-            $directories = Directory::where(['client_id' => $client_id,'parent_id' => 0,'deleted_at' => null])->get();
+            $directories = Directory::where(['client_id' => $client_id, 'parent_id' => 0, 'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
-            $images = Asset::where(['client_id' => $client_id,'directory_id' => null,'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
+            $images = Asset::where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
         } else {
             $client_id = $pathExp[0];
-            $directories = Directory::where(['client_id' => $pathExp[0],'parent_id' => end($pathExp),'deleted_at' => null])->get();
+            $directories = Directory::where(['client_id' => $pathExp[0], 'parent_id' => end($pathExp), 'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
-            $images = Asset::where(['client_id' => $pathExp[0],'directory_id' => end($pathExp)])->where('deleted_at',null)->orderBy('id', 'DESC')->limit($countImage)->get();
+            $images = Asset::where(['client_id' => $pathExp[0], 'directory_id' => end($pathExp)])->where('deleted_at', null)->orderBy('id', 'DESC')->limit($countImage)->get();
             $slug_url = $client_id;
-            foreach ($pathExp as $key => $value){
-                if($client_id != array_shift($pathExp)) {
-                    $lastFolder = Directory::where(['client_id' => $client_id,'id' => $value])->first();
+            foreach ($pathExp as $key => $value) {
+                if ($client_id != array_shift($pathExp)) {
+                    $lastFolder = Directory::where(['client_id' => $client_id, 'id' => $value])->first();
                     if (!empty($lastFolder->parent_id)) {
                         $slug_url = $slug_url . '/' . $lastFolder->id;
                         $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
                     } else {
-                        $slug_url =  $slug_url . '/' .$lastFolder->id;
+                        $slug_url = $slug_url . '/' . $lastFolder->id;
                         $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
                     }
                 }
             }
         }
         foreach ($images as $key => $value) {
-            if($key == 0){
+            if ($key == 0) {
                 $last_id = $value['id'];
             }
             $dt = $value['updated_at'];
@@ -69,13 +69,12 @@ class FileManagerController extends Controller
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'size' => $imgSize,
-                'src' => env('AWS_URL').$value['id'].'/'.$name
+                'src' => env('AWS_URL') . $value['id'] . '/' . $name
             ];
         }
 
         $modified = array();
-        foreach ($files as $key => $value)
-        {
+        foreach ($files as $key => $value) {
             $modified[$key] = $value['modified'];
         }
         $final = [
@@ -83,16 +82,16 @@ class FileManagerController extends Controller
             'directories' => $directories
         ];
 
-        if(isset($path['ids'])){
-            $image_ids = explode(',',$path['ids']);
+        if (isset($path['ids'])) {
+            $image_ids = explode(',', $path['ids']);
         }
-        if(isset($path['multiple'])){
+        if (isset($path['multiple'])) {
             $multiple = $path['multiple'];
         }
-        if(!empty($path['message'])){
+        if (!empty($path['message'])) {
             $message = $path['message'];
         }
-        return view('filemanager::file-manager.index')->with(array('message' => $message,'multiple' => $multiple,'image_ids' => $image_ids,'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'],'client_id' => $client_id,'breadcrumbs' => $breadcrumbs));
+        return view('filemanager::file-manager.index')->with(array('message' => $message, 'multiple' => $multiple, 'image_ids' => $image_ids, 'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'], 'client_id' => $client_id, 'breadcrumbs' => $breadcrumbs));
     }
 
     /**
@@ -101,11 +100,12 @@ class FileManagerController extends Controller
      * @param Request $request
      * @return array
      */
-    public function fetchImages(Request $request){
+    public function fetchImages(Request $request)
+    {
         $data = $request->all();
         $files = [];
         $image_ids = array();
-        $images = Asset::where('client_id', $data['id'])->where('deleted_at',null)->orderBy('id', 'DESC')->offset($data['start'])->limit($data['limit'])->get();
+        $images = Asset::where('client_id', $data['id'])->where('deleted_at', null)->orderBy('id', 'DESC')->offset($data['start'])->limit($data['limit'])->get();
 
         foreach ($images as $key => $value) {
             $dt = $value['updated_at'];
@@ -116,9 +116,12 @@ class FileManagerController extends Controller
                 'id' => $value['id'],
                 'type' => $value['type'],
                 'name' => $name,
+                'alt' => $value['alt'],
+                'title' => $value['title'],
+                'desc' => $value['description'],
                 'modified' => $dt,
                 'size' => $imgSize,
-                'src' => env('AWS_URL').$value['id'].'/'.$name
+                'src' => env('AWS_URL') . $value['id'] . '/' . $name
             ];
         }
         return $files;
@@ -145,38 +148,38 @@ class FileManagerController extends Controller
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $mimeType = finfo_file($finfo, $file);
                 $name = $file->getClientOriginalName();
-                $name = str_replace(" ","-",$name);
+                $name = str_replace(" ", "-", $name);
 
-                $arr = explode('.',$name);
+                $arr = explode('.', $name);
                 $ext = end($arr);
 
-                if($ext == 'mp4'){
+                if ($ext == 'mp4') {
                     $type = 'video';
-                } elseif($ext == 'pdf') {
+                } elseif ($ext == 'pdf') {
                     $type = 'pdf';
-                }else {
+                } else {
                     $param = getimagesize($file);
                     $width = $param[0];
                     $height = $param[1];
                     $type = 'image';
                 }
 
-                $size = floor(filesize($file)/1024);
+                $size = floor(filesize($file) / 1024);
 
-                if($size > 10240){
-                    $error =  'Please upload file less than 10MB .';
-                    return redirect()->secure('filemanager?path='.$data["folder_path"].'&message='.$error)->with('message','test message');
+                if ($size > 10240) {
+                    $error = 'Please upload file less than 10MB .';
+                    return redirect()->secure('filemanager?path=' . $data["folder_path"] . '&message=' . $error)->with('message', 'test message');
                 }
 
                 //directories
-                if(!empty($data['folder_path'])){
-                    $directoryIds = explode("/",$data['folder_path']);
-                    if(!empty($directoryIds[1])){
+                if (!empty($data['folder_path'])) {
+                    $directoryIds = explode("/", $data['folder_path']);
+                    if (!empty($directoryIds[1])) {
                         $directoryId = end($directoryIds);
                     } else {
                         $directoryId = null;
                     }
-                } else{
+                } else {
                     $directoryIds = array(0);
                     $directoryId = null;
                 }
@@ -200,9 +203,9 @@ class FileManagerController extends Controller
 
                 $image_array[] = $image;
             }
-            $ids = implode(',',$image_array);
+            $ids = implode(',', $image_array);
             if ($results) {
-                return redirect()->secure('/filemanager?path='.$data['folder_path'].'&ids='.$ids.'&multiple='.$multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
+                return redirect()->secure('/filemanager?path=' . $data['folder_path'] . '&ids=' . $ids . '&multiple=' . $multiSelect)->with('flash', 'success')->with('message', 'Image uploaded successfully');
             } else {
                 return redirect()->back()->with('flash', 'danger')->with('error', 'Image not uploaded.');
             }
@@ -218,8 +221,8 @@ class FileManagerController extends Controller
     public function addfolder(Request $request)
     {
         $data = $request->all();
-        $path = explode("/",$data['path']);
-        if(!empty($path[1])){
+        $path = explode("/", $data['path']);
+        if (!empty($path[1])) {
             $clientId = $path[0];
             $parentId = end($path);
         } else {
@@ -251,7 +254,7 @@ class FileManagerController extends Controller
     public function delete(Request $request)
     {
         $data = $request->all();
-        $del_file = Asset::where('id','=',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        $del_file = Asset::where('id', '=', $data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
 
         if ($del_file) {
             return 'true';
@@ -266,13 +269,14 @@ class FileManagerController extends Controller
      * @param Request $request
      * @return array
      */
-    public function deleteFolder(Request $request){
+    public function deleteFolder(Request $request)
+    {
         $data = $request->all();
         $response = array();
-        $parentDirectory = Directory::where('id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
-        $childDirectory = Directory::where('parent_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
-        $asset = Asset::where('directory_id',$data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
-        if($parentDirectory || $childDirectory || $asset){
+        $parentDirectory = Directory::where('id', $data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        $childDirectory = Directory::where('parent_id', $data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        $asset = Asset::where('directory_id', $data['id'])->update(array('deleted_at' => gmdate("Y-m-d H:i:s")));
+        if ($parentDirectory || $childDirectory || $asset) {
             $response['status'] = 'true';
             return $response;
         } else {
@@ -290,19 +294,19 @@ class FileManagerController extends Controller
     {
         $data = $request->all();
         $response = array();
-        if(!empty($data['assetId'])){
+        if (!empty($data['assetId'])) {
             $update = array(
-                'alt'=> $data['alt'],
-                'title'=> $data['title'],
-                'description'=> $data['desc'],
+                'alt' => $data['alt'],
+                'title' => $data['title'],
+                'description' => $data['desc'],
             );
             $result = Asset::where('id', $data['assetId'])->update($update);
-            if(!empty($result)){
+            if (!empty($result)) {
                 $response['error'] = 'false';
-            } else{
+            } else {
                 $response['error'] = 'true';
             }
-        } else{
+        } else {
             $response['error'] = 'true';
         }
         return $response;
