@@ -27,12 +27,14 @@
         </span>
         <form action="/filemanager/upload" method="post" enctype="multipart/form-data" role="form" id="upload-form">
             <span class="breadcrumbs">
-                                <a href="/filemanager?path={{$client_id}}"><i class="fas fa-home custom-breadcrumbs"></i></a>
+                                <a href="/filemanager?path={{$client_id}}"><i
+                                            class="fas fa-home custom-breadcrumbs"></i></a>
                                 <input type="hidden" class="path" name="folder_path" value="{{ $client_id }}">
                 @foreach($breadcrumbs as $key => $value)
                     <span class="arrow" style="color: #ffffff;font-size: 20px;font-weight: bold"> / </span>
                     @if($path != $value['slug'])
-                        <a class="child-breadcrumbs" href="/filemanager?path={{$value['slug']}}">{!! $value['name'] !!}</a>
+                        <a class="child-breadcrumbs"
+                           href="/filemanager?path={{$value['slug']}}">{!! $value['name'] !!}</a>
                     @else
                         <input type="hidden" class="path" name="folder_path" value="{{ $value['slug'] }}">
                         <span class="folderName child-breadcrumbs">{!! $value['name'] !!}</span>
@@ -42,7 +44,8 @@
             <input type="hidden" class="path" name="path" value="{{@$path}}">
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
-            <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf" id="file-input" multiple>
+            <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf"
+                   id="file-input" multiple>
             <span class="mobile-icons">
                 <button type="button" class="myBtn btn btn-default btn-square filemanager-btn">
                      <i class="fas fa-plus"></i>
@@ -69,12 +72,14 @@
 <div class="messages"></div>
 <div class="filemanager row">
     <div class="col-sm-6 col-md-9">
-    <ul class="data">
-        <ul id="load_data" class="data animated img-gallery">
-            @foreach($final['directories'] as $k)
-                <li class="folders">
+        <ul class="data">
+            <ul id="load_data" class="data animated img-gallery">
+                @foreach($final['directories'] as $k)
+                    <li class="folders">
                     <span class="folders">
-                        <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'" data-clientid="{{$k['client_id']}}" class="icon folder full folder-details icon-font"></span>
+                        <span onclick="location.href = '/filemanager?path={{ $path.'/'.$k['id'] }}'"
+                              data-clientid="{{$k['client_id']}}"
+                              class="icon folder full folder-details icon-font"></span>
                         <span class="name folder-name" :aria-valuemax="">{{$k['name']}}</span>
                         <div class="folder-outer-div">
                             <span class="folder-box-bottom">
@@ -82,62 +87,73 @@
                             </span>
                         </div>
                     </span>
-                </li>
-            @endforeach
-            <?php $count = 0; ?>
-            @foreach($final['files'] as $k)
-                <?php
-                $checked = '';
-                $li_class = '';
-                $ids = $k['id'];
-                if(!empty($image_ids) && in_array($ids, $image_ids)){
-                if($multiple == 'true'){
-                    $checked = 'checked';
-                    $li_class = 'add-background selected';
-                } else {
-                    if($count == 0){
+                    </li>
+                @endforeach
+                <?php $count = 0; ?>
+                @foreach($final['files'] as $k)
+                    <?php
+                    $checked = '';
+                    $li_class = '';
+                    $ids = $k['id'];
+                    if(!empty($image_ids) && in_array($ids, $image_ids)){
+                    if ($multiple == 'true') {
                         $checked = 'checked';
                         $li_class = 'add-background selected';
+                    } else {
+                        if ($count == 0) {
+                            $checked = 'checked';
+                            $li_class = 'add-background selected';
+                        }
+                        $count++;
                     }
-                    $count++;
-                }
-                ?>
-                <script>$("#insert-btn").show();</script>
-                <?php
-                }
-                ?>
-                <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" data-type="{{$k['type']}}" data-action="no" data-id="{!! $k['id'] !!}" id="li-{!! $k['id'] !!}">
+                    ?>
+                    <script>$("#insert-btn").show();</script>
+                    <?php
+                    }
+                    ?>
+                    <li class="image-li check-{{ $k['id'] }} {{ $li_class }}" data-type="{{$k['type']}}"
+                        data-action="no" data-id="{!! $k['id'] !!}" id="li-{!! $k['id'] !!}">
                     <span class="image">
                         @if($k['type'] == 'image' || $k['type'] == 'pdf')
-                            <img class="img-select" id="img-select" src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
-                                 data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight">
+                            <img class="img-select" id="img-select"
+                                 src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
+                                 data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}"
+                                 value="this.naturalHeight">
                         @endif
 
                         @if($k['type'] == 'video')
                             <video class="img-select" id="img-select"
-                                   data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}" value="this.naturalHeight" >
+                                   data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}"
+                                   value="this.naturalHeight">
                                 <source src="{{$k['src']}}" type="video/mp4">
                             </video>
                         @endif
                     </span>
-                    <div id="outer-{!! $k['id'] !!}" class="outer-div">
+                        <div id="outer-{!! $k['id'] !!}" class="outer-div">
                         <span class="inputGroup">
-                            <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}" data-id="{!! $k['id'] !!}" data-type="{{$k['type']}}" data-action="box" id="option-{!! $k['id'] !!}" data-alt="{!! $k['alt'] !!}" data-title="{!! $k['title'] !!}" data-desc="{!! $k['desc'] !!}" name="option{!! $k['id'] !!}" type="checkbox" disabled/>
+                            <input {{ $checked }} class="check-input check-{{ $k['id'] }} {{(($k['type'] == 'image') ? 'checkb-image' : 'checkb-video' )}}"
+                                   data-id="{!! $k['id'] !!}" data-type="{{$k['type']}}" data-action="box"
+                                   id="option-{!! $k['id'] !!}" data-alt="{!! $k['alt'] !!}"
+                                   data-title="{!! $k['title'] !!}" data-desc="{!! $k['desc'] !!}"
+                                   name="option{!! $k['id'] !!}" type="checkbox" disabled/>
                             <label for="option-{!! $k['name'] !!}"></label>
                         </span>
-                        <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
-                        <div class="box-bottom">
-                            <span id="copyClipboard" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="{{$k['src']}}"></span>
-                            <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
-                            <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}" data-type="{{$k['type']}}" data-action="del" data-name="file" >
+                            <span class="name" value="{{$k['name']}}">{{$k['name']}}</span>
+                            <div class="box-bottom">
+                                <span id="copyClipboard" data-toggle="tooltip" data-placement="top"
+                                      title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy"
+                                      onclick="copyToClipboard(this)" copyval="{{$k['src']}}"></span>
+                                <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
+                                <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}"
+                                      data-type="{{$k['type']}}" data-action="del" data-name="file">
                             <i class="fas fa-trash del-icon"></i>
                         </span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            @endforeach
+                    </li>
+                @endforeach
+            </ul>
         </ul>
-    </ul>
     </div>
 
     <div class="col-sm-6 col-md-3 assetData">
@@ -169,7 +185,8 @@
             </div>
             {{csrf_token()}}
             <input type="hidden" id="assetId" value="">
-            <button type="submit" class="btn btn-primary updateBtn">Update</button><span class="" id="messageBox"></span>
+            <button type="submit" class="btn btn-primary updateBtn">Update</button>
+            <span class="" id="messageBox"></span>
         </form>
     </div>
     <div id="load_data_message"></div>
@@ -191,7 +208,8 @@
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/js/mdb.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
@@ -203,10 +221,13 @@
         $temp.val($(element).attr('copyval')).select();
         document.execCommand("copy");
         $temp.remove();
-        $(element).css('color','#40a7de');
+        $(element).css('color', '#40a7de');
         parent.$('li.image-li').removeClass('selected');
-        setTimeout(function() { $(element).css('color','#ffffff'); }, 5000);
+        setTimeout(function () {
+            $(element).css('color', '#ffffff');
+        }, 5000);
     }
+
     let dataArray = [];
     $(document).ready(function () {
         // load images
@@ -214,47 +235,42 @@
         var start = 1;
         var action = 'inactive';
 
-        function load_images(limit, start,id)
-        {
+        function load_images(limit, start, id) {
             $.ajax({
-                url:"fetch",
-                method:"POST",
-                data:{limit:limit, start:start, id:id},
-                cache:false,
-                success:function(response)
-                {
+                url: "fetch",
+                method: "POST",
+                data: {limit: limit, start: start, id: id},
+                cache: false,
+                success: function (response) {
                     var data = '';
                     $.each(response, function () {
-                        data += '<li class="image-li check-'+this.id+'" data-type="'+this.type+'" data-action="no" data-id="'+this.id+'" id="li-'+this.id+'">';
+                        data += '<li class="image-li check-' + this.id + '" data-type="' + this.type + '" data-action="no" data-id="' + this.id + '" id="li-' + this.id + '">';
                         data += '<span class="image">';
-                        if(this.type == 'image' || this.type == 'pdf'){
-                            data += '<img class="img-select" id="img-select" src="'+(this.type == "pdf" ? "images/pdf-icon.png" : this.src)+'"data-value="'+this.name+'" data-id="'+this.id+'" data-size="'+this.size+'" value="'+this.naturalHeight+'">';
+                        if (this.type == 'image' || this.type == 'pdf') {
+                            data += '<img class="img-select" id="img-select" src="' + (this.type == "pdf" ? "images/pdf-icon.png" : this.src) + '"data-value="' + this.name + '" data-id="' + this.id + '" data-size="' + this.size + '" value="' + this.naturalHeight + '">';
                         }
-                        if(this.type == 'video'){
-                            data += '<video class="img-select" id="img-select" data-value="'+this.name+'" data-id="'+this.id+'" data-size="'+this.size+'" value="'+this.naturalHeight+'" ><source src="'+this.src+'" type="video/mp4"></video>';
+                        if (this.type == 'video') {
+                            data += '<video class="img-select" id="img-select" data-value="' + this.name + '" data-id="' + this.id + '" data-size="' + this.size + '" value="' + this.naturalHeight + '" ><source src="' + this.src + '" type="video/mp4"></video>';
                         }
                         data += '</span>';
-                        data += '<div id="outer-'+this.id+'" class="outer-div">';
+                        data += '<div id="outer-' + this.id + '" class="outer-div">';
                         data += '<span class="inputGroup">';
-                        data += '<input class="check-input check-'+this.id+' '+(this.type == "image" ? "checkb-image" : "checkb-video")+'" id="option-'+this.id+'" data-id="'+this.id+'" data-type="'+this.type+'" data-action="box" name="option'+this.id+'" type="checkbox" disabled/>';
-                        data += '<label for="option-'+ this.name +'"></label>';
+                        data += '<input class="check-input check-' + this.id + ' ' + (this.type == "image" ? "checkb-image" : "checkb-video") + '" id="option-' + this.id + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="box" ="' + this.alt + '" data-title="' + this.title + '" data-desc="' + this.desc + '" name="option' + this.id + '" type="checkbox" disabled/>';
+                        data += '<label for="option-' + this.name + '"></label>';
                         data += '</span>';
-                        data += '<span class="name" value="'+this.name+'">'+this.name+'</span>';
+                        data += '<span class="name" value="' + this.name + '">' + this.name + '</span>';
                         data += '<div class="box-bottom">';
-                        data += '<span id="copyClipboard" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="'+this.src+'"></span>';
-                        data += '<span class="image-size" value="'+this.size+'">'+this.size+' KB</span><span class="delbtn" data-value="'+this.name+'" data-id="'+this.id+'" data-type="'+this.type+'" data-action="del" data-name="file"> <i class="fas fa-trash del-icon"></i>';
+                        data += '<span id="copyClipboard" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="' + this.src + '"></span>';
+                        data += '<span class="image-size" value="' + this.size + '">' + this.size + ' KB</span><span class="delbtn" data-value="' + this.name + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="del" data-name="file"> <i class="fas fa-trash del-icon"></i>';
                         data += '</span>';
                         data += '</div>';
                         data += '</li>';
                     });
                     $('#load_data').append(data);
-                    if(data == '')
-                    {
+                    if (data == '') {
                         $('.loader').fadeOut();
                         action = 'active';
-                    }
-                    else
-                    {
+                    } else {
                         $('.loader').fadeOut();
                         action = "inactive";
                     }
@@ -262,15 +278,14 @@
             });
         }
 
-        $(window).scroll(function(){
-            if($(window).scrollTop() + $(window).height() > $("#load_data").height() && action == 'inactive')
-            {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() > $("#load_data").height() && action == 'inactive') {
                 $('.loader').show();
                 action = 'active';
                 start = start + limit;
                 var id = parent.document.getElementById('folder-id').value;
-                setTimeout(function(){
-                    load_images(limit, start,id);
+                setTimeout(function () {
+                    load_images(limit, start, id);
                 }, 1000);
             }
         });
@@ -278,12 +293,12 @@
         $('.delbtn').mousedown(function (event) {
             event.preventDefault();
             var type = $(this).data('name');
-            if(type == 'file') {
+            if (type == 'file') {
                 var r = confirm("Are you sure want to delete Image?");
-            }else if(type == 'folder'){
+            } else if (type == 'folder') {
                 var r = confirm("Are you sure want to delete Folder?");
             }
-            if(r == true) {
+            if (r == true) {
                 parent.$('#loader').show();
                 $('body').addClass('overlay');
                 var id = $(this).data('id');
@@ -297,7 +312,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/delete_file',
-                    data: 'id=' + id + '&_token=' + token +'&type=' + type,
+                    data: 'id=' + id + '&_token=' + token + '&type=' + type,
                     success: function (response) {
                         if (response = true) {
                             location.reload();
@@ -315,17 +330,17 @@
 
         $('.delete-folder').click(function () {
             var r = confirm("Are you sure want to delete Folder?");
-            if(r == true){
+            if (r == true) {
                 var id = $(this).data('id');
                 var token = $('input[name=_token]').val();
-                if(id != ''){
+                if (id != '') {
                     parent.$('#loader').show();
                     $.ajax({
                         type: 'POST',
                         url: '/delete-folders',
-                        data: 'id='+id+'&_token='+token,
+                        data: 'id=' + id + '&_token=' + token,
                         success: function (response) {
-                            if(response.status === 'true'){
+                            if (response.status === 'true') {
                                 location.reload();
                             }
                         }
@@ -336,67 +351,72 @@
 
         $('.add-btn').click(function () {
             var folderName = $('.custom-input').val();
-            if(folderName != ''){
+            if (folderName != '') {
                 parent.$('#loader').show();
-                $('#fileManageAddFolderModal').css('display','none');
+                $('#fileManageAddFolderModal').css('display', 'none');
             }
         });
 
-        $(document).on('click','.myBtn', function (e) {
-            $('#fileManageAddFolderModal').css('display','block');
+        $(document).on('click', '.myBtn', function (e) {
+            $('#fileManageAddFolderModal').css('display', 'block');
         });
 
         $('.updateBtn').click(function (e) {
             e.preventDefault();
-           var id = $('#assetId').val();
-            $.post( "/updateAssetData", { _token: $('input[name=_token]').val(), assetId: id,alt: $.trim($('#alt').val()),title: $('#title').val(), desc: $.trim($('#description').val()) })
-            .done(function(data) {
-                if(data.error == 'false'){
-                    $("#option-"+id).data('alt',$.trim($('#alt').val()));
-                    $("#option-"+id).data('title',$.trim($('#title').val()));
-                    $("#option-"+id).data('desc',$.trim($('#description').val()));
-                    $('#messageBox').removeClass('fail').addClass('success');
-                    $('#messageBox').html('Updated successfully.').show().delay(5000).fadeOut(800);
-                } else{
-                    $('#messageBox').removeClass('success').addClass('fail');
-                    $('#messageBox').html('Failed to update.').show().delay(5000).fadeOut(800);
-                }
-            });
+            var id = $('#assetId').val();
+            $.post("/updateAssetData", {
+                _token: $('input[name=_token]').val(),
+                assetId: id,
+                alt: $.trim($('#alt').val()),
+                title: $('#title').val(),
+                desc: $.trim($('#description').val())
+            })
+                .done(function (data) {
+                    if (data.error == 'false') {
+                        $("#option-" + id).data('alt', $.trim($('#alt').val()));
+                        $("#option-" + id).data('title', $.trim($('#title').val()));
+                        $("#option-" + id).data('desc', $.trim($('#description').val()));
+                        $('#messageBox').removeClass('fail').addClass('success');
+                        $('#messageBox').html('Updated successfully.').show().delay(5000).fadeOut(800);
+                    } else {
+                        $('#messageBox').removeClass('success').addClass('fail');
+                        $('#messageBox').html('Failed to update.').show().delay(5000).fadeOut(800);
+                    }
+                });
         });
     });
 
-    $(document).on('click','.image-li, .check-input, .delbtn', function (e) {
-        if(e.target.id == "copyClipboard")
+    $(document).on('click', '.image-li, .check-input, .delbtn', function (e) {
+        if (e.target.id == "copyClipboard")
             return;
         var type = $(this).data('type');
         var id = $(this).data('id');
         var action = $(this).data('action');
-        if(action == 'no'){
-            show_border(id,type);
-        } else{
-            show_border(id,type,action);
+        if (action == 'no') {
+            show_border(id, type);
+        } else {
+            show_border(id, type, action);
         }
     });
 
 
     function openDialog() {
         var type = parent.document.getElementById('file_manager').getAttribute('data-type');
-        if(type == 'image'){
-            $('#file-input').attr('accept','image/*');
-        }
-        else if(type == 'video'){
-            $('#file-input').attr('accept','video/mp4');
-        } else if(type == 'image-video'){
-            $('#file-input').attr('accept','image/*,video/mp4');
-        } else if(type == 'file'){
-            $('#file-input').attr('accept','application/pdf');
-        } else{
-            $('#file-input').attr('accept','image/*,video/mp4,application/pdf');
+        if (type == 'image') {
+            $('#file-input').attr('accept', 'image/*');
+        } else if (type == 'video') {
+            $('#file-input').attr('accept', 'video/mp4');
+        } else if (type == 'image-video') {
+            $('#file-input').attr('accept', 'image/*,video/mp4');
+        } else if (type == 'file') {
+            $('#file-input').attr('accept', 'application/pdf');
+        } else {
+            $('#file-input').attr('accept', 'image/*,video/mp4,application/pdf');
         }
         var multiSelect = parent.document.getElementById('file_manager').getAttribute('data-select');
-        if(multiSelect == 'true'){
+        if (multiSelect == 'true') {
             $('#multi-select').val('true');
-        }else{
+        } else {
             $('#multi-select').val('false');
         }
         document.getElementById("file-input").click();
@@ -407,13 +427,13 @@
         $('#file').each(function (index) {
             var get_size = this.files[index].size;
             var size = (Math.round((get_size / 1024) * 100) / 100);
-            if(size >= '10000') {
-                error+= 1;
+            if (size >= '10000') {
+                error += 1;
                 alert("Please upload an file less than 10MB");
                 e.preventDefault(e);
             }
         });
-        if(error == 0){
+        if (error == 0) {
             parent.$('#loader').show();
             $('body').addClass('overlay');
             document.getElementById("upload-form").submit();
@@ -436,55 +456,55 @@
         }
     }
 
-    function show_border(checkName,current){
+    function show_border(checkName, current) {
         var actionFrom = arguments.length > 2 && arguments[2] !== null ? arguments[2] : null;
         var type = window.frameElement.getAttribute("data-type");
-        if(type == 'all'){ // For all Files
+        if (type == 'all') { // For all Files
 
-        } else if(type == 'image-video') { // For Image and video
-            if(current == 'image' || current == 'video') {
+        } else if (type == 'image-video') { // For Image and video
+            if (current == 'image' || current == 'video') {
 
             } else {
                 alert('You can select Image/Video  file only !!');
                 return false;
             }
-        }else if(current != type){
-            alert('You can select '+type+' file only !!');
+        } else if (current != type) {
+            alert('You can select ' + type + ' file only !!');
             return false;
         }
         var multiple = parent.document.getElementById('multiple-img').value;
-        var assetId = $("#option-"+checkName).data('id');
+        var assetId = $("#option-" + checkName).data('id');
         var token = $('input[name=_token]').val();
-        var elId = $("#option-"+checkName);
+        var elId = $("#option-" + checkName);
 
         if (elId.prop("checked") == true) {
-            if(actionFrom == null) { // click on selected image box
+            if (actionFrom == null) { // click on selected image box
                 if (multiple === 'false') {
                     dataArray = [];
                     $('.assetData').hide();
                     $(".check-input").prop("checked", false);
                     $('li.image-li').removeClass('add-background');
                     $('li.image-li').removeClass('selected');
-                } else{
+                } else {
                     dataArray = dataArray.filter(item => item !== assetId);
                     if (typeof dataArray !== 'undefined' && dataArray.length > 0) {
                         var id = dataArray.slice(-1)[0];
-                        var elId = $("#option-"+id);
-                        $('#imgThumb').attr('src',elId.closest('li.image-li').find('img.img-select').attr('src'));
+                        var elId = $("#option-" + id);
+                        $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
                         $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
                         $('#assetId').val(id);
                         $('#alt').val(elId.data('alt'));
                         $('#title').val(elId.data('title'));
                         $('#description').val(elId.data('desc'));
                         setDataStyle();
-                    } else{
+                    } else {
                         $('.assetData').hide();
                     }
                     $("#option-" + checkName).prop("checked", false);
                     $('#li-' + checkName).removeClass('add-background');
                     $('#li-' + checkName).removeClass('selected');
                 }
-            }else{ // click on unselected image checkbox
+            } else { // click on unselected image checkbox
                 if (multiple === 'false') {
                     $(".check-input").prop("checked", false);
                     $('li.image-li').removeClass('add-background');
@@ -492,16 +512,16 @@
                     $("#option-" + checkName).prop("checked", true);
                     $('#li-' + checkName).addClass('add-background');
                     $('#li-' + checkName).addClass('selected');
-                }else {
+                } else {
                     $('#li-' + checkName).addClass('add-background');
                     $('#li-' + checkName).addClass('selected');
                 }
             }
-        }else{
+        } else {
             $('.assetData').show();
             dataArray.push(assetId);
-            var elId = $('#option-'+assetId);
-            $('#imgThumb').attr('src',elId.closest('li.image-li').find('img.img-select').attr('src'));
+            var elId = $('#option-' + assetId);
+            $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
             $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
             $('#assetId').val(assetId);
             $('#alt').val(elId.data('alt'));
@@ -509,10 +529,10 @@
             $('#description').val(elId.data('desc'));
             setDataStyle();
 
-            if(actionFrom == 'del') {
+            if (actionFrom == 'del') {
                 $("#option-" + checkName).prop("checked", false);
                 $('#li-' + checkName).removeClass('add-background');
-            }else if(actionFrom == null){ // image box click when checkbox unchecked
+            } else if (actionFrom == null) { // image box click when checkbox unchecked
                 if (multiple === 'false') {
                     $(".check-input").prop("checked", false);
                     $('li.image-li').removeClass('add-background');
@@ -520,13 +540,12 @@
                     $("#option-" + checkName).prop("checked", true);
                     $('#li-' + checkName).addClass('add-background');
                     $('#li-' + checkName).addClass('selected');
-                }else {
+                } else {
                     $("#option-" + checkName).prop("checked", true);
                     $('#li-' + checkName).addClass('add-background');
                     $('#li-' + checkName).addClass('selected');
                 }
-            }
-            else { // checkbox unchecked click
+            } else { // checkbox unchecked click
                 if (multiple === 'false') {
                     $(".check-input").prop("checked", false);
                     $('li.image-li').removeClass('add-background');
@@ -538,17 +557,17 @@
             }
         }
         var count = $('li.image-li.selected').length;
-        if(count > 0){
-            if(screen.width >= '568'){
-                $('#insert-btn').text('Insert ('+ count +')');
-            } else{
+        if (count > 0) {
+            if (screen.width >= '568') {
+                $('#insert-btn').text('Insert (' + count + ')');
+            } else {
                 $('#insert-btn').addClass('insert-btn-icon');
-                $('#insert-btn').html('<i class="fas fa-check"></i> ('+ count +')');
+                $('#insert-btn').html('<i class="fas fa-check"></i> (' + count + ')');
             }
             // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
         }
         var $insert_btn = $("#insert-btn").hide();
-        $insert_btn.toggle( $("input[type='checkbox']").is(":checked") );
+        $insert_btn.toggle($("input[type='checkbox']").is(":checked"));
     }
 
     function setDataStyle() {
