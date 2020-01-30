@@ -1,5 +1,5 @@
 {{--css--}}
-<link rel="stylesheet" href="/css/filemanager.css?v=2.4">
+<link rel="stylesheet" href="/css/filemanager.css?v=2.5">
 {{--start model for S3 file manager --}}
 <div class="modal filemanager-iframe" id="fileManagerModal" tabindex="-1" role="dialog" aria-labelledby="fileManagerModalLabel"
      aria-hidden="true">
@@ -29,6 +29,9 @@
         getS3Images(client_id,multiple,current,type);
     });
     $(document).on('click','.clear-file', function () {
+        dataArray = [];
+        $('#file_manager').contents().find('.assetData').hide();
+        console.log(dataArray);
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
     });

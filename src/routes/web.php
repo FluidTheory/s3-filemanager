@@ -18,4 +18,5 @@ Route::group(['namespace' => 'Fluidtheory\Filemanager\Http\Controllers'], functi
 //  Folder Routes
     Route::post('/filemanager/addfolder', 'FileManagerController@addFolder');
     Route::post('/delete-folders', 'FileManagerController@deleteFolder');
+    Route::post('/updateAssetData', 'FileManagerController@updateAssetData');
 });
