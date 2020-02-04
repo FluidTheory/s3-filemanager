@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/css/mdb.min.css" rel="stylesheet">
-    <link href="/css/filemanager/styles.css?v=4.13" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=4.16" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body class="overlay">
@@ -42,6 +42,7 @@
                 @endforeach
             </span>
             <input type="hidden" class="path" name="path" value="{{@$path}}">
+            <input type="hidden" id="folderId" name="folderId" value="{{@$folderId}}">
             <input type="hidden" class="path" name="_token" value="{{csrf_token()}}">
             <input type="hidden" class="path" name="multi-select" id="multi-select" value="false">
             <input type="file" style="display: none" name="file[]" accept="image/*,video/mp4,application/pdf"
@@ -71,6 +72,20 @@
 </div>
 <div class="messages"></div>
 <div class="filemanager row">
+    <div class="col-xs-6 col-6 md-form">
+        <select name="filter" id="filterType" class="custom-select sources" placeholder="Select Filter">
+            <option value="all" selected>All</option>
+            <option value="images">Images</option>
+            <option value="videos">Videos</option>
+            <option value="docs">Docs</option>
+        </select>
+    </div>
+    <div class="col-xs-6 col-6">
+        <form class="form-inline md-form mr-auto">
+            <input class="form-control mr-sm-8" type="text" placeholder="Search" id="searchInput" aria-label="Search">
+            <button class="btn searchBtn btn-rounded btn-sm my-0" id="searchAsset" type="submit">Search</button>
+        </form>
+    </div>
     <div class="col-sm-6 col-md-9">
         <ul class="data">
             <ul id="load_data" class="data animated img-gallery">
@@ -228,46 +243,33 @@
         }, 5000);
     }
 
+    let multiSelect = parent.document.getElementById('multiple-img').value;
     let dataArray = [];
     $(document).ready(function () {
         // load images
         var limit = 20;
         var start = 1;
-        var action = 'inactive';
+        let action = 'inactive';
+        let searchTxt = $('#searchInput').val();
+        let folderId = $('#folderId').val();
 
-        function load_images(limit, start, id) {
+        function load_images(limit, start, id,type = null) {
+            searchTxt = $('#searchInput').val();
+            var filter = $('#filterType').val();
+            var selectedIds = dataArray.join();
             $.ajax({
-                url: "fetch",
+                url: "filter",
                 method: "POST",
-                data: {limit: limit, start: start, id: id},
+                data: {limit: limit, start: start, id: id, filter: filter, folderId : folderId,type: type, activeIds : selectedIds,multiple : multiSelect, searchTxt : searchTxt},
                 cache: false,
                 success: function (response) {
-                    var data = '';
-                    $.each(response, function () {
-                        data += '<li class="image-li check-' + this.id + '" data-type="' + this.type + '" data-action="no" data-id="' + this.id + '" id="li-' + this.id + '">';
-                        data += '<span class="image">';
-                        if (this.type == 'image' || this.type == 'pdf') {
-                            data += '<img class="img-select" id="img-select" src="' + (this.type == "pdf" ? "images/pdf-icon.png" : this.src) + '"data-value="' + this.name + '" data-id="' + this.id + '" data-size="' + this.size + '" value="' + this.naturalHeight + '">';
-                        }
-                        if (this.type == 'video') {
-                            data += '<video class="img-select" id="img-select" data-value="' + this.name + '" data-id="' + this.id + '" data-size="' + this.size + '" value="' + this.naturalHeight + '" ><source src="' + this.src + '" type="video/mp4"></video>';
-                        }
-                        data += '</span>';
-                        data += '<div id="outer-' + this.id + '" class="outer-div">';
-                        data += '<span class="inputGroup">';
-                        data += '<input class="check-input check-' + this.id + ' ' + (this.type == "image" ? "checkb-image" : "checkb-video") + '" id="option-' + this.id + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="box" data-alt="' + this.alt + '" data-title="' + this.title + '" data-desc="' + this.desc + '" name="option' + this.id + '" type="checkbox" disabled/>';
-                        data += '<label for="option-' + this.name + '"></label>';
-                        data += '</span>';
-                        data += '<span class="name" value="' + this.name + '">' + this.name + '</span>';
-                        data += '<div class="box-bottom">';
-                        data += '<span id="copyClipboard" data-toggle="tooltip" data-placement="top" title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy" onclick="copyToClipboard(this)" copyval="' + this.src + '"></span>';
-                        data += '<span class="image-size" value="' + this.size + '">' + this.size + ' KB</span><span class="delbtn" data-value="' + this.name + '" data-id="' + this.id + '" data-type="' + this.type + '" data-action="del" data-name="file"> <i class="fas fa-trash del-icon"></i>';
-                        data += '</span>';
-                        data += '</div>';
-                        data += '</li>';
-                    });
-                    $('#load_data').append(data);
-                    if (data == '') {
+                    if(type == 'scroll'){
+                        $('#load_data').append(response);
+                    } else{
+                        $('#load_data').html(response);
+                    }
+
+                    if (response == '') {
                         $('.loader').fadeOut();
                         action = 'active';
                     } else {
@@ -285,7 +287,7 @@
                 start = start + limit;
                 var id = parent.document.getElementById('folder-id').value;
                 setTimeout(function () {
-                    load_images(limit, start, id);
+                    load_images(limit, start, id,'scroll');
                 }, 1000);
             }
         });
@@ -361,6 +363,13 @@
             $('#fileManageAddFolderModal').css('display', 'block');
         });
 
+        $('#searchAsset').click(function (e) {
+            e.preventDefault();
+            var id = parent.document.getElementById('folder-id').value;
+            start = 0;
+            load_images(limit, start, id);
+        });
+
         $('.updateBtn').click(function (e) {
             e.preventDefault();
             var id = $('#assetId').val();
@@ -383,6 +392,78 @@
                         $('#messageBox').html('Failed to update.').show().delay(5000).fadeOut(800);
                     }
                 });
+        });
+
+        $(".custom-select").each(function() {
+            var classes = $(this).attr("class"),
+                id = $(this).attr("id"),
+                name = $(this).attr("name");
+            var template = '<div class="' + classes + '">';
+            template +=
+                '<span class="custom-select-trigger">' +
+                $(this).attr("placeholder") +
+                "</span>";
+            template += '<div class="custom-options">';
+            $(this)
+                .find("option")
+                .each(function() {
+                    template +=
+                        '<span class="custom-option ' +
+                        $(this).attr("class") +
+                        '" data-value="' +
+                        $(this).attr("value") +
+                        '">' +
+                        $(this).html() +
+                        "</span>";
+                });
+            template += "</div></div>";
+
+            $(this).wrap('<div class="custom-select-wrapper"></div>');
+            $(this).hide();
+            $(this).after(template);
+        });
+        $(".custom-option:first-of-type").hover(
+            function() {
+                $(this)
+                    .parents(".custom-options")
+                    .addClass("option-hover");
+            },
+            function() {
+                $(this)
+                    .parents(".custom-options")
+                    .removeClass("option-hover");
+            }
+        );
+        $(".custom-select-trigger").on("click", function() {
+            $("html").one("click", function() {
+                $(".custom-select").removeClass("opened");
+            });
+            $(this)
+                .parents(".custom-select")
+                .toggleClass("opened");
+            event.stopPropagation();
+        });
+        $(".custom-option").on("click", function() {
+            $(this)
+                .parents(".custom-select-wrapper")
+                .find("select")
+                .val($(this).data("value"));
+            $(this)
+                .parents(".custom-options")
+                .find(".custom-option")
+                .removeClass("selection");
+            $(this).addClass("selection");
+            $(this)
+                .parents(".custom-select")
+                .removeClass("opened");
+            $(this)
+                .parents(".custom-select")
+                .find(".custom-select-trigger")
+                .text($(this).text());
+            var id = parent.document.getElementById('folder-id').value;
+            action = "inactive";
+            start = 0;
+            load_images(limit, start, id);
         });
     });
 
@@ -490,7 +571,11 @@
                     if (typeof dataArray !== 'undefined' && dataArray.length > 0) {
                         var id = dataArray.slice(-1)[0];
                         var elId = $("#option-" + id);
-                        $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
+                        if(elId.closest('li.image-li').find('img.img-select').attr('src') == undefined){
+                            $('#imgThumb').attr('src', 'https://via.placeholder.com/150/000000/FFFFFF/?text=Video');
+                        } else{
+                            $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
+                        }
                         $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
                         $('#assetId').val(id);
                         $('#alt').val(elId.data('alt'));
@@ -521,8 +606,11 @@
             $('.assetData').show();
             dataArray.push(assetId);
             var elId = $('#option-' + assetId);
-            $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
-            $('#imgName').text(elId.closest('li.image-li').find('img.img-select').data('value'));
+            if(elId.closest('li.image-li').find('img.img-select').attr('src') == undefined){
+                $('#imgThumb').attr('src', 'https://via.placeholder.com/150/000000/FFFFFF/?text=Video');
+            } else{
+                $('#imgThumb').attr('src', elId.closest('li.image-li').find('img.img-select').attr('src'));
+            }
             $('#assetId').val(assetId);
             $('#alt').val(elId.data('alt'));
             $('#title').val(elId.data('title'));
