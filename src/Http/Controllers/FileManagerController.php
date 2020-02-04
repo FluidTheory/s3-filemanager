@@ -319,12 +319,13 @@ class FileManagerController extends Controller
     public function filterData(Request $request)
     {
         $data = $request->all();
-        if(!empty($data['folderId'])){
+        if (!empty($data['folderId'])) {
             $folderId = $data['folderId'];
-        } else{
+        } else {
             $folderId = null;
         }
         $message = '';
+        $path = $_GET;
         $multiple = 'false';
         $breadcrumbs = array();
         $directories = array();
@@ -332,53 +333,33 @@ class FileManagerController extends Controller
         $last_id = 0;
         $image_ids = array();
 
-        if (empty($folderId)) {
-            $client_id = $data['id'];
-            if($data['filter'] == 'all'){
-                $filter = '';
-                if($data['type'] != 'scroll'){
-                    $directories = Directory::where(['client_id' => $client_id, 'parent_id' => 0, 'deleted_at' => null])->get();
-                }
-            } else{
-                if($data['filter'] == 'images'){
-                    $filter = 'image';
-                } elseif ($data['filter'] == 'videos'){
-                    $filter = 'video';
-                } else{
-                    $filter = 'pdf';
-                }
-                $directories = array();
+        $client_id = $data['id'];
+        if ($data['filter'] == 'all') {
+            $filter = '';
+            if ($data['type'] != 'scroll') {
+                $directories = Directory::where(['client_id' => $client_id, 'parent_id' => $folderId, 'deleted_at' => null])->get();
             }
-            if(!empty($directories)){
-                $countImage = 20 - count($directories);
-            } else{
-                $countImage = 20;
-            }
-            if(empty($filter)){
-                $images = Asset::where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
-            } else{
-                $images = Asset::where(['client_id' => $client_id, 'directory_id' => null,'type' => $filter, 'deleted_at' => null])->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
-            }
-
         } else {
-            $client_id = $data['id'];
-            $directories = Directory::where(['client_id' => $client_id, 'parent_id' => end($pathExp), 'deleted_at' => null])->get();
-            $countImage = 20 - count($directories);
-            $images = Asset::where(['client_id' => $client_id, 'directory_id' => end($pathExp)])->where('deleted_at', null)->orderBy('id', 'DESC')->limit($countImage)->get();
-            $slug_url = $client_id;
-            foreach ($pathExp as $key => $value) {
-                if ($client_id != array_shift($pathExp)) {
-                    $lastFolder = Directory::where(['client_id' => $client_id, 'id' => $value])->first();
-                    if (!empty($lastFolder->parent_id)) {
-                        $slug_url = $slug_url . '/' . $lastFolder->id;
-                        $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
-                    } else {
-                        $slug_url = $slug_url . '/' . $lastFolder->id;
-                        $breadcrumbs[] = array('name' => $lastFolder->name, 'slug' => $slug_url);
-                    }
-                }
+            if ($data['filter'] == 'images') {
+                $filter = 'image';
+            } elseif ($data['filter'] == 'videos') {
+                $filter = 'video';
+            } else {
+                $filter = 'pdf';
             }
+            $directories = array();
         }
+        if (!empty($directories)) {
+            $countImage = 20 - count($directories);
+        } else {
+            $countImage = 20;
+        }
+        if (empty($filter)) {
+            $images = Asset::where(['client_id' => $client_id, 'directory_id' => $folderId, 'deleted_at' => null])->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
+        } else {
+            $images = Asset::where(['client_id' => $client_id, 'directory_id' => $folderId, 'type' => $filter, 'deleted_at' => null])->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
+        }
+
         foreach ($images as $key => $value) {
             if ($key == 0) {
                 $last_id = $value['id'];
@@ -419,6 +400,6 @@ class FileManagerController extends Controller
             $message = $path['message'];
         }
 
-        return view('filemanager::file-manager.dataList')->with(array('message' => $message, 'image_ids' => $image_ids, 'final' => $final, 'path' => $client_id, 'folder_path' => $client_id, 'client_id' => $client_id, 'breadcrumbs' => $breadcrumbs,'multiple' => $multiple));
+        return view('filemanager::file-manager.dataList')->with(array('message' => $message, 'image_ids' => $image_ids, 'final' => $final, 'path' => $client_id, 'folder_path' => $client_id, 'client_id' => $client_id, 'multiple' => $multiple));
     }
 }
