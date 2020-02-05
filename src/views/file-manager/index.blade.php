@@ -72,7 +72,7 @@
 </div>
 <div class="messages"></div>
 <div class="filemanager row">
-    <div class="col-xs-6 col-6 md-form">
+    <div class="col-xs-12 col-md-6 md-form">
         <select name="filter" id="filterType" class="custom-select sources" placeholder="Select Filter">
             <option value="all" selected>All</option>
             <option value="images">Images</option>
@@ -80,13 +80,13 @@
             <option value="docs">Docs</option>
         </select>
     </div>
-    <div class="col-xs-6 col-6">
+    <div class="col-xs-12 col-md-6">
         <form class="form-inline md-form mr-auto">
             <input class="form-control mr-sm-8" type="text" placeholder="Search" id="searchInput" aria-label="Search">
             <button class="btn searchBtn btn-rounded btn-sm my-0" id="searchAsset" type="submit">Search</button>
         </form>
     </div>
-    <div class="col-sm-6 col-md-9">
+    <div class="col-xs-6 col-md-9">
         <ul class="data">
             <ul id="load_data" class="data animated img-gallery">
                 @foreach($final['directories'] as $k)
@@ -292,7 +292,7 @@
             }
         });
 
-        $('.delbtn').mousedown(function (event) {
+        $(document).on('click','.delbtn',function (event) {
             event.preventDefault();
             var type = $(this).data('name');
             if (type == 'file') {
@@ -330,7 +330,7 @@
             }
         });
 
-        $('.delete-folder').click(function () {
+        $(document).on('click','.delete-folder',function () {
             var r = confirm("Are you sure want to delete Folder?");
             if (r == true) {
                 var id = $(this).data('id');
