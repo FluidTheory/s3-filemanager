@@ -896,12 +896,12 @@ li.selected .inputGroup{
 }
 .loader {
     position: absolute;
-    left: 49%;
+    left: 35%;
     border: 12px solid #f3f3f3;
     border-radius: 50%;
     border-top: 12px solid #3498db;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }

@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/css/mdb.min.css" rel="stylesheet">
-    <link href="/css/filemanager/styles.css?v=4.16" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=4.17" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body class="overlay">
@@ -205,13 +205,13 @@
         </form>
     </div>
     <div id="load_data_message"></div>
-    <div class="loader" style="display: none"></div>
     <div class="nothingfound">
         <div class="nofiles"></div>
         <span>No files here.</span>
     </div>
     <input type="hidden" data-value="" id="selectedIds">
 </div>
+<div class="loader" style="display: none"></div>
 <!-- The Modal -->
 <div id="fileManageAddFolderModal" class="modal">
     <!-- Modal content -->
@@ -257,6 +257,16 @@
             searchTxt = $('#searchInput').val();
             var filter = $('#filterType').val();
             var selectedIds = dataArray.join();
+            if(type != 'scroll'){
+                parent.$('#loader').show();
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        backgroundColor: 'transparent'
+                    }
+                });
+            }
+
             $.ajax({
                 url: "filter",
                 method: "POST",
@@ -266,7 +276,11 @@
                     if(type == 'scroll'){
                         $('#load_data').append(response);
                     } else{
-                        $('#load_data').html(response);
+                        if(response == ''){
+                            $('#load_data').html('<b>No Data Found</b>');
+                        } else{
+                            $('#load_data').html(response);
+                        }
                     }
 
                     if (response == '') {
@@ -276,6 +290,8 @@
                         $('.loader').fadeOut();
                         action = "inactive";
                     }
+                    $.unblockUI();
+                    parent.$('#loader').hide();
                 }
             });
         }
