@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/css/mdb.min.css" rel="stylesheet">
-    <link href="/css/filemanager/styles.css?v=4.17" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=4.18" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body class="overlay">
@@ -58,7 +58,7 @@
                 </button>
             </span>
             <span class="desktop-btn">
-                <button type="button" class="myBtn btn btn-default btn-square filemanager-btn">
+                <button type="button" class="myBtn btn btn-default btn-square filemanager-btn" data-toggle="modal" data-target="#fileManageAddFolderModal">
                     Add Folder
                 </button>
             </span>
@@ -213,10 +213,31 @@
 </div>
 <div class="loader" style="display: none"></div>
 <!-- The Modal -->
-<div id="fileManageAddFolderModal" class="modal">
+<div id="fileManageAddFolderModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <!-- Modal content -->
     <div class="modal-content model-content-folder">
-
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Add Folder</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="<?php echo e(url('/filemanager/addfolder')); ?>" method="post" enctype="multipart/form-data" role="form">
+                <?php echo e(csrf_field()); ?>
+                <div class="modal-data" style="text-align: -webkit-center">
+                    <p class="icon folder custom-folder icon-font"></p>
+                    <div class="md-form mb-5">
+                        <input type="text" id="form34" name="folder_name" class="form-control validate" required>
+                        <label data-error="wrong" data-success="right" for="form34">Enter Folder Name</label>
+                    </div>
+                    <br/>
+                    <input type="hidden" name="path" value="<?php echo e(@$folder_path); ?>">
+                    <button type="submit" class="btn add-btn">ADD</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <!-- Latest compiled and minified JavaScript -->
@@ -373,10 +394,6 @@
                 parent.$('#loader').show();
                 $('#fileManageAddFolderModal').css('display', 'none');
             }
-        });
-
-        $(document).on('click', '.myBtn', function (e) {
-            $('#fileManageAddFolderModal').css('display', 'block');
         });
 
         $('#searchAsset').click(function (e) {

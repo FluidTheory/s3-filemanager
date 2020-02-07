@@ -105,13 +105,6 @@
       <workItem from="1572262681156" duration="6019000" />
       <workItem from="1572441466348" duration="1486000" />
     </task>
-    <task id="LOCAL-00053" summary="[NR-1013] - File manager updates">
-      <created>1559831216459</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1559831216459</updated>
-    </task>
     <task id="LOCAL-00054" summary="[NR-1013] - File manager updates">
       <created>1559887036768</created>
       <option name="number" value="00054" />
@@ -448,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580900369581</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="[MediaManager - 1158124355827642] - Search by Image name, Alt, Title description in Media gallery">
+      <created>1580993228787</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1580993228787</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

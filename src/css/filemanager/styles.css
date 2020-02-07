@@ -610,7 +610,7 @@ footer #tzine-actions iframe{
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 99999; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -729,8 +729,6 @@ li.folders {
     background-color: #fefefe !important;
     margin: auto !important;
     border: 1px solid #888 !important;
-    width: 22% !important;
-    height: 50% !important;
     border-radius: 5px !important;
 }
 #fm_header{
@@ -939,14 +937,6 @@ li.selected .inputGroup{
 }
 
 /* Satish Style add css*/
-.model-content-folder{
-    background-color: #fefefe !important;
-    margin: auto !important;
-    border: 1px solid #888 !important;
-    width: 22% !important;
-    height: 50% !important;
-    border-radius: 5px !important;
-}
 .custom-close {
     color: #aaaaaa;
     float: right;
