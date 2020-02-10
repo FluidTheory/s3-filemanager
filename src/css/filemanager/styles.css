@@ -610,7 +610,7 @@ footer #tzine-actions iframe{
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 99999; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -729,8 +729,6 @@ li.folders {
     background-color: #fefefe !important;
     margin: auto !important;
     border: 1px solid #888 !important;
-    width: 22% !important;
-    height: 50% !important;
     border-radius: 5px !important;
 }
 #fm_header{
@@ -896,12 +894,12 @@ li.selected .inputGroup{
 }
 .loader {
     position: absolute;
-    left: 49%;
+    left: 35%;
     border: 12px solid #f3f3f3;
     border-radius: 50%;
     border-top: 12px solid #3498db;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
@@ -939,14 +937,6 @@ li.selected .inputGroup{
 }
 
 /* Satish Style add css*/
-.model-content-folder{
-    background-color: #fefefe !important;
-    margin: auto !important;
-    border: 1px solid #888 !important;
-    width: 22% !important;
-    height: 50% !important;
-    border-radius: 5px !important;
-}
 .custom-close {
     color: #aaaaaa;
     float: right;
@@ -1206,5 +1196,10 @@ span.fail{
 .custom-option.selection {
     color: #fff;
     background-color: #38a7de;
+}
+.searchBtn{
+    color: #38a7de !important;
+    background-color: transparent !important;
+    border: 2px solid #38a7de !important;
 }
 /*end css*/

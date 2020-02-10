@@ -11,7 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.11.0/css/mdb.min.css" rel="stylesheet">
-    <link href="/css/filemanager/styles.css?v=4.15" rel="stylesheet"/>
+    <link href="/css/filemanager/styles.css?v=4.18" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body class="overlay">
@@ -58,7 +58,7 @@
                 </button>
             </span>
             <span class="desktop-btn">
-                <button type="button" class="myBtn btn btn-default btn-square filemanager-btn">
+                <button type="button" class="myBtn btn btn-default btn-square filemanager-btn" data-toggle="modal" data-target="#fileManageAddFolderModal">
                     Add Folder
                 </button>
             </span>
@@ -72,7 +72,7 @@
 </div>
 <div class="messages"></div>
 <div class="filemanager row">
-    <div class="col-12">
+    <div class="col-xs-12 col-md-6 md-form">
         <select name="filter" id="filterType" class="custom-select sources" placeholder="Select Filter">
             <option value="all" selected>All</option>
             <option value="images">Images</option>
@@ -80,7 +80,13 @@
             <option value="docs">Docs</option>
         </select>
     </div>
-    <div class="col-sm-6 col-md-9">
+    <div class="col-xs-12 col-md-6">
+        <form class="form-inline md-form mr-auto">
+            <input class="form-control mr-sm-8" type="text" placeholder="Search" id="searchInput" aria-label="Search">
+            <button class="btn searchBtn btn-rounded btn-sm my-0" id="searchAsset" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="col-xs-6 col-md-9">
         <ul class="data">
             <ul id="load_data" class="data animated img-gallery">
                 @foreach($final['directories'] as $k)
@@ -199,18 +205,39 @@
         </form>
     </div>
     <div id="load_data_message"></div>
-    <div class="loader" style="display: none"></div>
     <div class="nothingfound">
         <div class="nofiles"></div>
         <span>No files here.</span>
     </div>
     <input type="hidden" data-value="" id="selectedIds">
 </div>
+<div class="loader" style="display: none"></div>
 <!-- The Modal -->
-<div id="fileManageAddFolderModal" class="modal">
+<div id="fileManageAddFolderModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <!-- Modal content -->
     <div class="modal-content model-content-folder">
-
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100 font-weight-bold">Add Folder</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="<?php echo e(url('/filemanager/addfolder')); ?>" method="post" enctype="multipart/form-data" role="form">
+                <?php echo e(csrf_field()); ?>
+                <div class="modal-data" style="text-align: -webkit-center">
+                    <p class="icon folder custom-folder icon-font"></p>
+                    <div class="md-form mb-5">
+                        <input type="text" id="form34" name="folder_name" class="form-control validate" required>
+                        <label data-error="wrong" data-success="right" for="form34">Enter Folder Name</label>
+                    </div>
+                    <br/>
+                    <input type="hidden" name="path" value="<?php echo e(@$folder_path); ?>">
+                    <button type="submit" class="btn add-btn">ADD</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <!-- Latest compiled and minified JavaScript -->
@@ -244,20 +271,37 @@
         var limit = 20;
         var start = 1;
         let action = 'inactive';
-        var folderId = $('#folderId').val();
+        let searchTxt = $('#searchInput').val();
+        let folderId = $('#folderId').val();
 
-        function load_images(limit, start, id,type,filter = null) {
+        function load_images(limit, start, id,type = null) {
+            searchTxt = $('#searchInput').val();
+            var filter = $('#filterType').val();
             var selectedIds = dataArray.join();
+            if(type != 'scroll'){
+                parent.$('#loader').show();
+                $.blockUI({
+                    css: {
+                        border: 'none',
+                        backgroundColor: 'transparent'
+                    }
+                });
+            }
+
             $.ajax({
-                url: "filter",
+                url: "fetch",
                 method: "POST",
-                data: {limit: limit, start: start, id: id, filter: filter, folderId : folderId,type: type, activeIds : selectedIds,multiple : multiSelect},
+                data: {limit: limit, start: start, id: id, filter: filter, folderId : folderId,type: type, activeIds : selectedIds,multiple : multiSelect, searchTxt : searchTxt},
                 cache: false,
                 success: function (response) {
                     if(type == 'scroll'){
                         $('#load_data').append(response);
                     } else{
-                        $('#load_data').html(data);
+                        if(response == ''){
+                            $('#load_data').html('<b>No Data Found</b>');
+                        } else{
+                            $('#load_data').html(response);
+                        }
                     }
 
                     if (response == '') {
@@ -267,6 +311,8 @@
                         $('.loader').fadeOut();
                         action = "inactive";
                     }
+                    $.unblockUI();
+                    parent.$('#loader').hide();
                 }
             });
         }
@@ -276,15 +322,14 @@
                 $('.loader').show();
                 action = 'active';
                 start = start + limit;
-                var filter = $('#filterType').val();
                 var id = parent.document.getElementById('folder-id').value;
                 setTimeout(function () {
-                    load_images(limit, start, id,'scroll',filter);
+                    load_images(limit, start, id,'scroll');
                 }, 1000);
             }
         });
 
-        $('.delbtn').mousedown(function (event) {
+        $(document).on('click','.delbtn',function (event) {
             event.preventDefault();
             var type = $(this).data('name');
             if (type == 'file') {
@@ -322,7 +367,7 @@
             }
         });
 
-        $('.delete-folder').click(function () {
+        $(document).on('click','.delete-folder',function () {
             var r = confirm("Are you sure want to delete Folder?");
             if (r == true) {
                 var id = $(this).data('id');
@@ -351,8 +396,11 @@
             }
         });
 
-        $(document).on('click', '.myBtn', function (e) {
-            $('#fileManageAddFolderModal').css('display', 'block');
+        $('#searchAsset').click(function (e) {
+            e.preventDefault();
+            var id = parent.document.getElementById('folder-id').value;
+            start = 0;
+            load_images(limit, start, id);
         });
 
         $('.updateBtn').click(function (e) {
@@ -445,21 +493,10 @@
                 .parents(".custom-select")
                 .find(".custom-select-trigger")
                 .text($(this).text());
-            var folderId = $('#folderId').val();
             var id = parent.document.getElementById('folder-id').value;
             action = "inactive";
-            start = 1;
-            var selectedIds = dataArray.join();
-            $.ajax({
-                url: "filter",
-                method: "POST",
-                data: {limit: 20, start: 0, id: id, filter: $(this).data("value"), folderId : folderId, type : null, activeIds : selectedIds, multiple: multiSelect},
-                cache: false,
-                success: function (response) {
-                    $('#load_data').html(response);
-                }
-            });
-            // load_images(20,0,id,'load',$(this).data("value"));
+            start = 0;
+            load_images(limit, start, id);
         });
     });
 
