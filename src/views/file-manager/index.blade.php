@@ -289,7 +289,7 @@
             }
 
             $.ajax({
-                url: "filter",
+                url: "fetch",
                 method: "POST",
                 data: {limit: limit, start: start, id: id, filter: filter, folderId : folderId,type: type, activeIds : selectedIds,multiple : multiSelect, searchTxt : searchTxt},
                 cache: false,
