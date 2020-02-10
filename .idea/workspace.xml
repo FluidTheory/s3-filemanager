@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="[Dashboard - 1155862725780609] - Alt-title,description feature added in media manager">
+    <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="[FileManager - 1158124355827641] - Filter option by filetype in media gallery- 3 filters (Docs, Images, Videos)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,20 +35,20 @@
   <component name="ProjectId" id="1QloQRfGQDbM2TK65ElNqyM8IQn" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/Models" />
       <recent name="$PROJECT_DIR$/src/Http/Controllers" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -102,13 +104,6 @@
       <workItem from="1571235203481" duration="665000" />
       <workItem from="1572262681156" duration="6019000" />
       <workItem from="1572441466348" duration="1486000" />
-    </task>
-    <task id="LOCAL-00050" summary="[NWP-1119] - Gif upload added">
-      <created>1559722536564</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1559722536565</updated>
     </task>
     <task id="LOCAL-00051" summary="[NWP-1119] - Gif upload added">
       <created>1559729346029</created>
@@ -446,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580375006560</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="[FileManager - 1158124355827641] - Filter option by filetype in media gallery- 3 filters (Docs, Images, Videos)">
+      <created>1580730192688</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1580730192688</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,7 +468,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Auto discover package update" />
     <MESSAGE value="File manager Package updated" />
     <MESSAGE value="Updated Package" />
     <MESSAGE value="Breadcrumb updated" />
@@ -491,7 +492,8 @@
     <MESSAGE value="NR-1028:breadcrumbs and Add button changed." />
     <MESSAGE value="[Dashboard - 1133115678619026] - Loading issue in IE Edge 17" />
     <MESSAGE value="[Dashboard - 1155862725780609] - Alt-title,description feature added in media manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="[Dashboard - 1155862725780609] - Alt-title,description feature added in media manager" />
+    <MESSAGE value="[FileManager - 1158124355827641] - Filter option by filetype in media gallery- 3 filters (Docs, Images, Videos)" />
+    <option name="LAST_COMMIT_MESSAGE" value="[FileManager - 1158124355827641] - Filter option by filetype in media gallery- 3 filters (Docs, Images, Videos)" />
   </component>
   <component name="masterDetails">
     <states>
