@@ -31,7 +31,6 @@
     $(document).on('click','.clear-file', function () {
         dataArray = [];
         $('#file_manager').contents().find('.assetData').hide();
-        console.log(dataArray);
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
     });
@@ -40,6 +39,14 @@
         var multiple = false;
         $('#file_manager').attr('data-type','image');
         $('#fileManagerModal').attr('current', 'trumbowyg-editor');
+        getS3Images(client_id,multiple);
+    });
+
+    $(document).on('click', '.cke_button__image,.browse_files', function () {
+        var client_id = $('#folder-id').val();
+        var multiple = false;
+        $('#file_manager').attr('data-type','image');
+        $('#fileManagerModal').attr('current', 'ckeditor');
         getS3Images(client_id,multiple);
     });
     $(document).on('click', '.trumbowyg-modal-submit', function () {
@@ -185,6 +192,10 @@
                 var client_id = $('#folder-id').val();
                 var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
                 $('input[name="url"]').val(img);
+            } else if(current == 'ckeditor'){
+                var client_id = $('#folder-id').val();
+                var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
+                $('.cke_dialog_image_url input.cke_dialog_ui_input_text').val(img).focus().trigger('change');
             } else {
                 $(current).val(images);
 
