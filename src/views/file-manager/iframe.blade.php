@@ -31,7 +31,6 @@
     $(document).on('click','.clear-file', function () {
         dataArray = [];
         $('#file_manager').contents().find('.assetData').hide();
-        console.log(dataArray);
         $(this).parent().find('.fm-image').val('');
         $(this).parent().find('.image-ids').val('');
     });
@@ -42,6 +41,7 @@
         $('#fileManagerModal').attr('current', 'trumbowyg-editor');
         getS3Images(client_id,multiple);
     });
+
     $(document).on('click', '.trumbowyg-modal-submit', function () {
         $('#fileManagerModal').attr('current', '').modal('hide');
     });
@@ -187,7 +187,6 @@
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);
-
                 @if(!empty($validateSize))
                 if(width >= 640 && height <= 1920){
                     $('#image-ids').val(ids);

@@ -67,11 +67,31 @@
                     Upload
                 </button>
             </span>
+            <div id="move-btn-box" style="display: none">
+                @if(!empty($final['directories']))
+                    <select name="folders" id="moveTo" class="custom-select sources" placeholder="Move To <img src='https://ik.imagekit.io/0ofixtqpt/tr:w-26/660089/folder-icon.png'/>" onchange="moveToFolder(this)">
+                        @if(!$isRoot)
+                            <option value="0">Home</option>
+                        @endif
+                        @foreach($allDir as $dir)
+                            @if($dir['id'] != $currentDir)
+                                <option value="{{$dir['id']}}">{{(!empty($dir['parent']) ? $dir['parent']." > " : '').$dir['name']}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                @endif
+            </div>
         </form>
     </div>
 </div>
 <div class="messages"></div>
 <div class="filemanager row">
+    <div class="col-xs-12 col-md-9 text-center">
+        <div id="responseMsg" class="alert alert-dismissible" style="display: none">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <span></span>
+        </div>
+    </div>
     <div class="col-xs-12 col-md-6 md-form">
         <select name="filter" id="filterType" class="custom-select sources" placeholder="Select Filter">
             <option value="all" selected>All</option>
@@ -123,6 +143,7 @@
                     }
                     ?>
                     <script>$("#insert-btn").show();</script>
+                    <script>$("#move-btn-box").show();</script>
                     <?php
                     }
                     ?>
@@ -441,9 +462,7 @@
                 .find("option")
                 .each(function() {
                     template +=
-                        '<span class="custom-option ' +
-                        $(this).attr("class") +
-                        '" data-value="' +
+                        '<span class="custom-option" data-value="' +
                         $(this).attr("value") +
                         '">' +
                         $(this).html() +
@@ -477,6 +496,8 @@
             event.stopPropagation();
         });
         $(".custom-option").on("click", function() {
+            var type = $(this).closest('.custom-select-wrapper').find('.custom-select').attr('id');
+
             $(this)
                 .parents(".custom-select-wrapper")
                 .find("select")
@@ -496,6 +517,10 @@
             var id = parent.document.getElementById('folder-id').value;
             action = "inactive";
             start = 0;
+            if(type == 'moveTo'){
+                $('#moveTo').trigger("change");
+                return false;
+            }
             load_images(limit, start, id);
         });
     });
@@ -534,6 +559,40 @@
             $('#multi-select').val('false');
         }
         document.getElementById("file-input").click();
+    }
+
+    /**
+     * Move files to folder
+     * @param obj
+     */
+    function moveToFolder(obj){
+        var destFolderId = obj.value;
+        var selectedIds = [];
+        $('#load_data input:checked').each(function() {
+            selectedIds.push($(this).attr('data-id'));
+        });
+        $('.loader').show();
+        $.post("/moveToFolder",
+            {
+                destFolderId: destFolderId,
+                selected: selectedIds
+            },
+            function(data, status){
+                if(data.status == 'success'){
+                    $('#responseMsg').removeClass('alert-danger');
+                    $('#responseMsg').addClass('alert-success');
+                    $('#responseMsg span').text('Files moved successfully.');
+                    $('#responseMsg').toggle();
+                    $('.loader').fadeOut();
+                    setTimeout(location.reload.bind(location), 1000);
+                } else{
+                    $('#responseMsg').removeClass('alert-success');
+                    $('#responseMsg').addClass('alert-danger');
+                    $('#responseMsg span').text('Unable to move selected files.');
+                    $('#responseMsg').toggle();
+                    $('.loader').fadeOut();
+                }
+            });
     }
 
     document.getElementById("file-input").onchange = function (e) {
@@ -688,7 +747,9 @@
             // parent.document.getElementById('insert-btn').text = 'Insert ('+ count +')';
         }
         var $insert_btn = $("#insert-btn").hide();
+        var $moveBtn = $("#move-btn-box").hide();
         $insert_btn.toggle($("input[type='checkbox']").is(":checked"));
+        $moveBtn.toggle($("input[type='checkbox']").is(":checked"));
     }
 
     function setDataStyle() {

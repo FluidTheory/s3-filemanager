@@ -1089,7 +1089,7 @@ span.fail{
     position: relative;
     display: block;
     min-width: 130px;
-    padding: 0 104px 0 25px;
+    padding: 0 75px 0 25px;
     font-weight: normal;
     color: #000000;
     line-height: 50px;
@@ -1201,5 +1201,17 @@ span.fail{
     color: #38a7de !important;
     background-color: transparent !important;
     border: 2px solid #38a7de !important;
+}
+.alert-dismissible .close{
+    padding: 0.25rem !important;
+    margin: 0 10px;
+}
+#move-btn-box{
+    display: inline;
+    float: right;
+}
+#move-btn-box .custom-select-trigger, #move-btn-box .custom-select-trigger:before{
+    line-height: 38px;
+    height: 38px;
 }
 /*end css*/

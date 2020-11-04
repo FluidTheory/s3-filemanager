@@ -21,7 +21,9 @@ class FileManagerController extends Controller
     public function index()
     {
         $message = '';
+        $currentDir = null;
         $breadcrumbs = array();
+        $isRoot = false;
         $path = $_GET;
         $files = [];
         $last_id = 0;
@@ -29,12 +31,16 @@ class FileManagerController extends Controller
         $folderId = null;
         $image_ids = array();
         $pathExp = explode("/", $path['path']);
+        $clientId = $pathExp[0];
+
         if (empty($pathExp[1])) {
+            $isRoot = true;
             $client_id = $pathExp[0];
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $client_id, 'parent_id' => 0, 'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
             $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
         } else {
+            $currentDir = end($pathExp);
             $client_id = $pathExp[0];
             $folderId = end($pathExp);
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $pathExp[0], 'parent_id' => end($pathExp), 'deleted_at' => null])->get();
@@ -71,7 +77,7 @@ class FileManagerController extends Controller
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'size' => $imgSize,
-                'src' => env('AWS_URL') . $value['id'] . '/' . $name
+                'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }
 
@@ -79,6 +85,10 @@ class FileManagerController extends Controller
         foreach ($files as $key => $value) {
             $modified[$key] = $value['modified'];
         }
+
+        // get All folders
+        $allDir = $this->getAllFolders($clientId);
+
         $final = [
             'files' => $files,
             'directories' => $directories
@@ -93,7 +103,67 @@ class FileManagerController extends Controller
         if (!empty($path['message'])) {
             $message = $path['message'];
         }
-        return view('filemanager::file-manager.index')->with(array('message' => $message, 'multiple' => $multiple, 'image_ids' => $image_ids, 'final' => $final, 'path' => $path['path'], 'folder_path' => $path['path'], 'folderId' => $folderId, 'client_id' => $client_id, 'breadcrumbs' => $breadcrumbs));
+        return view('filemanager::file-manager.index')->with(array('message' => $message, 'multiple' => $multiple, 'image_ids' => $image_ids, 'final' => $final, 'isRoot' => $isRoot, 'allDir' => $allDir, 'currentDir' => $currentDir, 'path' => $path['path'], 'folder_path' => $path['path'], 'folderId' => $folderId, 'client_id' => $client_id, 'breadcrumbs' => $breadcrumbs));
+    }
+
+    public function getAllFolders($clientId)
+    {
+        $dirList = array();
+        if(!empty($clientId)){
+            $sql = 'Select t1.id, t1.name,t1.parent_id, t2.name AS parent_name From directories t1 LEFT JOIN directories t2 ON t1.parent_id = t2.id where t1.client_id = '.$clientId.' and t1.deleted_at is null and t2.deleted_at is null';
+            $allFolders = DB::select(DB::raw($sql));
+            $allFolders = array_map(function ($value) {
+                return (array)$value;
+            }, $allFolders);
+
+            $array_column = array_column($allFolders, 'parent_id');
+            $allParentDir = array_keys($array_column, "0");  //get all base folders
+
+            $i = 0;
+            foreach ($allParentDir as $value) {
+                $dir = $allFolders[$value];
+                $dirList[$i]['id'] = $dir['id'];
+                $dirList[$i]['name'] = $dir['name'];
+                $dirList[$i]['parent'] = $dir['parent_name'];
+                $i++;
+                $parent_id = $dir['id'];
+                $nodeNumber = 1;
+                $lastElem = FALSE;//is this last element of the folder
+                $nodeArray = [];//save all the nodes of the folder
+                while ( $parent_id != $dir['id'] || $lastElem == FALSE) {
+                    /*************************************************************/
+                    //get details of a specific folder
+                    $last = 1;
+                    $sub_dir_ids = array_keys($array_column, $parent_id);
+                    if($sub_dir_ids)
+                    {
+                        $sub_dir = isset($sub_dir_ids[$nodeNumber-1])? $sub_dir_ids[$nodeNumber-1] : null;
+                        if($sub_dir){
+                            $res = $allFolders[$sub_dir];
+                            $dirList[$i]['id'] = $res['id'];
+                            $dirList[$i]['name'] = $res['name'];
+                            $dirList[$i]['parent'] = $res['parent_name'];
+                            $i++;
+                            if($res){$last = 0; }
+                        }
+                    }
+                    /*************************************************************/
+                    if($last == 1){
+                        if($parent_id != $dir['id']){//if $parent_id didn't reach the first element (starting point)
+                            $lastElement = array_pop($nodeArray);
+                            $parent_id = $lastElement[0];
+                            $nodeNumber = $lastElement[1] + 1;
+                        }else{$lastElem = TRUE;}
+                    }else{
+                        $lastElem = FALSE;
+                        array_push($nodeArray, array($parent_id,$nodeNumber));
+                        $parent_id = $res['id'];//$parent_id for inner folder
+                        $nodeNumber = 1;//go to next step - inner folder
+                    }
+                }
+            }
+        }
+        return $dirList;
     }
 
     /**
@@ -123,7 +193,7 @@ class FileManagerController extends Controller
                 'desc' => $value['description'],
                 'modified' => $dt,
                 'size' => $imgSize,
-                'src' => env('AWS_URL') . $value['id'] . '/' . $name
+                'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }
         return $files;
@@ -368,9 +438,9 @@ class FileManagerController extends Controller
             $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'type' => $filter, 'deleted_at' => null])->
             where(function ($query) use ($data) {
                 $query->where('name','like','%'.$data['searchTxt'].'%')
-                ->orWhere('alt','like','%'.$data['searchTxt'].'%')
-                ->orWhere('title','like','%'.$data['searchTxt'].'%')
-                ->orWhere('description','like','%'.$data['searchTxt'].'%');
+                    ->orWhere('alt','like','%'.$data['searchTxt'].'%')
+                    ->orWhere('title','like','%'.$data['searchTxt'].'%')
+                    ->orWhere('description','like','%'.$data['searchTxt'].'%');
             })->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
         }
 
@@ -391,7 +461,7 @@ class FileManagerController extends Controller
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'size' => $imgSize,
-                'src' => env('AWS_URL') . $value['id'] . '/' . $name
+                'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }
 
@@ -412,5 +482,26 @@ class FileManagerController extends Controller
         }
 
         return view('filemanager::file-manager.dataList')->with(array('message' => $message, 'image_ids' => $image_ids, 'final' => $final, 'path' => $client_id, 'folder_path' => $client_id, 'client_id' => $client_id, 'multiple' => $multiple));
+    }
+
+    /**
+     * Move files to folder
+     * @param Request $request
+     * @return mixed
+     */
+    public function moveToFolder(Request $request)
+    {
+        $response['status'] = '';
+        $data = $request->all();
+        if(isset($data['destFolderId']) && !empty($data['selected'])){
+            $dirId = ($data['destFolderId'] == 0 ? null : $data['destFolderId']);
+            $update = Asset::whereIn('id',$data['selected'])->update(array(
+                'directory_id' => $dirId
+            ));
+            if($update){
+                $response['status'] = 'success';
+            }
+        }
+        return $response;
     }
 }
