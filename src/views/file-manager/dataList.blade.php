@@ -66,7 +66,7 @@
             <div class="box-bottom">
                                 <span id="copyClipboard" data-toggle="tooltip" data-placement="top"
                                       title="Copy to clipboard" class="copy_clipboard fa fa-2x fa-copy"
-                                      onclick="copyToClipboard(this)" copyval="{{$k['src']}}"></span>
+                                      onclick="copyToClipboard(this)" copyval="{{$k['copySrc']}}"></span>
                 <span class="image-size" value="{!! $k['size'] !!}">{!! $k['size'].' KB' !!}</span>
                 <span class="delbtn" data-value="{{$k['name']}}" data-id="{{ $k['id'] }}"
                       data-type="{{$k['type']}}" data-action="del" data-name="file">

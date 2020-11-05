@@ -77,6 +77,7 @@ class FileManagerController extends Controller
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'size' => $imgSize,
+                'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
                 'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }
@@ -193,6 +194,7 @@ class FileManagerController extends Controller
                 'desc' => $value['description'],
                 'modified' => $dt,
                 'size' => $imgSize,
+                'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
                 'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }
@@ -461,6 +463,7 @@ class FileManagerController extends Controller
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'size' => $imgSize,
+                'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
                 'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
             ];
         }

@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c421e859-4850-4b94-8160-0ec0642db05a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/file-manager/dataList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/dataList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/file-manager/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/file-manager/index.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,8 +22,8 @@
       <file leaf-file-name="FileManagerController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="480" column="42" selection-start-line="480" selection-start-column="42" selection-end-line="480" selection-end-column="42" />
+            <state relative-caret-position="283">
+              <caret line="196" column="73" selection-start-line="196" selection-start-column="73" selection-end-line="196" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -28,8 +31,8 @@
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="728">
-              <caret line="564" column="27" selection-start-line="564" selection-start-column="27" selection-end-line="564" selection-end-column="27" />
+            <state relative-caret-position="293">
+              <caret line="180" column="92" selection-start-line="180" selection-start-column="92" selection-end-line="180" selection-end-column="92" />
               <folding>
                 <element signature="e#5096#5103#1#HTML" expanded="true" />
                 <element signature="e#13089#13096#1#HTML" expanded="true" />
@@ -38,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataList.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dataList.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/file-manager/dataList.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="14" column="11" selection-end-line="77" selection-end-column="11" />
+            <state relative-caret-position="626">
+              <caret line="68" column="92" selection-start-line="68" selection-start-column="92" selection-end-line="68" selection-end-column="92" />
             </state>
           </provider>
         </entry>
@@ -50,8 +53,8 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
-              <caret line="1217" selection-start-line="1217" selection-end-line="1217" />
+            <state relative-caret-position="400">
+              <caret line="1187" column="1" lean-forward="true" selection-start-line="1187" selection-start-column="1" selection-end-line="1187" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -74,16 +77,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="iframe.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="670">
+            <state relative-caret-position="2970">
               <caret line="198" column="22" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>styles.css</find>
+      <find>'src'</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -96,13 +105,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/css/filemanager.css" />
+        <option value="$PROJECT_DIR$/src/routes/web.php" />
+        <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
+        <option value="$PROJECT_DIR$/src/css/filemanager/styles.css" />
+        <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
         <option value="$PROJECT_DIR$/src/views/file-manager/index.blade.php" />
         <option value="$PROJECT_DIR$/src/views/file-manager/dataList.blade.php" />
-        <option value="$PROJECT_DIR$/src/css/filemanager.css" />
-        <option value="$PROJECT_DIR$/src/css/filemanager/styles.css" />
-        <option value="$PROJECT_DIR$/src/routes/web.php" />
-        <option value="$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php" />
-        <option value="$PROJECT_DIR$/src/views/file-manager/iframe.blade.php" />
       </list>
     </option>
   </component>
@@ -256,13 +265,6 @@
       <workItem from="1571235203481" duration="665000" />
       <workItem from="1572262681156" duration="6019000" />
       <workItem from="1572441466348" duration="1486000" />
-    </task>
-    <task id="LOCAL-00056" summary="[NR-1013] - File manager updates">
-      <created>1559889084190</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1559889084190</updated>
     </task>
     <task id="LOCAL-00057" summary="[NR-1013] - File manager updates">
       <created>1559889596316</created>
@@ -600,11 +602,18 @@
       <option name="project" value="LOCAL" />
       <updated>1604493736157</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="[MediaManager - 1164727132135546] - Ability to Move Images in and out of Folders in Library">
+      <created>1604494454047</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1604494454047</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2244000" />
+    <option name="totallyTimeSpent" value="4579000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="23" width="1623" height="1027" extended-state="6" />
@@ -620,6 +629,7 @@
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19038583" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -640,7 +650,6 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.30238095" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout>
@@ -991,35 +1000,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="728">
-          <caret line="564" column="27" selection-start-line="564" selection-start-column="27" selection-end-line="564" selection-end-column="27" />
-          <folding>
-            <element signature="e#5096#5103#1#HTML" expanded="true" />
-            <element signature="e#13089#13096#1#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/css/filemanager.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="73" lean-forward="true" selection-end-line="133" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/dataList.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="14" column="11" selection-end-line="77" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="1217" selection-start-line="1217" selection-end-line="1217" />
         </state>
       </provider>
     </entry>
@@ -1030,17 +1014,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="480" column="42" selection-start-line="480" selection-start-column="42" selection-end-line="480" selection-end-column="42" />
+        <state relative-caret-position="2970">
+          <caret line="198" column="22" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/file-manager/iframe.blade.php">
+    <entry file="file://$PROJECT_DIR$/src/css/filemanager/styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="670">
-          <caret line="198" column="22" selection-start-line="198" selection-start-column="22" selection-end-line="198" selection-end-column="22" />
+        <state relative-caret-position="400">
+          <caret line="1187" column="1" lean-forward="true" selection-start-line="1187" selection-start-column="1" selection-end-line="1187" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Http/Controllers/FileManagerController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="196" column="73" selection-start-line="196" selection-start-column="73" selection-end-line="196" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="180" column="92" selection-start-line="180" selection-start-column="92" selection-end-line="180" selection-end-column="92" />
+          <folding>
+            <element signature="e#5096#5103#1#HTML" expanded="true" />
+            <element signature="e#13089#13096#1#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/file-manager/dataList.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="68" column="92" selection-start-line="68" selection-start-column="92" selection-end-line="68" selection-end-column="92" />
         </state>
       </provider>
     </entry>
