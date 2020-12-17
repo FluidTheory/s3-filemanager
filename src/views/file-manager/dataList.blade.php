@@ -41,6 +41,8 @@
                         @if($k['type'] == 'image' || $k['type'] == 'pdf')
                             <img class="img-select" id="img-select"
                                  src="{{($k['type'] == 'pdf' ? 'images/pdf-icon.png' : $k['src'] )}}"
+                                 data-width="{{$k['width']}}"
+                                 data-height="{{$k['height']}}"
                                  data-value="{{ $k['name'] }}" data-id="{{ $k['id'] }}" data-size="{{ $k['size'] }}"
                                  value="this.naturalHeight">
                         @endif
