@@ -38,14 +38,14 @@ class FileManagerController extends Controller
             $client_id = $pathExp[0];
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $client_id, 'parent_id' => 0, 'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
-            $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
+            $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
         } else {
             $currentDir = end($pathExp);
             $client_id = $pathExp[0];
             $folderId = end($pathExp);
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $pathExp[0], 'parent_id' => end($pathExp), 'deleted_at' => null])->get();
             $countImage = 20 - count($directories);
-            $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $pathExp[0], 'directory_id' => end($pathExp)])->where('deleted_at', null)->orderBy('id', 'DESC')->limit($countImage)->get();
+            $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $pathExp[0], 'directory_id' => end($pathExp)])->where('deleted_at', null)->orderBy('id', 'DESC')->limit($countImage)->get();
             $slug_url = $client_id;
             foreach ($pathExp as $key => $value) {
                 if ($client_id != array_shift($pathExp)) {
@@ -76,6 +76,8 @@ class FileManagerController extends Controller
                 'alt' => $value['alt'],
                 'title' => $value['title'],
                 'desc' => $value['description'],
+                'width' => $value['width'],
+                'height' => $value['height'],
                 'size' => $imgSize,
                 'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
                 'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name
@@ -192,6 +194,8 @@ class FileManagerController extends Controller
                 'alt' => $value['alt'],
                 'title' => $value['title'],
                 'desc' => $value['description'],
+                'width' => $value['width'],
+                'height' => $value['height'],
                 'modified' => $dt,
                 'size' => $imgSize,
                 'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
@@ -429,7 +433,7 @@ class FileManagerController extends Controller
             $countImage = 20;
         }
         if (empty($filter)) { // data without filter type
-            $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'deleted_at' => null])->
+            $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'deleted_at' => null])->
             where(function ($query) use ($data) {
                 $query->where('name','like','%'.$data['searchTxt'].'%')
                     ->orWhere('alt','like','%'.$data['searchTxt'].'%')
@@ -437,7 +441,7 @@ class FileManagerController extends Controller
                     ->orWhere('description','like','%'.$data['searchTxt'].'%');
             })->orderBy('id', 'DESC')->offset($data['start'])->limit($countImage)->get();
         } else { // data with filter type
-            $images = Asset::select('id','name','size','type','alt','title','description','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'type' => $filter, 'deleted_at' => null])->
+            $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'type' => $filter, 'deleted_at' => null])->
             where(function ($query) use ($data) {
                 $query->where('name','like','%'.$data['searchTxt'].'%')
                     ->orWhere('alt','like','%'.$data['searchTxt'].'%')
@@ -462,6 +466,8 @@ class FileManagerController extends Controller
                 'alt' => $value['alt'],
                 'title' => $value['title'],
                 'desc' => $value['description'],
+                'width' => $value['width'],
+                'height' => $value['height'],
                 'size' => $imgSize,
                 'copySrc' => env('AWS_URL') . $value['id'] . '/' . $name,
                 'src' => env('AWS_URL') .'tr:n-media_thumb/'. $value['id'] . '/' . $name

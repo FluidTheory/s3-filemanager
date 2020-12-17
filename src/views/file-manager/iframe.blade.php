@@ -162,8 +162,8 @@
                     var client_id = $('#folder-id').val();
                     if(type == 'image' ){
                         images.push($(this).find('img').data('value'));
-                        height.push($(this).find('img')[0].naturalHeight);
-                        width.push($(this).find('img')[0].naturalWidth);
+                        height.push($(this).find('img').data('height'));
+                        width.push($(this).find('img').data('width'));
                         ids.push($(this).find('img').data('id'));
                         size.push($(this).find('img').data('size'));
                     }
