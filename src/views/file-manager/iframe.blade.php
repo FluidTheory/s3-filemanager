@@ -181,9 +181,12 @@
 
                 }
             });
-            if(current == 'trumbowyg-editor') {
+            if(current == 'trumbowyg-editor' || current == '.trumbowyg-editor') {
                 var client_id = $('#folder-id').val();
                 var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
+                var strarrtext=images[0].split(".");
+                var text_url=(typeof strarrtext[0] !== 'undefined')?strarrtext[0]:'';
+                $('input[name="text"]').val(text_url);
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);
