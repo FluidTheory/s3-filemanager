@@ -16,7 +16,9 @@
 <input type="hidden" id="multiple-img" value="">
 {{--end model for S3 file manager --}}
 <script>
+    let sizeValidation = false;
     $(document).on('click','.s3-upload',function () {
+        sizeValidation = ($(this).attr('data-validateSize') === 'true');
         $('.s3-upload').attr('data-click','');
         $(this).attr('data-click','set');
         var client_id = $('#folder-id').val();
@@ -181,25 +183,22 @@
 
                 }
             });
-            if(current == 'trumbowyg-editor' || current == '.trumbowyg-editor') {
+            if(current == 'trumbowyg-editor') {
                 var client_id = $('#folder-id').val();
                 var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
-                var strarrtext=images[0].split(".");
-                var text_url=(typeof strarrtext[0] !== 'undefined')?strarrtext[0]:'';
-                $('input[name="text"]').val(text_url);
                 $('input[name="url"]').val(img);
             } else {
                 $(current).val(images);
-                @if(!empty($validateSize))
-                if(width >= 640 && height <= 1920){
-                    $('#image-ids').val(ids);
-                    $('form#img-upload').submit();
-                } else{
-                    alert("Please upload a bigger image.");
-                    return false;
+                if(sizeValidation) {
+                    if (width >= 640 && height <= 1920) {
+                        $('#image-ids').val(ids);
+                        $('form#img-upload').submit();
+                    } else {
+                        alert("Please upload a bigger image.");
+                        return false;
+                    }
                 }
 
-                @endif
                 $('.s3-upload').each(function() {
                     if($(this).attr('data-click') == 'set'){
                         $(this).parent().find('.fm-image').val(images);
