@@ -183,10 +183,16 @@
 
                 }
             });
-            if(current == 'trumbowyg-editor') {
+
+            let img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
+            console.log('current :' + current, img);
+            if(current === 'trumbowyg-editor') {
                 var client_id = $('#folder-id').val();
-                var img = '{{ env('AWS_URL')}}'+ ids +'/' + images ;
                 $('input[name="url"]').val(img);
+            } else if(current === 'tinymce-editor') {
+                $('input[type="url"]').val(img);
+                $(".tox-form__controls-h-stack div:nth-child(1)").find('input:text').val(width);
+                $(".tox-form__controls-h-stack div:nth-child(2)").find('input:text').val(height);
             } else {
                 $(current).val(images);
                 if(sizeValidation) {
