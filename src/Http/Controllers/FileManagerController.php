@@ -427,11 +427,12 @@ class FileManagerController extends Controller
             $directories = array();
         }
 
-        if (!empty($directories)) {
-            $countImage = 20 - count($directories);
-        } else {
-            $countImage = 20;
-        }
+       // if (!empty($directories)) {
+       //     $countImage = 20 - count($directories);
+       // } else {
+       //     $countImage = 20;
+       // }
+        $countImage = 20;
         if (empty($filter)) { // data without filter type
             $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $client_id, 'directory_id' => !empty($folderId) ? $folderId : null, 'deleted_at' => null])->
             where(function ($query) use ($data) {
