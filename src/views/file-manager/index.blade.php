@@ -292,7 +292,7 @@
     $(document).ready(function () {
         // load images
         var limit = 20;
-        var start = 1;
+        var start = 0;
         let action = 'inactive';
         let searchTxt = $('#searchInput').val();
         let folderId = $('#folderId').val();
