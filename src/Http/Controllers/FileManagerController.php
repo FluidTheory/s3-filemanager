@@ -37,14 +37,16 @@ class FileManagerController extends Controller
             $isRoot = true;
             $client_id = $pathExp[0];
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $client_id, 'parent_id' => 0, 'deleted_at' => null])->get();
-            $countImage = 20 - count($directories);
+            //$countImage = 20 - count($directories);
+            $countImage = 20;
             $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $client_id, 'directory_id' => null, 'deleted_at' => null])->orderBy('id', 'DESC')->limit($countImage)->get();
         } else {
             $currentDir = end($pathExp);
             $client_id = $pathExp[0];
             $folderId = end($pathExp);
             $directories = Directory::select('id','name','client_id')->where(['client_id' => $pathExp[0], 'parent_id' => end($pathExp), 'deleted_at' => null])->get();
-            $countImage = 20 - count($directories);
+            //$countImage = 20 - count($directories);
+            $countImage = 20;
             $images = Asset::select('id','name','size','type','alt','title','description','width','height','updated_at')->where(['client_id' => $pathExp[0], 'directory_id' => end($pathExp)])->where('deleted_at', null)->orderBy('id', 'DESC')->limit($countImage)->get();
             $slug_url = $client_id;
             foreach ($pathExp as $key => $value) {
