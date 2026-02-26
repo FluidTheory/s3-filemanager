@@ -115,8 +115,8 @@ class FileManagerController extends Controller
     {
         $dirList = array();
         if(!empty($clientId)){
-            $sql = 'Select t1.id, t1.name,t1.parent_id, t2.name AS parent_name From directories t1 LEFT JOIN directories t2 ON t1.parent_id = t2.id where t1.client_id = '.$clientId.' and t1.deleted_at is null and t2.deleted_at is null';
-            $allFolders = DB::select(DB::raw($sql));
+            $sql = 'Select t1.id, t1.name,t1.parent_id, t2.name AS parent_name From directories t1 LEFT JOIN directories t2 ON t1.parent_id = t2.id where t1.client_id = ? and t1.deleted_at is null and t2.deleted_at is null';
+            $allFolders = DB::select($sql, [$clientId]);
             $allFolders = array_map(function ($value) {
                 return (array)$value;
             }, $allFolders);
